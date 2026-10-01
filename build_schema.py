@@ -308,7 +308,6 @@ def build(xlsx_path: Path):
         if ui_style not in VALID_UI_STYLES:
             errors.append(f"Fields row {rownum} ({fid}): invalid ui_style '{ui_style}' "
                            f"(must be blank or 'toggle')")
-
         try:
             options = parse_options(r.get("options"))
         except SpecError as e:
@@ -340,16 +339,22 @@ def build(xlsx_path: Path):
             "applies_to_kinds": applies,
             "ui_style": ui_style,
             "show_if_raw": (str(r.get("show_if")).strip() if r.get("show_if") else ""),
+            "disabled_if_raw": (str(r.get("disabled_if")).strip() if r.get("disabled_if") else ""),
             "help_text": str(r.get("help_text", "")).strip() if r.get("help_text") else "",
             "_row": rownum,
         }
         field_order.append(fid)
 
-    # ---- Fields (pass 2: show_if, now that every field_id is known) ----
+    # ---- Fields (pass 2: show_if / disabled_if, now that every field_id is known) ----
     for fid, f in fields.items():
         raw = f.pop("show_if_raw")
         f["show_if"] = resolve_show_if(
             raw, fields, errors, where=f"Fields row {f['_row']} ({fid})",
+            self_id=fid, self_group_id=f["group_id"],
+        )
+        disabled_raw = f.pop("disabled_if_raw")
+        f["disabled_if"] = resolve_show_if(
+            disabled_raw, fields, errors, where=f"Fields row {f['_row']} ({fid}) disabled_if",
             self_id=fid, self_group_id=f["group_id"],
         )
 
@@ -474,7 +479,7 @@ def build(xlsx_path: Path):
     ordered_sections = [sections[sid] for sid in sorted(sections, key=lambda s: sections[s]["order"])]
 
     return {
-        "version": 2,
+        "version": 3,
         "kind_axis_fields": kind_axis_fields,
         "sections": ordered_sections,
     }
