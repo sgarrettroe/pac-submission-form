@@ -168,6 +168,15 @@
   .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
 
   #pdf-actions { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border); }
+  #validation-block {
+    display: none; font-size: 0.82rem; color: var(--warning); background: var(--warning-bg);
+    border: 1px solid rgba(180,83,9,0.2); border-left: 4px solid var(--warning);
+    border-radius: 0 3px 3px 0; padding: 12px 16px; margin-bottom: 14px;
+  }
+  #validation-block.visible { display: block; }
+  #validation-block strong { display: block; margin-bottom: 6px; font-weight: 700; }
+  #validation-block ul { margin: 0; padding-left: 18px; }
+  #validation-block li { margin-bottom: 2px; }
   #pdf-status {
     margin-top: 12px; padding: 10px 14px; font-size: 0.82rem; display: none;
     border-left: 4px solid var(--header-blue); background: rgba(45,106,143,0.06);
@@ -222,6 +231,7 @@
   <div id="formRoot"></div>
 
   <div id="pdf-actions">
+    <div id="validation-block"></div>
     <button id="generatePdfBtn" type="button" class="btn-primary">Generate PDF + JSON</button>
     <div id="pdf-status"></div>
   </div>
@@ -1941,10 +1951,76 @@ function refreshAll() {
   });
 
   updateKindConfirmBanner();
+  updateValidationAndButton();
 
   document.getElementById('debugOut').textContent = JSON.stringify(
     { answers, groupInstances }, null, 2
   );
+}
+
+function isFieldFilled(field, val) {
+  if (field.type === 'checkbox_group') return Array.isArray(val) && val.length > 0;
+  return val !== undefined && val !== null && String(val).trim() !== '';
+}
+
+function collectValidationIssues() {
+  const kset = activeKindSet();
+  const issues = [];
+
+  SCHEMA.sections.forEach(section => {
+    if (!kindSetMatches(section.applies_to_kinds, kset)) return;
+
+    section.items.forEach(item => {
+      if (item.kind === 'field') {
+        const kindOk = kindSetMatches(item.applies_to_kinds, kset);
+        const showOk = evalShowIf(item.show_if, getTopValue);
+        const visible = kindOk && showOk;
+        if (!visible) return;
+        if (isRequired(item, kset, 0, visible) && !isFieldFilled(item, getTopValue(item.id))) {
+          issues.push(item.label + ' (' + section.title + ')');
+        }
+      } else {
+        const groupVisible = evalShowIf(item.show_if, getTopValue);
+        if (!groupVisible) return;
+        const instances = groupInstances[item.id] || [];
+        const groupReqForKind = item.required_for_kinds.length && kindSetMatches(item.required_for_kinds, kset);
+        const floor = Math.max(item.min_instances, groupReqForKind ? 1 : 0);
+        if (instances.length < floor) {
+          issues.push('At least one ' + item.item_label + ' (' + section.title + ')');
+        }
+        instances.forEach((inst, idx) => {
+          item.fields.forEach(f => {
+            const showOk = evalShowIf(f.show_if, (ref) => getInstanceValue(item.id, idx, ref));
+            if (!showOk) return;
+            if (isRequired(f, kset, idx, showOk) && !isFieldFilled(f, getInstanceValue(item.id, idx, f.id))) {
+              issues.push(f.label + ' (' + item.item_label + ' ' + (idx + 1) + ')');
+            }
+          });
+        });
+      }
+    });
+  });
+
+  return issues;
+}
+
+function updateValidationAndButton() {
+  const issues = collectValidationIssues();
+  const btn = document.getElementById('generatePdfBtn');
+  const block = document.getElementById('validation-block');
+
+  btn.disabled = issues.length > 0;
+
+  if (issues.length) {
+    block.classList.add('visible');
+    block.innerHTML = '<strong>' + issues.length + ' item' + (issues.length > 1 ? 's' : '') +
+      ' need attention before you can generate the PDF/JSON:</strong><ul>' +
+      issues.map(i => '<li>' + i.replace(/&/g, '&amp;').replace(/</g, '&lt;') + '</li>').join('') +
+      '</ul>';
+  } else {
+    block.classList.remove('visible');
+    block.innerHTML = '';
+  }
 }
 
 function updateReqMark(fieldEl, required) {
@@ -2241,7 +2317,7 @@ async function generatePdf() {
     statusEl.textContent = 'Could not generate PDF: ' + err.message;
     console.error(err);
   } finally {
-    btn.disabled = false;
+    updateValidationAndButton();
   }
 }
 
