@@ -2,14 +2,29 @@
   "version": 1,
   "kinds": [
     {
-      "id": "learning_cycle",
-      "display_name": "Learning Cycle Activity",
-      "description": "Primarily designed to develop content knowledge through a Learning Cycle structure."
+      "id": "activity_idea",
+      "display_name": "Activity Idea",
+      "description": "Early-stage idea submission, before a full activity is developed."
     },
     {
-      "id": "application",
-      "display_name": "Application Activity",
-      "description": "Primarily designed to deepen or refine understanding through application of process skills."
+      "id": "traditional_review",
+      "display_name": "Traditional Review",
+      "description": "Standard written review of a completed activity by PAC writing consultants."
+    },
+    {
+      "id": "collaborative_peer_feedback",
+      "display_name": "Collaborative Peer Feedback",
+      "description": "Informal peer feedback exchange between authors ahead of formal review."
+    },
+    {
+      "id": "classroom_testing",
+      "display_name": "Classroom Testing",
+      "description": "Activity is being piloted in a live classroom; submission centers on implementation and testing notes."
+    },
+    {
+      "id": "approval_review",
+      "display_name": "Approval Review",
+      "description": "Final review for formal approval/designation as a vetted POGIL activity."
     }
   ],
   "sections": [
@@ -18,125 +33,105 @@
       "order": 1.0,
       "title": "Authors & Activity Identification",
       "applies_to_kinds": [
-        "all"
+        "traditional_review",
+        "collaborative_peer_feedback",
+        "classroom_testing",
+        "approval_review"
       ],
-      "fields": [
+      "items": [
         {
-          "id": "corr_name",
-          "section_id": "authors",
+          "kind": "group",
           "order": 1.0,
-          "label": "Corresponding Author \u2014 Name",
-          "type": "text",
-          "options": [],
-          "required": "TRUE",
-          "applies_to_kinds": [
-            "all"
+          "id": "authors_group",
+          "section_id": "authors",
+          "item_label": "Author",
+          "min_instances": 1,
+          "max_instances": null,
+          "add_button_text": "+ Add another author",
+          "required_for_kinds": [],
+          "fields": [
+            {
+              "id": "author_name",
+              "section_id": "authors",
+              "group_id": "authors_group",
+              "order": 1.0,
+              "label": "Name",
+              "type": "text",
+              "options": [],
+              "required": "TRUE",
+              "required_first_only": true,
+              "required_for_kinds": [],
+              "applies_to_kinds": [
+                "all"
+              ],
+              "help_text": "",
+              "show_if": null,
+              "pdf": {
+                "page_break_before": false,
+                "pdf_format": "table_row"
+              }
+            },
+            {
+              "id": "author_email",
+              "section_id": "authors",
+              "group_id": "authors_group",
+              "order": 2.0,
+              "label": "Email",
+              "type": "email",
+              "options": [],
+              "required": "TRUE",
+              "required_first_only": true,
+              "required_for_kinds": [],
+              "applies_to_kinds": [
+                "all"
+              ],
+              "help_text": "",
+              "show_if": null,
+              "pdf": {
+                "page_break_before": false,
+                "pdf_format": "table_row"
+              }
+            },
+            {
+              "id": "author_phone",
+              "section_id": "authors",
+              "group_id": "authors_group",
+              "order": 3.0,
+              "label": "Phone",
+              "type": "tel",
+              "options": [],
+              "required": "FALSE",
+              "required_first_only": false,
+              "required_for_kinds": [],
+              "applies_to_kinds": [
+                "all"
+              ],
+              "help_text": "",
+              "show_if": null,
+              "pdf": {
+                "page_break_before": false,
+                "pdf_format": "table_row"
+              }
+            }
           ],
-          "help_text": "",
           "show_if": null,
           "pdf": {
             "page_break_before": false,
-            "pdf_format": "table_row"
+            "pdf_format": "repeated_block"
           }
         },
         {
-          "id": "corr_email",
-          "section_id": "authors",
+          "kind": "field",
           "order": 2.0,
-          "label": "Corresponding Author \u2014 Email",
-          "type": "email",
-          "options": [],
-          "required": "TRUE",
-          "applies_to_kinds": [
-            "all"
-          ],
-          "help_text": "",
-          "show_if": null,
-          "pdf": {
-            "page_break_before": false,
-            "pdf_format": "table_row"
-          }
-        },
-        {
-          "id": "corr_phone",
-          "section_id": "authors",
-          "order": 3.0,
-          "label": "Corresponding Author \u2014 Phone",
-          "type": "tel",
-          "options": [],
-          "required": "FALSE",
-          "applies_to_kinds": [
-            "all"
-          ],
-          "help_text": "",
-          "show_if": null,
-          "pdf": {
-            "page_break_before": false,
-            "pdf_format": "table_row"
-          }
-        },
-        {
-          "id": "second_name",
-          "section_id": "authors",
-          "order": 4.0,
-          "label": "Second Author \u2014 Name",
-          "type": "text",
-          "options": [],
-          "required": "FALSE",
-          "applies_to_kinds": [
-            "all"
-          ],
-          "help_text": "",
-          "show_if": null,
-          "pdf": {
-            "page_break_before": false,
-            "pdf_format": "table_row"
-          }
-        },
-        {
-          "id": "second_email",
-          "section_id": "authors",
-          "order": 5.0,
-          "label": "Second Author \u2014 Email",
-          "type": "email",
-          "options": [],
-          "required": "FALSE",
-          "applies_to_kinds": [
-            "all"
-          ],
-          "help_text": "",
-          "show_if": null,
-          "pdf": {
-            "page_break_before": false,
-            "pdf_format": "table_row"
-          }
-        },
-        {
-          "id": "second_phone",
-          "section_id": "authors",
-          "order": 6.0,
-          "label": "Second Author \u2014 Phone",
-          "type": "tel",
-          "options": [],
-          "required": "FALSE",
-          "applies_to_kinds": [
-            "all"
-          ],
-          "help_text": "",
-          "show_if": null,
-          "pdf": {
-            "page_break_before": false,
-            "pdf_format": "table_row"
-          }
-        },
-        {
           "id": "title_activity",
           "section_id": "authors",
-          "order": 7.0,
+          "group_id": null,
           "label": "Title of Activity",
           "type": "text",
           "options": [],
           "required": "TRUE",
+          "required_first_only": false,
+          "required_for_kinds": [],
           "applies_to_kinds": [
             "all"
           ],
@@ -148,13 +143,116 @@
           }
         },
         {
-          "id": "discipline_topic",
+          "kind": "field",
+          "order": 3.0,
+          "id": "discipline",
           "section_id": "authors",
-          "order": 8.0,
-          "label": "Discipline & Topic",
+          "group_id": null,
+          "label": "Discipline",
+          "type": "radio",
+          "options": [
+            {
+              "value": "anatomy_physiology",
+              "label": "Anatomy & Physiology"
+            },
+            {
+              "value": "astronomy",
+              "label": "Astronomy"
+            },
+            {
+              "value": "biology",
+              "label": "Biology"
+            },
+            {
+              "value": "chemistry",
+              "label": "Chemistry"
+            },
+            {
+              "value": "computer_science",
+              "label": "Computer Science"
+            },
+            {
+              "value": "economics",
+              "label": "Economics"
+            },
+            {
+              "value": "environmental_science",
+              "label": "Environmental Science"
+            },
+            {
+              "value": "exercise_science",
+              "label": "Exercise Science"
+            },
+            {
+              "value": "fine_arts",
+              "label": "Fine Arts"
+            },
+            {
+              "value": "general",
+              "label": "General"
+            },
+            {
+              "value": "general_education",
+              "label": "General Education"
+            },
+            {
+              "value": "general_science",
+              "label": "General Science"
+            },
+            {
+              "value": "language_arts",
+              "label": "Language Arts"
+            },
+            {
+              "value": "mathematics",
+              "label": "Mathematics"
+            },
+            {
+              "value": "music",
+              "label": "Music"
+            },
+            {
+              "value": "neuroscience",
+              "label": "Neuroscience"
+            },
+            {
+              "value": "physics",
+              "label": "Physics"
+            },
+            {
+              "value": "psychology",
+              "label": "Psychology"
+            },
+            {
+              "value": "statistics",
+              "label": "Statistics"
+            }
+          ],
+          "required": "TRUE",
+          "required_first_only": false,
+          "required_for_kinds": [],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "checklist"
+          }
+        },
+        {
+          "kind": "field",
+          "order": 4.0,
+          "id": "topic",
+          "section_id": "authors",
+          "group_id": null,
+          "label": "Topic",
           "type": "text",
           "options": [],
           "required": "TRUE",
+          "required_first_only": false,
+          "required_for_kinds": [],
           "applies_to_kinds": [
             "all"
           ],
@@ -172,17 +270,24 @@
       "order": 2.0,
       "title": "Course Context",
       "applies_to_kinds": [
-        "all"
+        "traditional_review",
+        "collaborative_peer_feedback",
+        "classroom_testing",
+        "approval_review"
       ],
-      "fields": [
+      "items": [
         {
+          "kind": "field",
+          "order": 1.0,
           "id": "q1a",
           "section_id": "course_context",
-          "order": 1.0,
+          "group_id": null,
           "label": "The student population for your course.",
           "type": "textarea",
           "options": [],
           "required": "TRUE",
+          "required_first_only": false,
+          "required_for_kinds": [],
           "applies_to_kinds": [
             "all"
           ],
@@ -194,13 +299,17 @@
           }
         },
         {
+          "kind": "field",
+          "order": 2.0,
           "id": "q1b",
           "section_id": "course_context",
-          "order": 2.0,
+          "group_id": null,
           "label": "How the course fits into your departmental curriculum.",
           "type": "textarea",
           "options": [],
           "required": "TRUE",
+          "required_first_only": false,
+          "required_for_kinds": [],
           "applies_to_kinds": [
             "all"
           ],
@@ -212,13 +321,17 @@
           }
         },
         {
+          "kind": "field",
+          "order": 3.0,
           "id": "q1c",
           "section_id": "course_context",
-          "order": 3.0,
+          "group_id": null,
           "label": "The course setting (room description, class size, frequency and length of meeting times, etc.).",
           "type": "textarea",
           "options": [],
           "required": "TRUE",
+          "required_first_only": false,
+          "required_for_kinds": [],
           "applies_to_kinds": [
             "all"
           ],
@@ -236,13 +349,18 @@
       "order": 3.0,
       "title": "Student Background",
       "applies_to_kinds": [
-        "all"
+        "traditional_review",
+        "collaborative_peer_feedback",
+        "classroom_testing",
+        "approval_review"
       ],
-      "fields": [
+      "items": [
         {
+          "kind": "field",
+          "order": 1.0,
           "id": "q2",
           "section_id": "student_background",
-          "order": 1.0,
+          "group_id": null,
           "label": "Have students used and/or reviewed this activity?",
           "type": "radio",
           "options": [
@@ -256,6 +374,8 @@
             }
           ],
           "required": "TRUE",
+          "required_first_only": false,
+          "required_for_kinds": [],
           "applies_to_kinds": [
             "all"
           ],
@@ -267,13 +387,17 @@
           }
         },
         {
+          "kind": "field",
+          "order": 2.0,
           "id": "q3a",
           "section_id": "student_background",
-          "order": 2.0,
+          "group_id": null,
           "label": "Key knowledge students should have as a prerequisite.",
           "type": "textarea",
           "options": [],
           "required": "TRUE",
+          "required_first_only": false,
+          "required_for_kinds": [],
           "applies_to_kinds": [
             "all"
           ],
@@ -285,13 +409,17 @@
           }
         },
         {
+          "kind": "field",
+          "order": 3.0,
           "id": "q3b",
           "section_id": "student_background",
-          "order": 3.0,
+          "group_id": null,
           "label": "Knowledge students are not expected to have prior to activity.",
           "type": "textarea",
           "options": [],
           "required": "TRUE",
+          "required_first_only": false,
+          "required_for_kinds": [],
           "applies_to_kinds": [
             "all"
           ],
@@ -309,13 +437,18 @@
       "order": 4.0,
       "title": "Activity Purpose",
       "applies_to_kinds": [
-        "all"
+        "traditional_review",
+        "collaborative_peer_feedback",
+        "classroom_testing",
+        "approval_review"
       ],
-      "fields": [
+      "items": [
         {
+          "kind": "field",
+          "order": 1.0,
           "id": "q4",
           "section_id": "activity_purpose",
-          "order": 1.0,
+          "group_id": null,
           "label": "This activity is primarily designed:",
           "type": "radio",
           "options": [
@@ -333,6 +466,8 @@
             }
           ],
           "required": "TRUE",
+          "required_first_only": false,
+          "required_for_kinds": [],
           "applies_to_kinds": [
             "all"
           ],
@@ -344,13 +479,17 @@
           }
         },
         {
+          "kind": "field",
+          "order": 2.0,
           "id": "q5",
           "section_id": "activity_purpose",
-          "order": 2.0,
+          "group_id": null,
           "label": "If you checked (c), provide details explaining the primary purpose of the activity.",
           "type": "textarea",
           "options": [],
           "required": "IF_VISIBLE",
+          "required_first_only": false,
+          "required_for_kinds": [],
           "applies_to_kinds": [
             "all"
           ],
@@ -372,17 +511,24 @@
       "order": 5.0,
       "title": "Learning Objectives & Process Skill Goals",
       "applies_to_kinds": [
-        "all"
+        "traditional_review",
+        "collaborative_peer_feedback",
+        "classroom_testing",
+        "approval_review"
       ],
-      "fields": [
+      "items": [
         {
+          "kind": "field",
+          "order": 1.0,
           "id": "q6a",
           "section_id": "objectives_goals",
-          "order": 1.0,
+          "group_id": null,
           "label": "Content Learning Objective (a)",
           "type": "text",
           "options": [],
           "required": "TRUE",
+          "required_first_only": false,
+          "required_for_kinds": [],
           "applies_to_kinds": [
             "all"
           ],
@@ -394,13 +540,17 @@
           }
         },
         {
+          "kind": "field",
+          "order": 2.0,
           "id": "q6b",
           "section_id": "objectives_goals",
-          "order": 2.0,
+          "group_id": null,
           "label": "Content Learning Objective (b)",
           "type": "text",
           "options": [],
           "required": "FALSE",
+          "required_first_only": false,
+          "required_for_kinds": [],
           "applies_to_kinds": [
             "all"
           ],
@@ -412,13 +562,17 @@
           }
         },
         {
+          "kind": "field",
+          "order": 3.0,
           "id": "q6c",
           "section_id": "objectives_goals",
-          "order": 3.0,
+          "group_id": null,
           "label": "Content Learning Objective (c)",
           "type": "text",
           "options": [],
           "required": "FALSE",
+          "required_first_only": false,
+          "required_for_kinds": [],
           "applies_to_kinds": [
             "all"
           ],
@@ -430,13 +584,17 @@
           }
         },
         {
+          "kind": "field",
+          "order": 4.0,
           "id": "q7a",
           "section_id": "objectives_goals",
-          "order": 4.0,
+          "group_id": null,
           "label": "Process Skill Goal (a)",
           "type": "text",
           "options": [],
           "required": "TRUE",
+          "required_first_only": false,
+          "required_for_kinds": [],
           "applies_to_kinds": [
             "all"
           ],
@@ -448,13 +606,17 @@
           }
         },
         {
+          "kind": "field",
+          "order": 5.0,
           "id": "q7b",
           "section_id": "objectives_goals",
-          "order": 5.0,
+          "group_id": null,
           "label": "Process Skill Goal (b)",
           "type": "text",
           "options": [],
           "required": "FALSE",
+          "required_first_only": false,
+          "required_for_kinds": [],
           "applies_to_kinds": [
             "all"
           ],
@@ -472,13 +634,18 @@
       "order": 6.0,
       "title": "POGIL Classroom Implementation",
       "applies_to_kinds": [
-        "all"
+        "traditional_review",
+        "collaborative_peer_feedback",
+        "classroom_testing",
+        "approval_review"
       ],
-      "fields": [
+      "items": [
         {
+          "kind": "field",
+          "order": 1.0,
           "id": "q8",
           "section_id": "implementation",
-          "order": 1.0,
+          "group_id": null,
           "label": "Is this activity intended for use with the eight characteristics of the Basic POGIL Classroom Implementation? Check all that apply.",
           "type": "checkbox_group",
           "options": [
@@ -516,6 +683,8 @@
             }
           ],
           "required": "TRUE",
+          "required_first_only": false,
+          "required_for_kinds": [],
           "applies_to_kinds": [
             "all"
           ],
@@ -527,13 +696,17 @@
           }
         },
         {
+          "kind": "field",
+          "order": 2.0,
           "id": "q9",
           "section_id": "implementation",
-          "order": 2.0,
+          "group_id": null,
           "label": "If you did not check boxes (a), (c), and (d) above, submit an implementation plan describing specifically how you implement this activity within your classroom.",
           "type": "textarea",
           "options": [],
           "required": "IF_VISIBLE",
+          "required_first_only": false,
+          "required_for_kinds": [],
           "applies_to_kinds": [
             "all"
           ],
@@ -553,13 +726,17 @@
           }
         },
         {
+          "kind": "field",
+          "order": 3.0,
           "id": "q10",
           "section_id": "implementation",
-          "order": 3.0,
+          "group_id": null,
           "label": "For those boxes above that you did not check, briefly describe how and/or why your activity is not implemented in that way.",
           "type": "textarea",
           "options": [],
           "required": "IF_VISIBLE",
+          "required_first_only": false,
+          "required_for_kinds": [],
           "applies_to_kinds": [
             "all"
           ],
@@ -582,6 +759,28 @@
             "page_break_before": false,
             "pdf_format": "paragraph"
           }
+        },
+        {
+          "kind": "field",
+          "order": 4.0,
+          "id": "approval_testing_evidence",
+          "section_id": "implementation",
+          "group_id": null,
+          "label": "Provide evidence that this activity has been tested in the classroom, and describe how it has been revised based on that feedback.",
+          "type": "textarea",
+          "options": [],
+          "required": "TRUE",
+          "required_first_only": false,
+          "required_for_kinds": [],
+          "applies_to_kinds": [
+            "approval_review"
+          ],
+          "help_text": "Include student performance data, instructor observations, or facilitator notes as applicable.",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "paragraph"
+          }
         }
       ]
     },
@@ -590,17 +789,24 @@
       "order": 7.0,
       "title": "Supplemental Materials Checklist",
       "applies_to_kinds": [
-        "all"
+        "traditional_review",
+        "collaborative_peer_feedback",
+        "classroom_testing",
+        "approval_review"
       ],
-      "fields": [
+      "items": [
         {
+          "kind": "field",
+          "order": 1.0,
           "id": "supp_note",
           "section_id": "supplemental",
-          "order": 1.0,
+          "group_id": null,
           "label": "If there are special aspects of implementation important to accomplishing the content or process goals of your activity, provide an Implementation Plan describing them. Please include a set of answers with your submission so writing consultants understand the expected level of student response.",
           "type": "info",
           "options": [],
           "required": "FALSE",
+          "required_first_only": false,
+          "required_for_kinds": [],
           "applies_to_kinds": [
             "all"
           ],
@@ -612,9 +818,11 @@
           }
         },
         {
+          "kind": "field",
+          "order": 2.0,
           "id": "checklist",
           "section_id": "supplemental",
-          "order": 2.0,
+          "group_id": null,
           "label": "Check List for Submission",
           "type": "checkbox_group",
           "options": [
@@ -636,6 +844,8 @@
             }
           ],
           "required": "FALSE",
+          "required_first_only": false,
+          "required_for_kinds": [],
           "applies_to_kinds": [
             "all"
           ],
@@ -644,6 +854,834 @@
           "pdf": {
             "page_break_before": true,
             "pdf_format": "checklist"
+          }
+        }
+      ]
+    },
+    {
+      "id": "idea_contact",
+      "order": 8.0,
+      "title": "Contact Information",
+      "applies_to_kinds": [
+        "activity_idea"
+      ],
+      "items": [
+        {
+          "kind": "field",
+          "order": 1.0,
+          "id": "idea_name",
+          "section_id": "idea_contact",
+          "group_id": null,
+          "label": "Name",
+          "type": "text",
+          "options": [],
+          "required": "TRUE",
+          "required_first_only": false,
+          "required_for_kinds": [],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "table_row"
+          }
+        },
+        {
+          "kind": "field",
+          "order": 2.0,
+          "id": "idea_email",
+          "section_id": "idea_contact",
+          "group_id": null,
+          "label": "Email",
+          "type": "email",
+          "options": [],
+          "required": "TRUE",
+          "required_first_only": false,
+          "required_for_kinds": [],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "table_row"
+          }
+        }
+      ]
+    },
+    {
+      "id": "idea_context",
+      "order": 9.0,
+      "title": "Classroom Context",
+      "applies_to_kinds": [
+        "activity_idea"
+      ],
+      "items": [
+        {
+          "kind": "field",
+          "order": 1.0,
+          "id": "idea_activity_type",
+          "section_id": "idea_context",
+          "group_id": null,
+          "label": "Activity Type (choose as many or as few as appropriate)",
+          "type": "checkbox_group",
+          "options": [
+            {
+              "value": "learning_cycle",
+              "label": "Learning Cycle"
+            },
+            {
+              "value": "application",
+              "label": "Application"
+            },
+            {
+              "value": "swh_lab",
+              "label": "Science Writing Heuristic Lab"
+            },
+            {
+              "value": "pogil_lab",
+              "label": "POGIL Lab"
+            },
+            {
+              "value": "other",
+              "label": "Other"
+            }
+          ],
+          "required": "FALSE",
+          "required_first_only": false,
+          "required_for_kinds": [],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "checklist"
+          }
+        },
+        {
+          "kind": "field",
+          "order": 2.0,
+          "id": "idea_activity_type_other",
+          "section_id": "idea_context",
+          "group_id": null,
+          "label": "If Other, please specify",
+          "type": "text",
+          "options": [],
+          "required": "IF_VISIBLE",
+          "required_first_only": false,
+          "required_for_kinds": [],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": {
+            "ref": "idea_activity_type",
+            "op": "all",
+            "values": [
+              "other"
+            ]
+          },
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "table_row"
+          }
+        },
+        {
+          "kind": "field",
+          "order": 3.0,
+          "id": "idea_discipline",
+          "section_id": "idea_context",
+          "group_id": null,
+          "label": "Discipline",
+          "type": "radio",
+          "options": [
+            {
+              "value": "anatomy_physiology",
+              "label": "Anatomy & Physiology"
+            },
+            {
+              "value": "astronomy",
+              "label": "Astronomy"
+            },
+            {
+              "value": "biology",
+              "label": "Biology"
+            },
+            {
+              "value": "chemistry",
+              "label": "Chemistry"
+            },
+            {
+              "value": "computer_science",
+              "label": "Computer Science"
+            },
+            {
+              "value": "economics",
+              "label": "Economics"
+            },
+            {
+              "value": "environmental_science",
+              "label": "Environmental Science"
+            },
+            {
+              "value": "exercise_science",
+              "label": "Exercise Science"
+            },
+            {
+              "value": "fine_arts",
+              "label": "Fine Arts"
+            },
+            {
+              "value": "general",
+              "label": "General"
+            },
+            {
+              "value": "general_education",
+              "label": "General Education"
+            },
+            {
+              "value": "general_science",
+              "label": "General Science"
+            },
+            {
+              "value": "language_arts",
+              "label": "Language Arts"
+            },
+            {
+              "value": "mathematics",
+              "label": "Mathematics"
+            },
+            {
+              "value": "music",
+              "label": "Music"
+            },
+            {
+              "value": "neuroscience",
+              "label": "Neuroscience"
+            },
+            {
+              "value": "physics",
+              "label": "Physics"
+            },
+            {
+              "value": "psychology",
+              "label": "Psychology"
+            },
+            {
+              "value": "statistics",
+              "label": "Statistics"
+            }
+          ],
+          "required": "FALSE",
+          "required_first_only": false,
+          "required_for_kinds": [],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "checklist"
+          }
+        },
+        {
+          "kind": "field",
+          "order": 4.0,
+          "id": "idea_setting",
+          "section_id": "idea_context",
+          "group_id": null,
+          "label": "Setting",
+          "type": "checkbox_group",
+          "options": [
+            {
+              "value": "laboratory",
+              "label": "Laboratory"
+            },
+            {
+              "value": "classroom",
+              "label": "Classroom"
+            }
+          ],
+          "required": "FALSE",
+          "required_first_only": false,
+          "required_for_kinds": [],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "checklist"
+          }
+        },
+        {
+          "kind": "field",
+          "order": 5.0,
+          "id": "idea_course",
+          "section_id": "idea_context",
+          "group_id": null,
+          "label": "Course (e.g., Physical Chemistry, General Biology)",
+          "type": "text",
+          "options": [],
+          "required": "FALSE",
+          "required_first_only": false,
+          "required_for_kinds": [],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "table_row"
+          }
+        },
+        {
+          "kind": "field",
+          "order": 6.0,
+          "id": "idea_level",
+          "section_id": "idea_context",
+          "group_id": null,
+          "label": "Level",
+          "type": "checkbox_group",
+          "options": [
+            {
+              "value": "k5",
+              "label": "K-5"
+            },
+            {
+              "value": "middle",
+              "label": "Middle School"
+            },
+            {
+              "value": "high",
+              "label": "High School"
+            },
+            {
+              "value": "undergrad",
+              "label": "Undergraduate"
+            },
+            {
+              "value": "grad",
+              "label": "Graduate"
+            }
+          ],
+          "required": "FALSE",
+          "required_first_only": false,
+          "required_for_kinds": [],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "checklist"
+          }
+        }
+      ]
+    },
+    {
+      "id": "idea_details",
+      "order": 10.0,
+      "title": "Activity Idea",
+      "applies_to_kinds": [
+        "activity_idea"
+      ],
+      "items": [
+        {
+          "kind": "field",
+          "order": 1.0,
+          "id": "idea_title",
+          "section_id": "idea_details",
+          "group_id": null,
+          "label": "Title",
+          "type": "text",
+          "options": [],
+          "required": "TRUE",
+          "required_first_only": false,
+          "required_for_kinds": [],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "table_row"
+          }
+        },
+        {
+          "kind": "field",
+          "order": 2.0,
+          "id": "idea_content_obj_a",
+          "section_id": "idea_details",
+          "group_id": null,
+          "label": "Content Objective (a)",
+          "type": "text",
+          "options": [],
+          "required": "TRUE",
+          "required_first_only": false,
+          "required_for_kinds": [],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "table_row"
+          }
+        },
+        {
+          "kind": "field",
+          "order": 3.0,
+          "id": "idea_content_obj_b",
+          "section_id": "idea_details",
+          "group_id": null,
+          "label": "Content Objective (b)",
+          "type": "text",
+          "options": [],
+          "required": "FALSE",
+          "required_first_only": false,
+          "required_for_kinds": [],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "table_row"
+          }
+        },
+        {
+          "kind": "field",
+          "order": 4.0,
+          "id": "idea_content_obj_c",
+          "section_id": "idea_details",
+          "group_id": null,
+          "label": "Content Objective (c)",
+          "type": "text",
+          "options": [],
+          "required": "FALSE",
+          "required_first_only": false,
+          "required_for_kinds": [],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "table_row"
+          }
+        },
+        {
+          "kind": "field",
+          "order": 5.0,
+          "id": "idea_process_obj_a",
+          "section_id": "idea_details",
+          "group_id": null,
+          "label": "Process Objective (a)",
+          "type": "text",
+          "options": [],
+          "required": "TRUE",
+          "required_first_only": false,
+          "required_for_kinds": [],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "table_row"
+          }
+        },
+        {
+          "kind": "field",
+          "order": 6.0,
+          "id": "idea_process_obj_b",
+          "section_id": "idea_details",
+          "group_id": null,
+          "label": "Process Objective (b)",
+          "type": "text",
+          "options": [],
+          "required": "FALSE",
+          "required_first_only": false,
+          "required_for_kinds": [],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "table_row"
+          }
+        },
+        {
+          "kind": "field",
+          "order": 7.0,
+          "id": "idea_process_obj_c",
+          "section_id": "idea_details",
+          "group_id": null,
+          "label": "Process Objective (c)",
+          "type": "text",
+          "options": [],
+          "required": "FALSE",
+          "required_first_only": false,
+          "required_for_kinds": [],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "table_row"
+          }
+        },
+        {
+          "kind": "field",
+          "order": 8.0,
+          "id": "idea_description",
+          "section_id": "idea_details",
+          "group_id": null,
+          "label": "Description",
+          "type": "textarea",
+          "options": [],
+          "required": "TRUE",
+          "required_first_only": false,
+          "required_for_kinds": [],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "250 words or less",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "paragraph"
+          }
+        }
+      ]
+    },
+    {
+      "id": "image_source",
+      "order": 11.0,
+      "title": "Image Source",
+      "applies_to_kinds": [
+        "traditional_review",
+        "collaborative_peer_feedback",
+        "classroom_testing",
+        "approval_review"
+      ],
+      "items": [
+        {
+          "kind": "field",
+          "order": 1.0,
+          "id": "image_authorship_mode",
+          "section_id": "image_source",
+          "group_id": null,
+          "label": "Image Authorship",
+          "type": "radio",
+          "options": [
+            {
+              "value": "blanket_author",
+              "label": "I am the author of all images in the activity"
+            },
+            {
+              "value": "specify",
+              "label": "Specify image authorship"
+            }
+          ],
+          "required": "FALSE",
+          "required_first_only": false,
+          "required_for_kinds": [
+            "approval_review"
+          ],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "checklist"
+          }
+        },
+        {
+          "kind": "group",
+          "order": 2.0,
+          "id": "image_source_group",
+          "section_id": "image_source",
+          "item_label": "Image",
+          "min_instances": 0,
+          "max_instances": null,
+          "add_button_text": "+ Add image",
+          "required_for_kinds": [
+            "approval_review"
+          ],
+          "fields": [
+            {
+              "id": "image_description",
+              "section_id": "image_source",
+              "group_id": "image_source_group",
+              "order": 1.0,
+              "label": "Image",
+              "type": "text",
+              "options": [],
+              "required": "TRUE",
+              "required_first_only": false,
+              "required_for_kinds": [],
+              "applies_to_kinds": [
+                "all"
+              ],
+              "help_text": "A short description or filename identifying the image.",
+              "show_if": null,
+              "pdf": {
+                "page_break_before": false,
+                "pdf_format": "table_row"
+              }
+            },
+            {
+              "id": "image_role",
+              "section_id": "image_source",
+              "group_id": "image_source_group",
+              "order": 2.0,
+              "label": "Image Credit",
+              "type": "radio",
+              "options": [
+                {
+                  "value": "author",
+                  "label": "I am the author of this image"
+                },
+                {
+                  "value": "source",
+                  "label": "Image source"
+                }
+              ],
+              "required": "TRUE",
+              "required_first_only": false,
+              "required_for_kinds": [],
+              "applies_to_kinds": [
+                "all"
+              ],
+              "help_text": "",
+              "show_if": null,
+              "pdf": {
+                "page_break_before": false,
+                "pdf_format": "checklist"
+              }
+            },
+            {
+              "id": "image_source_detail",
+              "section_id": "image_source",
+              "group_id": "image_source_group",
+              "order": 3.0,
+              "label": "Source (URL or description)",
+              "type": "text",
+              "options": [],
+              "required": "IF_VISIBLE",
+              "required_first_only": false,
+              "required_for_kinds": [],
+              "applies_to_kinds": [
+                "all"
+              ],
+              "help_text": "",
+              "show_if": {
+                "ref": "image_role",
+                "op": "==",
+                "value": "source"
+              },
+              "pdf": {
+                "page_break_before": false,
+                "pdf_format": "table_row"
+              }
+            }
+          ],
+          "show_if": {
+            "ref": "image_authorship_mode",
+            "op": "==",
+            "value": "specify"
+          },
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "repeated_block"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ai_use",
+      "order": 12.0,
+      "title": "Generative AI Use",
+      "applies_to_kinds": [
+        "traditional_review",
+        "collaborative_peer_feedback",
+        "classroom_testing",
+        "approval_review"
+      ],
+      "items": [
+        {
+          "kind": "field",
+          "order": 1.0,
+          "id": "ai_use_intro",
+          "section_id": "ai_use",
+          "group_id": null,
+          "label": "Generative AI can support activity development, but it should support \u2014 not replace \u2014 your own instructional design, disciplinary judgment, and critical thinking. As AI plays a larger role in producing content, the expectation for your review, verification, and disclosure increases. Select the level that best describes how AI was used in developing this activity. Routine or Supportive use covers things like brainstorming, wording suggestions, grammar/clarity checks, or formatting on work you conceived and directed. Substantive Developmental use means AI helped develop or revise real components \u2014 drafting objectives, generating questions from your objectives, building datasets, or suggesting scaffolding \u2014 requiring your careful review and verification. Extensive Generative use means AI generated substantial portions of the activity (e.g. a full question sequence or draft) with limited initial input from you.",
+          "type": "info",
+          "options": [],
+          "required": "FALSE",
+          "required_first_only": false,
+          "required_for_kinds": [],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "paragraph"
+          }
+        },
+        {
+          "kind": "field",
+          "order": 2.0,
+          "id": "ai_use_level",
+          "section_id": "ai_use",
+          "group_id": null,
+          "label": "Level of AI use",
+          "type": "radio",
+          "options": [
+            {
+              "value": "no_ai",
+              "label": "No AI was used"
+            },
+            {
+              "value": "routine",
+              "label": "Routine or Supportive use"
+            },
+            {
+              "value": "substantive",
+              "label": "Substantive development use"
+            },
+            {
+              "value": "extensive",
+              "label": "Extensive generative AI use"
+            }
+          ],
+          "required": "TRUE",
+          "required_first_only": false,
+          "required_for_kinds": [],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "checklist"
+          }
+        },
+        {
+          "kind": "field",
+          "order": 3.0,
+          "id": "ai_responsibility_statement",
+          "section_id": "ai_use",
+          "group_id": null,
+          "label": "Author Responsibility Statement: By selecting this level, I affirm that I have critically reviewed, verified, and substantively revised any AI-assisted content in this activity. My own intellectual and creative contribution to this activity is substantial enough that I hold copyright in the final work, and I accept full responsibility for the accuracy, originality, instructional design, and POGIL alignment of the submitted activity.",
+          "type": "info",
+          "options": [],
+          "required": "FALSE",
+          "required_first_only": false,
+          "required_for_kinds": [],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": {
+            "ref": "ai_use_level",
+            "op": "in",
+            "values": [
+              "substantive",
+              "extensive"
+            ]
+          },
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "paragraph"
+          }
+        },
+        {
+          "kind": "field",
+          "order": 4.0,
+          "id": "ai_responsibility_checkbox",
+          "section_id": "ai_use",
+          "group_id": null,
+          "label": "Affirmation",
+          "type": "checkbox_group",
+          "options": [
+            {
+              "value": "affirmed",
+              "label": "I affirm the statement above."
+            }
+          ],
+          "required": "IF_VISIBLE",
+          "required_first_only": false,
+          "required_for_kinds": [],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": {
+            "ref": "ai_use_level",
+            "op": "in",
+            "values": [
+              "substantive",
+              "extensive"
+            ]
+          },
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "checklist"
+          }
+        },
+        {
+          "kind": "field",
+          "order": 5.0,
+          "id": "ai_use_description",
+          "section_id": "ai_use",
+          "group_id": null,
+          "label": "Briefly describe how AI was used in developing this activity.",
+          "type": "textarea",
+          "options": [],
+          "required": "IF_VISIBLE",
+          "required_first_only": false,
+          "required_for_kinds": [],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": {
+            "ref": "ai_use_level",
+            "op": "in",
+            "values": [
+              "substantive",
+              "extensive"
+            ]
+          },
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "paragraph"
           }
         }
       ]
