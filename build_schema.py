@@ -11,6 +11,13 @@ only structure.xlsx does. Edit the spreadsheet, re-run this, commit both.
 
 All problems found are reported together (not just the first one), and
 nothing is written unless the sheet is fully clean.
+
+KIND AXES: there is no longer a single "kind" enum. Any number of ordinary
+radio/select fields can act as a "kind axis" — their option values become
+valid entries for every applies_to_kinds / required_for_kinds column in the
+sheet. Which fields are axes is declared in the KindAxes sheet (one field_id
+per row). The active "kind set" at runtime is the union of the CURRENT
+values of every axis field, not a single selector.
 """
 import sys
 import re
@@ -25,6 +32,7 @@ SHOW_IF_SET = re.compile(r"^\s*([A-Za-z0-9_]+)\s+(all|not_all|in|not_in)\s*\[\s*
 VALID_TYPES = {"text", "email", "tel", "textarea", "date", "radio", "select", "checkbox_group", "info"}
 VALID_REQUIRED = {"TRUE", "FALSE", "IF_VISIBLE"}
 OPTION_TYPES = {"radio", "select", "checkbox_group"}
+VALID_UI_STYLES = {"", "toggle"}
 
 
 class SpecError(Exception):
@@ -51,7 +59,7 @@ def norm_bool(v, default="FALSE"):
 
 
 def norm_list(v):
-    """'all' | 'a,b,c' -> list, lowercased/stripped; 'all' passes through literally."""
+    """'all' | 'a,b,c' -> list, stripped; 'all' passes through literally."""
     if v is None or str(v).strip() == "":
         return ["all"]
     v = str(v).strip()
@@ -166,35 +174,12 @@ def build(xlsx_path: Path):
     errors = []
     wb = openpyxl.load_workbook(xlsx_path, data_only=True)
 
-    for required_sheet in ("Kinds", "Sections", "Fields"):
+    for required_sheet in ("KindAxes", "Sections", "Fields"):
         if required_sheet not in wb.sheetnames:
             raise SpecError(f"missing required sheet '{required_sheet}'")
 
-    # ---- Kinds ----
-    kinds = []
-    kind_ids = set()
-    for rownum, r in sheet_rows(wb["Kinds"]):
-        kid = str(r.get("kind_id", "")).strip()
-        if not kid:
-            errors.append(f"Kinds row {rownum}: empty kind_id")
-            continue
-        if kid in kind_ids:
-            errors.append(f"Kinds row {rownum}: duplicate kind_id '{kid}'")
-        kind_ids.add(kid)
-        kinds.append({
-            "id": kid,
-            "display_name": str(r.get("display_name", "")).strip(),
-            "description": str(r.get("description", "")).strip(),
-        })
-
-    def check_kind_refs(values, where):
-        for v in values:
-            if v != "all" and v not in kind_ids:
-                errors.append(f"{where}: references unknown kind_id '{v}'")
-
-    # ---- Sections ----
+    # ---- Sections (raw: collect applies_to_kinds as a plain list, validate later) ----
     sections = {}
-    section_order = []
     for rownum, r in sheet_rows(wb["Sections"]):
         sid = str(r.get("section_id", "")).strip()
         if not sid:
@@ -203,7 +188,6 @@ def build(xlsx_path: Path):
         if sid in sections:
             errors.append(f"Sections row {rownum}: duplicate section_id '{sid}'")
         applies = norm_list(r.get("applies_to_kinds"))
-        check_kind_refs(applies, f"Sections row {rownum} ({sid})")
         try:
             order = float(r.get("order", 0) or 0)
         except (TypeError, ValueError):
@@ -214,11 +198,11 @@ def build(xlsx_path: Path):
             "order": order,
             "title": str(r.get("title", "")).strip(),
             "applies_to_kinds": applies,
+            "_row": rownum,
             "fields": [],
         }
-        section_order.append(sid)
 
-    # ---- RepeatGroups ----
+    # ---- RepeatGroups (raw) ----
     groups = {}
     if "RepeatGroups" in wb.sheetnames:
         for rownum, r in sheet_rows(wb["RepeatGroups"]):
@@ -252,7 +236,6 @@ def build(xlsx_path: Path):
             if max_i is not None and max_i < min_i:
                 errors.append(f"RepeatGroups row {rownum} ({gid}): max_instances < min_instances")
             req_for = norm_list(r.get("required_for_kinds")) if r.get("required_for_kinds") else []
-            check_kind_refs(req_for, f"RepeatGroups row {rownum} ({gid}) required_for_kinds")
             groups[gid] = {
                 "id": gid,
                 "section_id": sid,
@@ -263,10 +246,11 @@ def build(xlsx_path: Path):
                 "add_button_text": str(r.get("add_button_text", "")).strip() or "+ Add another",
                 "required_for_kinds": req_for,
                 "show_if_raw": (str(r.get("show_if")).strip() if r.get("show_if") else ""),
+                "_row": rownum,
                 "fields": [],
             }
 
-    # ---- Fields (pass 1: collect) ----
+    # ---- Fields (pass 1: collect; applies_to_kinds/required_for_kinds not yet validated) ----
     fields = {}
     field_order = []
     field_rows_raw = list(sheet_rows(wb["Fields"]))
@@ -312,7 +296,6 @@ def build(xlsx_path: Path):
             )
 
         required_for_kinds = norm_list(r.get("required_for_kinds")) if r.get("required_for_kinds") else []
-        check_kind_refs(required_for_kinds, f"Fields row {rownum} ({fid}) required_for_kinds")
         if required_for_kinds and required == "TRUE":
             errors.append(
                 f"Fields row {rownum} ({fid}): required_for_kinds has no effect when "
@@ -320,7 +303,11 @@ def build(xlsx_path: Path):
             )
 
         applies = norm_list(r.get("applies_to_kinds"))
-        check_kind_refs(applies, f"Fields row {rownum} ({fid})")
+
+        ui_style = str(r.get("ui_style", "")).strip() if r.get("ui_style") else ""
+        if ui_style not in VALID_UI_STYLES:
+            errors.append(f"Fields row {rownum} ({fid}): invalid ui_style '{ui_style}' "
+                           f"(must be blank or 'toggle')")
 
         try:
             options = parse_options(r.get("options"))
@@ -351,6 +338,7 @@ def build(xlsx_path: Path):
             "required_first_only": required_first_only,
             "required_for_kinds": required_for_kinds,
             "applies_to_kinds": applies,
+            "ui_style": ui_style,
             "show_if_raw": (str(r.get("show_if")).strip() if r.get("show_if") else ""),
             "help_text": str(r.get("help_text", "")).strip() if r.get("help_text") else "",
             "_row": rownum,
@@ -372,6 +360,43 @@ def build(xlsx_path: Path):
             raw, fields, errors, where=f"RepeatGroups ({gid})",
             self_id=gid, require_groupless_ref=True,
         )
+
+    # ---- KindAxes: field_ids whose OPTION VALUES become valid kind tags ----
+    kind_axis_fields = []
+    valid_kind_values = set()
+    for rownum, r in sheet_rows(wb["KindAxes"]):
+        fid = str(r.get("field_id", "")).strip()
+        if not fid:
+            errors.append(f"KindAxes row {rownum}: empty field_id")
+            continue
+        if fid not in fields:
+            errors.append(f"KindAxes row {rownum}: unknown field_id '{fid}'")
+            continue
+        if fields[fid]["type"] not in OPTION_TYPES:
+            errors.append(
+                f"KindAxes row {rownum} ({fid}): type '{fields[fid]['type']}' can't act as a "
+                f"kind axis (must be radio/select/checkbox_group)"
+            )
+            continue
+        kind_axis_fields.append(fid)
+        valid_kind_values.update(o["value"] for o in fields[fid]["options"])
+
+    def check_kind_refs(values, where):
+        for v in values:
+            if v != "all" and v not in valid_kind_values:
+                errors.append(
+                    f"{where}: references unknown kind value '{v}' "
+                    f"(not an option of any KindAxes field)"
+                )
+
+    # ---- Now validate every applies_to_kinds / required_for_kinds collected earlier ----
+    for sid, sec in sections.items():
+        check_kind_refs(sec["applies_to_kinds"], f"Sections row {sec['_row']} ({sid})")
+    for fid, f in fields.items():
+        check_kind_refs(f["applies_to_kinds"], f"Fields row {f['_row']} ({fid})")
+        check_kind_refs(f["required_for_kinds"], f"Fields row {f['_row']} ({fid}) required_for_kinds")
+    for gid, g in groups.items():
+        check_kind_refs(g["required_for_kinds"], f"RepeatGroups ({gid}) required_for_kinds")
 
     # ---- PDF_Layout (optional overrides; may target a field_id or a group_id) ----
     pdf_overrides = {}
@@ -406,6 +431,11 @@ def build(xlsx_path: Path):
         raise SpecError("\n".join(errors))
 
     # ---- Assemble ----
+    for sec in sections.values():
+        sec.pop("_row", None)
+    for g in groups.values():
+        g.pop("_row", None)
+
     for fid in field_order:
         f = fields[fid]
         f.pop("_row", None)
@@ -444,8 +474,8 @@ def build(xlsx_path: Path):
     ordered_sections = [sections[sid] for sid in sorted(sections, key=lambda s: sections[s]["order"])]
 
     return {
-        "version": 1,
-        "kinds": kinds,
+        "version": 2,
+        "kind_axis_fields": kind_axis_fields,
         "sections": ordered_sections,
     }
 
@@ -478,7 +508,7 @@ def main():
     n_fields = sum(count_fields(s["items"]) for s in schema["sections"])
     n_groups = sum(1 for s in schema["sections"] for it in s["items"] if it["kind"] == "group")
     print(f"OK: wrote {out_path}  "
-          f"({len(schema['kinds'])} kinds, {len(schema['sections'])} sections, "
+          f"({len(schema['kind_axis_fields'])} kind axes, {len(schema['sections'])} sections, "
           f"{n_fields} fields, {n_groups} repeat group(s))")
 
 
