@@ -88,6 +88,9 @@
   }
   .toggle-btn:hover { border-color: var(--header-blue); color: var(--header-blue); }
   .toggle-btn.selected { background: var(--header-blue); border-color: var(--header-blue); color: #fff; }
+  .toggle-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+  .toggle-btn:disabled:hover { border-color: var(--border); color: var(--muted); }
+  .toggle-field .disabled-note { font-size: 0.74rem; color: var(--muted); font-style: italic; margin-top: 6px; }
 
   /* ── Fields ───────────────────────────────────────────────────── */
   .field { margin-bottom: 18px; }
@@ -196,7 +199,7 @@
 
 <script type="application/json" id="schema-data">
 {
-  "version": 2,
+  "version": 3,
   "kind_axis_fields": [
     "review_kind",
     "readiness"
@@ -238,6 +241,7 @@
               "ui_style": "",
               "help_text": "",
               "show_if": null,
+              "disabled_if": null,
               "pdf": {
                 "page_break_before": false,
                 "pdf_format": "table_row"
@@ -260,6 +264,7 @@
               "ui_style": "",
               "help_text": "",
               "show_if": null,
+              "disabled_if": null,
               "pdf": {
                 "page_break_before": false,
                 "pdf_format": "table_row"
@@ -282,6 +287,7 @@
               "ui_style": "",
               "help_text": "",
               "show_if": null,
+              "disabled_if": null,
               "pdf": {
                 "page_break_before": false,
                 "pdf_format": "table_row"
@@ -307,42 +313,6 @@
         {
           "kind": "field",
           "order": 1.0,
-          "id": "review_kind",
-          "section_id": "submission_kind",
-          "group_id": null,
-          "label": "Kind of Review",
-          "type": "radio",
-          "options": [
-            {
-              "value": "traditional_review",
-              "label": "Traditional Review"
-            },
-            {
-              "value": "collaborative_peer_feedback",
-              "label": "Collaborative Peer Feedback"
-            },
-            {
-              "value": "classroom_testing",
-              "label": "Classroom Testing"
-            }
-          ],
-          "required": "TRUE",
-          "required_first_only": false,
-          "required_for_kinds": [],
-          "applies_to_kinds": [
-            "all"
-          ],
-          "ui_style": "toggle",
-          "help_text": "",
-          "show_if": null,
-          "pdf": {
-            "page_break_before": false,
-            "pdf_format": "checklist"
-          }
-        },
-        {
-          "kind": "field",
-          "order": 2.0,
           "id": "readiness",
           "section_id": "submission_kind",
           "group_id": null,
@@ -375,6 +345,48 @@
           "ui_style": "toggle",
           "help_text": "",
           "show_if": null,
+          "disabled_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "checklist"
+          }
+        },
+        {
+          "kind": "field",
+          "order": 2.0,
+          "id": "review_kind",
+          "section_id": "submission_kind",
+          "group_id": null,
+          "label": "Kind of Review",
+          "type": "radio",
+          "options": [
+            {
+              "value": "traditional_review",
+              "label": "Traditional Review"
+            },
+            {
+              "value": "collaborative_peer_feedback",
+              "label": "Collaborative Activity Feedback"
+            },
+            {
+              "value": "classroom_testing",
+              "label": "Classroom Testing"
+            }
+          ],
+          "required": "TRUE",
+          "required_first_only": false,
+          "required_for_kinds": [],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "ui_style": "toggle",
+          "help_text": "",
+          "show_if": null,
+          "disabled_if": {
+            "ref": "readiness",
+            "op": "==",
+            "value": "activity_idea"
+          },
           "pdf": {
             "page_break_before": false,
             "pdf_format": "checklist"
@@ -401,34 +413,12 @@
             "all"
           ],
           "ui_style": "",
-          "help_text": "",
+          "help_text": "The PAC serves authors with many goals. Some authors want PAC feedback and may not intend to post the activity on the PAC (e.g., activities for Endorsed Collections). Indicate your preference.",
           "show_if": null,
+          "disabled_if": null,
           "pdf": {
             "page_break_before": false,
             "pdf_format": "checklist"
-          }
-        },
-        {
-          "kind": "field",
-          "order": 4.0,
-          "id": "posting_goal_intro",
-          "section_id": "submission_kind",
-          "group_id": null,
-          "label": "The PAC serves authors with many goals. Some authors want PAC feedback and may not intend to post the activity on the PAC (e.g., activities for Endorsed Collections).",
-          "type": "info",
-          "options": [],
-          "required": "FALSE",
-          "required_first_only": false,
-          "required_for_kinds": [],
-          "applies_to_kinds": [
-            "all"
-          ],
-          "ui_style": "",
-          "help_text": "",
-          "show_if": null,
-          "pdf": {
-            "page_break_before": false,
-            "pdf_format": "paragraph"
           }
         }
       ]
@@ -464,6 +454,7 @@
           "ui_style": "",
           "help_text": "",
           "show_if": null,
+          "disabled_if": null,
           "pdf": {
             "page_break_before": true,
             "pdf_format": "checklist"
@@ -492,6 +483,7 @@
           "ui_style": "",
           "help_text": "",
           "show_if": null,
+          "disabled_if": null,
           "pdf": {
             "page_break_before": false,
             "pdf_format": "checklist"
@@ -524,6 +516,7 @@
           "ui_style": "",
           "help_text": "",
           "show_if": null,
+          "disabled_if": null,
           "pdf": {
             "page_break_before": false,
             "pdf_format": "checklist"
@@ -556,6 +549,7 @@
           "ui_style": "",
           "help_text": "",
           "show_if": null,
+          "disabled_if": null,
           "pdf": {
             "page_break_before": false,
             "pdf_format": "checklist"
@@ -588,6 +582,7 @@
           "ui_style": "",
           "help_text": "",
           "show_if": null,
+          "disabled_if": null,
           "pdf": {
             "page_break_before": false,
             "pdf_format": "checklist"
@@ -619,6 +614,7 @@
           "ui_style": "",
           "help_text": "",
           "show_if": null,
+          "disabled_if": null,
           "pdf": {
             "page_break_before": false,
             "pdf_format": "checklist"
@@ -654,6 +650,7 @@
           "ui_style": "",
           "help_text": "",
           "show_if": null,
+          "disabled_if": null,
           "pdf": {
             "page_break_before": false,
             "pdf_format": "table_row"
@@ -754,6 +751,7 @@
           "ui_style": "",
           "help_text": "",
           "show_if": null,
+          "disabled_if": null,
           "pdf": {
             "page_break_before": false,
             "pdf_format": "table_row"
@@ -777,6 +775,7 @@
           "ui_style": "",
           "help_text": "",
           "show_if": null,
+          "disabled_if": null,
           "pdf": {
             "page_break_before": false,
             "pdf_format": "table_row"
@@ -787,7 +786,7 @@
     {
       "id": "idea_context",
       "order": 5.0,
-      "title": "Classroom Context",
+      "title": "Activity Type and Classroom Context",
       "applies_to_kinds": [
         "all"
       ],
@@ -798,7 +797,7 @@
           "id": "idea_activity_type",
           "section_id": "idea_context",
           "group_id": null,
-          "label": "Activity Type (choose as many or as few as appropriate)",
+          "label": "Activity Type",
           "type": "checkbox_group",
           "options": [
             {
@@ -808,21 +807,9 @@
             {
               "value": "application",
               "label": "Application"
-            },
-            {
-              "value": "swh_lab",
-              "label": "Science Writing Heuristic Lab"
-            },
-            {
-              "value": "pogil_lab",
-              "label": "POGIL Lab"
-            },
-            {
-              "value": "other",
-              "label": "Other"
             }
           ],
-          "required": "FALSE",
+          "required": "TRUE",
           "required_first_only": false,
           "required_for_kinds": [],
           "applies_to_kinds": [
@@ -831,38 +818,10 @@
           "ui_style": "",
           "help_text": "",
           "show_if": null,
+          "disabled_if": null,
           "pdf": {
             "page_break_before": false,
             "pdf_format": "checklist"
-          }
-        },
-        {
-          "kind": "field",
-          "order": 2.0,
-          "id": "idea_activity_type_other",
-          "section_id": "idea_context",
-          "group_id": null,
-          "label": "If Other, please specify",
-          "type": "text",
-          "options": [],
-          "required": "IF_VISIBLE",
-          "required_first_only": false,
-          "required_for_kinds": [],
-          "applies_to_kinds": [
-            "all"
-          ],
-          "ui_style": "",
-          "help_text": "",
-          "show_if": {
-            "ref": "idea_activity_type",
-            "op": "all",
-            "values": [
-              "other"
-            ]
-          },
-          "pdf": {
-            "page_break_before": false,
-            "pdf_format": "table_row"
           }
         },
         {
@@ -951,7 +910,7 @@
               "label": "Statistics"
             }
           ],
-          "required": "FALSE",
+          "required": "TRUE",
           "required_first_only": false,
           "required_for_kinds": [],
           "applies_to_kinds": [
@@ -960,6 +919,7 @@
           "ui_style": "",
           "help_text": "",
           "show_if": null,
+          "disabled_if": null,
           "pdf": {
             "page_break_before": false,
             "pdf_format": "table_row"
@@ -983,7 +943,7 @@
               "label": "Classroom"
             }
           ],
-          "required": "FALSE",
+          "required": "TRUE",
           "required_first_only": false,
           "required_for_kinds": [],
           "applies_to_kinds": [
@@ -992,6 +952,7 @@
           "ui_style": "",
           "help_text": "",
           "show_if": null,
+          "disabled_if": null,
           "pdf": {
             "page_break_before": false,
             "pdf_format": "checklist"
@@ -1000,13 +961,13 @@
         {
           "kind": "field",
           "order": 5.0,
-          "id": "idea_course",
+          "id": "course",
           "section_id": "idea_context",
           "group_id": null,
           "label": "Course (e.g., Physical Chemistry, General Biology)",
           "type": "text",
           "options": [],
-          "required": "FALSE",
+          "required": "TRUE",
           "required_first_only": false,
           "required_for_kinds": [],
           "applies_to_kinds": [
@@ -1015,6 +976,7 @@
           "ui_style": "",
           "help_text": "",
           "show_if": null,
+          "disabled_if": null,
           "pdf": {
             "page_break_before": false,
             "pdf_format": "table_row"
@@ -1054,7 +1016,7 @@
               "label": "Graduate"
             }
           ],
-          "required": "FALSE",
+          "required": "TRUE",
           "required_first_only": false,
           "required_for_kinds": [],
           "applies_to_kinds": [
@@ -1063,130 +1025,10 @@
           "ui_style": "",
           "help_text": "",
           "show_if": null,
+          "disabled_if": null,
           "pdf": {
             "page_break_before": false,
             "pdf_format": "checklist"
-          }
-        }
-      ]
-    },
-    {
-      "id": "course_context",
-      "order": 6.0,
-      "title": "Course Context",
-      "applies_to_kinds": [
-        "activity_for_review",
-        "activity_for_testing",
-        "approved_activity"
-      ],
-      "items": [
-        {
-          "kind": "field",
-          "order": 1.0,
-          "id": "course_level",
-          "section_id": "course_context",
-          "group_id": null,
-          "label": "Course Level",
-          "type": "radio",
-          "options": [
-            {
-              "value": "high_school",
-              "label": "High school"
-            },
-            {
-              "value": "undergrad_intro",
-              "label": "Undergraduate course (introductory-level)"
-            },
-            {
-              "value": "undergrad_upper",
-              "label": "Undergraduate course (upper-level)"
-            },
-            {
-              "value": "grad",
-              "label": "Graduate course"
-            }
-          ],
-          "required": "TRUE",
-          "required_first_only": false,
-          "required_for_kinds": [],
-          "applies_to_kinds": [
-            "all"
-          ],
-          "ui_style": "",
-          "help_text": "",
-          "show_if": null,
-          "pdf": {
-            "page_break_before": false,
-            "pdf_format": "checklist"
-          }
-        },
-        {
-          "kind": "field",
-          "order": 2.0,
-          "id": "q1a",
-          "section_id": "course_context",
-          "group_id": null,
-          "label": "The student population for your course.",
-          "type": "textarea",
-          "options": [],
-          "required": "TRUE",
-          "required_first_only": false,
-          "required_for_kinds": [],
-          "applies_to_kinds": [
-            "all"
-          ],
-          "ui_style": "",
-          "help_text": "",
-          "show_if": null,
-          "pdf": {
-            "page_break_before": false,
-            "pdf_format": "paragraph"
-          }
-        },
-        {
-          "kind": "field",
-          "order": 3.0,
-          "id": "q1b",
-          "section_id": "course_context",
-          "group_id": null,
-          "label": "How the course fits into your departmental curriculum.",
-          "type": "textarea",
-          "options": [],
-          "required": "TRUE",
-          "required_first_only": false,
-          "required_for_kinds": [],
-          "applies_to_kinds": [
-            "all"
-          ],
-          "ui_style": "",
-          "help_text": "",
-          "show_if": null,
-          "pdf": {
-            "page_break_before": false,
-            "pdf_format": "paragraph"
-          }
-        },
-        {
-          "kind": "field",
-          "order": 4.0,
-          "id": "q1c",
-          "section_id": "course_context",
-          "group_id": null,
-          "label": "The course setting (room description, class size, frequency and length of meeting times, etc.).",
-          "type": "textarea",
-          "options": [],
-          "required": "TRUE",
-          "required_first_only": false,
-          "required_for_kinds": [],
-          "applies_to_kinds": [
-            "all"
-          ],
-          "ui_style": "",
-          "help_text": "",
-          "show_if": null,
-          "pdf": {
-            "page_break_before": false,
-            "pdf_format": "paragraph"
           }
         }
       ]
@@ -1228,6 +1070,7 @@
           "ui_style": "",
           "help_text": "",
           "show_if": null,
+          "disabled_if": null,
           "pdf": {
             "page_break_before": false,
             "pdf_format": "checklist"
@@ -1251,6 +1094,7 @@
           "ui_style": "",
           "help_text": "",
           "show_if": null,
+          "disabled_if": null,
           "pdf": {
             "page_break_before": false,
             "pdf_format": "paragraph"
@@ -1274,6 +1118,7 @@
           "ui_style": "",
           "help_text": "",
           "show_if": null,
+          "disabled_if": null,
           "pdf": {
             "page_break_before": false,
             "pdf_format": "paragraph"
@@ -1328,143 +1173,18 @@
       ]
     },
     {
-      "id": "implementation",
+      "id": "approval_evidence",
       "order": 9.0,
-      "title": "POGIL Classroom Implementation",
+      "title": "Classroom Testing & Revision",
       "applies_to_kinds": [
-        "activity_for_review",
-        "activity_for_testing",
         "approved_activity"
       ],
       "items": [
         {
           "kind": "field",
           "order": 1.0,
-          "id": "q8",
-          "section_id": "implementation",
-          "group_id": null,
-          "label": "Is this activity intended for use with the eight characteristics of the Basic POGIL Classroom Implementation? Check all that apply.",
-          "type": "checkbox_group",
-          "options": [
-            {
-              "value": "a",
-              "label": "Students are expected to work cooperatively, generally in groups of three or four."
-            },
-            {
-              "value": "b",
-              "label": "The activity is a POGIL activity, specifically designed for POGIL implementation."
-            },
-            {
-              "value": "c",
-              "label": "The students work on the activity during class time with a facilitator present."
-            },
-            {
-              "value": "d",
-              "label": "The dominant mode of instruction is not lecture or instructor-centered; the instructor serves predominantly as a facilitator of student learning."
-            },
-            {
-              "value": "e",
-              "label": "Students have assigned roles within their groups."
-            },
-            {
-              "value": "f",
-              "label": "The activity is designed to be the first introduction to the topic or specific content."
-            },
-            {
-              "value": "g",
-              "label": "The students are not expected to have worked on any part of the activity prior to class meeting time."
-            },
-            {
-              "value": "h",
-              "label": "Groups are expected to complete all of the Critical Thinking Questions (or equivalently designated questions) during class, but they are not expected to work on any of the Exercises or Problems."
-            }
-          ],
-          "required": "TRUE",
-          "required_first_only": false,
-          "required_for_kinds": [],
-          "applies_to_kinds": [
-            "all"
-          ],
-          "ui_style": "",
-          "help_text": "",
-          "show_if": null,
-          "pdf": {
-            "page_break_before": false,
-            "pdf_format": "checklist"
-          }
-        },
-        {
-          "kind": "field",
-          "order": 2.0,
-          "id": "q9",
-          "section_id": "implementation",
-          "group_id": null,
-          "label": "If you did not check boxes (a), (c), and (d) above, submit an implementation plan describing specifically how you implement this activity within your classroom.",
-          "type": "textarea",
-          "options": [],
-          "required": "IF_VISIBLE",
-          "required_first_only": false,
-          "required_for_kinds": [],
-          "applies_to_kinds": [
-            "all"
-          ],
-          "ui_style": "",
-          "help_text": "",
-          "show_if": {
-            "ref": "q8",
-            "op": "not_all",
-            "values": [
-              "a",
-              "c",
-              "d"
-            ]
-          },
-          "pdf": {
-            "page_break_before": false,
-            "pdf_format": "paragraph"
-          }
-        },
-        {
-          "kind": "field",
-          "order": 3.0,
-          "id": "q10",
-          "section_id": "implementation",
-          "group_id": null,
-          "label": "For those boxes above that you did not check, briefly describe how and/or why your activity is not implemented in that way.",
-          "type": "textarea",
-          "options": [],
-          "required": "IF_VISIBLE",
-          "required_first_only": false,
-          "required_for_kinds": [],
-          "applies_to_kinds": [
-            "all"
-          ],
-          "ui_style": "",
-          "help_text": "",
-          "show_if": {
-            "ref": "q8",
-            "op": "not_all",
-            "values": [
-              "a",
-              "b",
-              "c",
-              "d",
-              "e",
-              "f",
-              "g",
-              "h"
-            ]
-          },
-          "pdf": {
-            "page_break_before": false,
-            "pdf_format": "paragraph"
-          }
-        },
-        {
-          "kind": "field",
-          "order": 4.0,
           "id": "approval_testing_evidence",
-          "section_id": "implementation",
+          "section_id": "approval_evidence",
           "group_id": null,
           "label": "Provide evidence that this activity has been tested in the classroom, and describe how it has been revised based on that feedback.",
           "type": "textarea",
@@ -1473,11 +1193,12 @@
           "required_first_only": false,
           "required_for_kinds": [],
           "applies_to_kinds": [
-            "approved_activity"
+            "all"
           ],
           "ui_style": "",
           "help_text": "Include student performance data, instructor observations, or facilitator notes as applicable.",
           "show_if": null,
+          "disabled_if": null,
           "pdf": {
             "page_break_before": false,
             "pdf_format": "paragraph"
@@ -1524,6 +1245,7 @@
           "ui_style": "",
           "help_text": "",
           "show_if": null,
+          "disabled_if": null,
           "pdf": {
             "page_break_before": false,
             "pdf_format": "checklist"
@@ -1559,6 +1281,7 @@
               "ui_style": "",
               "help_text": "A short description or filename identifying the image.",
               "show_if": null,
+              "disabled_if": null,
               "pdf": {
                 "page_break_before": false,
                 "pdf_format": "table_row"
@@ -1590,6 +1313,7 @@
               "ui_style": "",
               "help_text": "",
               "show_if": null,
+              "disabled_if": null,
               "pdf": {
                 "page_break_before": false,
                 "pdf_format": "checklist"
@@ -1616,6 +1340,7 @@
                 "op": "==",
                 "value": "source"
               },
+              "disabled_if": null,
               "pdf": {
                 "page_break_before": false,
                 "pdf_format": "table_row"
@@ -1662,6 +1387,7 @@
           "ui_style": "",
           "help_text": "",
           "show_if": null,
+          "disabled_if": null,
           "pdf": {
             "page_break_before": false,
             "pdf_format": "paragraph"
@@ -1702,6 +1428,7 @@
           "ui_style": "",
           "help_text": "",
           "show_if": null,
+          "disabled_if": null,
           "pdf": {
             "page_break_before": false,
             "pdf_format": "checklist"
@@ -1732,6 +1459,7 @@
               "extensive"
             ]
           },
+          "disabled_if": null,
           "pdf": {
             "page_break_before": false,
             "pdf_format": "paragraph"
@@ -1767,6 +1495,7 @@
               "extensive"
             ]
           },
+          "disabled_if": null,
           "pdf": {
             "page_break_before": false,
             "pdf_format": "checklist"
@@ -1797,6 +1526,7 @@
               "extensive"
             ]
           },
+          "disabled_if": null,
           "pdf": {
             "page_break_before": false,
             "pdf_format": "paragraph"
@@ -1830,6 +1560,7 @@
           "ui_style": "",
           "help_text": "",
           "show_if": null,
+          "disabled_if": null,
           "pdf": {
             "page_break_before": false,
             "pdf_format": "table_row"
@@ -1863,6 +1594,7 @@
               "ui_style": "",
               "help_text": "",
               "show_if": null,
+              "disabled_if": null,
               "pdf": {
                 "page_break_before": false,
                 "pdf_format": "table_row"
@@ -1903,6 +1635,7 @@
               "ui_style": "",
               "help_text": "",
               "show_if": null,
+              "disabled_if": null,
               "pdf": {
                 "page_break_before": false,
                 "pdf_format": "table_row"
@@ -1933,6 +1666,7 @@
           "ui_style": "",
           "help_text": "250 words or less",
           "show_if": null,
+          "disabled_if": null,
           "pdf": {
             "page_break_before": false,
             "pdf_format": "paragraph"
@@ -2067,6 +1801,11 @@ function renderField(field, container, getVal, setVal, onChange) {
     });
     wrap.appendChild(tg);
     syncToggleSelected(tg, field, getVal);
+    if (field.disabled_if) {
+      const note = document.createElement('p');
+      note.className = 'disabled-note';
+      wrap.appendChild(note);
+    }
     container.appendChild(wrap);
     return wrap;
   }
@@ -2074,10 +1813,21 @@ function renderField(field, container, getVal, setVal, onChange) {
   wrap.appendChild(labelWithReq(field.label));
 
   const isSingleCheckbox = field.type === 'checkbox_group' && field.options.length === 1;
-  if (isSingleCheckbox) {
-    // A lone checkbox reads better as just "[ ] Item name" with no separate
-    // heading line above it repeating the same text.
+  const redundantLabel = isSingleCheckbox &&
+    field.options[0].label.trim().toLowerCase() === field.label.trim().toLowerCase();
+  if (redundantLabel) {
+    // A lone checkbox whose option text repeats the field label reads better as
+    // just "[ ] Item name" with no separate heading line above it.
     wrap.lastChild.remove();
+  }
+
+  // For radio/checkbox fields, help text reads as framing/instructions for the
+  // choice that follows, so it belongs above the options, not below them.
+  if (field.help_text && (field.type === 'radio' || field.type === 'checkbox_group')) {
+    const help = document.createElement('p');
+    help.className = 'help';
+    help.textContent = field.help_text;
+    wrap.appendChild(help);
   }
 
   if (field.type === 'radio' || field.type === 'checkbox_group') {
@@ -2142,7 +1892,7 @@ function renderField(field, container, getVal, setVal, onChange) {
     wrap.appendChild(input);
   }
 
-  if (field.help_text) {
+  if (field.help_text && field.type !== 'radio' && field.type !== 'checkbox_group') {
     const help = document.createElement('p');
     help.className = 'help';
     help.textContent = field.help_text;
@@ -2302,6 +2052,15 @@ function refreshAll() {
         el.classList.toggle('hidden', !visible2);
         const req = isRequired(item, kset, 0, visible2);
         updateReqMark(el, req);
+
+        if (item.disabled_if) {
+          const isDisabled = evalShowIf(item.disabled_if, getTopValue);
+          el.querySelectorAll('.toggle-btn, input, textarea, select').forEach(ctrl => {
+            ctrl.disabled = isDisabled;
+          });
+          const note = el.querySelector('.disabled-note');
+          if (note) note.textContent = isDisabled ? 'Activity ideas are reviewed by PAC editors only.' : '';
+        }
       } else {
         const gwrap = sec.querySelector('.group-wrap[data-group-id="' + item.id + '"]');
         if (!gwrap) return;
