@@ -1,0 +1,652 @@
+{
+  "version": 1,
+  "kinds": [
+    {
+      "id": "learning_cycle",
+      "display_name": "Learning Cycle Activity",
+      "description": "Primarily designed to develop content knowledge through a Learning Cycle structure."
+    },
+    {
+      "id": "application",
+      "display_name": "Application Activity",
+      "description": "Primarily designed to deepen or refine understanding through application of process skills."
+    }
+  ],
+  "sections": [
+    {
+      "id": "authors",
+      "order": 1.0,
+      "title": "Authors & Activity Identification",
+      "applies_to_kinds": [
+        "all"
+      ],
+      "fields": [
+        {
+          "id": "corr_name",
+          "section_id": "authors",
+          "order": 1.0,
+          "label": "Corresponding Author \u2014 Name",
+          "type": "text",
+          "options": [],
+          "required": "TRUE",
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "table_row"
+          }
+        },
+        {
+          "id": "corr_email",
+          "section_id": "authors",
+          "order": 2.0,
+          "label": "Corresponding Author \u2014 Email",
+          "type": "email",
+          "options": [],
+          "required": "TRUE",
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "table_row"
+          }
+        },
+        {
+          "id": "corr_phone",
+          "section_id": "authors",
+          "order": 3.0,
+          "label": "Corresponding Author \u2014 Phone",
+          "type": "tel",
+          "options": [],
+          "required": "FALSE",
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "table_row"
+          }
+        },
+        {
+          "id": "second_name",
+          "section_id": "authors",
+          "order": 4.0,
+          "label": "Second Author \u2014 Name",
+          "type": "text",
+          "options": [],
+          "required": "FALSE",
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "table_row"
+          }
+        },
+        {
+          "id": "second_email",
+          "section_id": "authors",
+          "order": 5.0,
+          "label": "Second Author \u2014 Email",
+          "type": "email",
+          "options": [],
+          "required": "FALSE",
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "table_row"
+          }
+        },
+        {
+          "id": "second_phone",
+          "section_id": "authors",
+          "order": 6.0,
+          "label": "Second Author \u2014 Phone",
+          "type": "tel",
+          "options": [],
+          "required": "FALSE",
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "table_row"
+          }
+        },
+        {
+          "id": "title_activity",
+          "section_id": "authors",
+          "order": 7.0,
+          "label": "Title of Activity",
+          "type": "text",
+          "options": [],
+          "required": "TRUE",
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "table_row"
+          }
+        },
+        {
+          "id": "discipline_topic",
+          "section_id": "authors",
+          "order": 8.0,
+          "label": "Discipline & Topic",
+          "type": "text",
+          "options": [],
+          "required": "TRUE",
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "table_row"
+          }
+        }
+      ]
+    },
+    {
+      "id": "course_context",
+      "order": 2.0,
+      "title": "Course Context",
+      "applies_to_kinds": [
+        "all"
+      ],
+      "fields": [
+        {
+          "id": "q1a",
+          "section_id": "course_context",
+          "order": 1.0,
+          "label": "The student population for your course.",
+          "type": "textarea",
+          "options": [],
+          "required": "TRUE",
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "paragraph"
+          }
+        },
+        {
+          "id": "q1b",
+          "section_id": "course_context",
+          "order": 2.0,
+          "label": "How the course fits into your departmental curriculum.",
+          "type": "textarea",
+          "options": [],
+          "required": "TRUE",
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "paragraph"
+          }
+        },
+        {
+          "id": "q1c",
+          "section_id": "course_context",
+          "order": 3.0,
+          "label": "The course setting (room description, class size, frequency and length of meeting times, etc.).",
+          "type": "textarea",
+          "options": [],
+          "required": "TRUE",
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "paragraph"
+          }
+        }
+      ]
+    },
+    {
+      "id": "student_background",
+      "order": 3.0,
+      "title": "Student Background",
+      "applies_to_kinds": [
+        "all"
+      ],
+      "fields": [
+        {
+          "id": "q2",
+          "section_id": "student_background",
+          "order": 1.0,
+          "label": "Have students used and/or reviewed this activity?",
+          "type": "radio",
+          "options": [
+            {
+              "value": "yes",
+              "label": "Yes"
+            },
+            {
+              "value": "no",
+              "label": "No"
+            }
+          ],
+          "required": "TRUE",
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": true,
+            "pdf_format": "checklist"
+          }
+        },
+        {
+          "id": "q3a",
+          "section_id": "student_background",
+          "order": 2.0,
+          "label": "Key knowledge students should have as a prerequisite.",
+          "type": "textarea",
+          "options": [],
+          "required": "TRUE",
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "paragraph"
+          }
+        },
+        {
+          "id": "q3b",
+          "section_id": "student_background",
+          "order": 3.0,
+          "label": "Knowledge students are not expected to have prior to activity.",
+          "type": "textarea",
+          "options": [],
+          "required": "TRUE",
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "paragraph"
+          }
+        }
+      ]
+    },
+    {
+      "id": "activity_purpose",
+      "order": 4.0,
+      "title": "Activity Purpose",
+      "applies_to_kinds": [
+        "all"
+      ],
+      "fields": [
+        {
+          "id": "q4",
+          "section_id": "activity_purpose",
+          "order": 1.0,
+          "label": "This activity is primarily designed:",
+          "type": "radio",
+          "options": [
+            {
+              "value": "a",
+              "label": "To develop content knowledge through a Learning Cycle structure."
+            },
+            {
+              "value": "b",
+              "label": "To deepen or refine understanding through application of relevant process skills."
+            },
+            {
+              "value": "c",
+              "label": "For a different purpose than a or b."
+            }
+          ],
+          "required": "TRUE",
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "For assistance, refer to the Guide for POGIL Activity Submission.",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": true,
+            "pdf_format": "checklist"
+          }
+        },
+        {
+          "id": "q5",
+          "section_id": "activity_purpose",
+          "order": 2.0,
+          "label": "If you checked (c), provide details explaining the primary purpose of the activity.",
+          "type": "textarea",
+          "options": [],
+          "required": "IF_VISIBLE",
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": {
+            "ref": "q4",
+            "op": "==",
+            "value": "c"
+          },
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "paragraph"
+          }
+        }
+      ]
+    },
+    {
+      "id": "objectives_goals",
+      "order": 5.0,
+      "title": "Learning Objectives & Process Skill Goals",
+      "applies_to_kinds": [
+        "all"
+      ],
+      "fields": [
+        {
+          "id": "q6a",
+          "section_id": "objectives_goals",
+          "order": 1.0,
+          "label": "Content Learning Objective (a)",
+          "type": "text",
+          "options": [],
+          "required": "TRUE",
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "No more than three key learning objectives.",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "table_row"
+          }
+        },
+        {
+          "id": "q6b",
+          "section_id": "objectives_goals",
+          "order": 2.0,
+          "label": "Content Learning Objective (b)",
+          "type": "text",
+          "options": [],
+          "required": "FALSE",
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "table_row"
+          }
+        },
+        {
+          "id": "q6c",
+          "section_id": "objectives_goals",
+          "order": 3.0,
+          "label": "Content Learning Objective (c)",
+          "type": "text",
+          "options": [],
+          "required": "FALSE",
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "table_row"
+          }
+        },
+        {
+          "id": "q7a",
+          "section_id": "objectives_goals",
+          "order": 4.0,
+          "label": "Process Skill Goal (a)",
+          "type": "text",
+          "options": [],
+          "required": "TRUE",
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "One or two process skills.",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "table_row"
+          }
+        },
+        {
+          "id": "q7b",
+          "section_id": "objectives_goals",
+          "order": 5.0,
+          "label": "Process Skill Goal (b)",
+          "type": "text",
+          "options": [],
+          "required": "FALSE",
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "table_row"
+          }
+        }
+      ]
+    },
+    {
+      "id": "implementation",
+      "order": 6.0,
+      "title": "POGIL Classroom Implementation",
+      "applies_to_kinds": [
+        "all"
+      ],
+      "fields": [
+        {
+          "id": "q8",
+          "section_id": "implementation",
+          "order": 1.0,
+          "label": "Is this activity intended for use with the eight characteristics of the Basic POGIL Classroom Implementation? Check all that apply.",
+          "type": "checkbox_group",
+          "options": [
+            {
+              "value": "a",
+              "label": "Students are expected to work cooperatively, generally in groups of three or four."
+            },
+            {
+              "value": "b",
+              "label": "The activity is a POGIL activity, specifically designed for POGIL implementation."
+            },
+            {
+              "value": "c",
+              "label": "The students work on the activity during class time with a facilitator present."
+            },
+            {
+              "value": "d",
+              "label": "The dominant mode of instruction is not lecture or instructor-centered; the instructor serves predominantly as a facilitator of student learning."
+            },
+            {
+              "value": "e",
+              "label": "Students have assigned roles within their groups."
+            },
+            {
+              "value": "f",
+              "label": "The activity is designed to be the first introduction to the topic or specific content."
+            },
+            {
+              "value": "g",
+              "label": "The students are not expected to have worked on any part of the activity prior to class meeting time."
+            },
+            {
+              "value": "h",
+              "label": "Groups are expected to complete all of the Critical Thinking Questions (or equivalently designated questions) during class, but they are not expected to work on any of the Exercises or Problems."
+            }
+          ],
+          "required": "TRUE",
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "checklist"
+          }
+        },
+        {
+          "id": "q9",
+          "section_id": "implementation",
+          "order": 2.0,
+          "label": "If you did not check boxes (a), (c), and (d) above, submit an implementation plan describing specifically how you implement this activity within your classroom.",
+          "type": "textarea",
+          "options": [],
+          "required": "IF_VISIBLE",
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": {
+            "ref": "q8",
+            "op": "not_all",
+            "values": [
+              "a",
+              "c",
+              "d"
+            ]
+          },
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "paragraph"
+          }
+        },
+        {
+          "id": "q10",
+          "section_id": "implementation",
+          "order": 3.0,
+          "label": "For those boxes above that you did not check, briefly describe how and/or why your activity is not implemented in that way.",
+          "type": "textarea",
+          "options": [],
+          "required": "IF_VISIBLE",
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": {
+            "ref": "q8",
+            "op": "not_all",
+            "values": [
+              "a",
+              "b",
+              "c",
+              "d",
+              "e",
+              "f",
+              "g",
+              "h"
+            ]
+          },
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "paragraph"
+          }
+        }
+      ]
+    },
+    {
+      "id": "supplemental",
+      "order": 7.0,
+      "title": "Supplemental Materials Checklist",
+      "applies_to_kinds": [
+        "all"
+      ],
+      "fields": [
+        {
+          "id": "supp_note",
+          "section_id": "supplemental",
+          "order": 1.0,
+          "label": "If there are special aspects of implementation important to accomplishing the content or process goals of your activity, provide an Implementation Plan describing them. Please include a set of answers with your submission so writing consultants understand the expected level of student response.",
+          "type": "info",
+          "options": [],
+          "required": "FALSE",
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "paragraph"
+          }
+        },
+        {
+          "id": "checklist",
+          "section_id": "supplemental",
+          "order": 2.0,
+          "label": "Check List for Submission",
+          "type": "checkbox_group",
+          "options": [
+            {
+              "value": "classroom_activity",
+              "label": "Classroom Activity"
+            },
+            {
+              "value": "submission_form",
+              "label": "POGIL Activity Submission Form (this form)"
+            },
+            {
+              "value": "answer_key",
+              "label": "Activity Answer Key"
+            },
+            {
+              "value": "implementation_plan",
+              "label": "Implementation Plan (optional; see above and question 9)"
+            }
+          ],
+          "required": "FALSE",
+          "applies_to_kinds": [
+            "all"
+          ],
+          "help_text": "",
+          "show_if": null,
+          "pdf": {
+            "page_break_before": true,
+            "pdf_format": "checklist"
+          }
+        }
+      ]
+    }
+  ]
+}
