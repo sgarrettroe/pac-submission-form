@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PAC Activity Submission Form</title>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
 
@@ -146,6 +148,25 @@
   }
   .btn-outline:hover { border-color: var(--header-blue); color: var(--header-blue); }
 
+  .btn-primary {
+    background: var(--header-blue); color: #fff; border: none;
+    font-family: 'Open Sans', sans-serif; font-size: 0.9rem; font-weight: 700;
+    padding: 12px 28px; cursor: pointer; border-radius: 3px; transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover:not(:disabled) { background: #245a7a; transform: translateY(-1px); box-shadow: 0 3px 10px rgba(30,58,95,0.18); }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+
+  #pdf-actions { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border); }
+  #pdf-status {
+    margin-top: 12px; padding: 10px 14px; font-size: 0.82rem; display: none;
+    border-left: 4px solid var(--header-blue); background: rgba(45,106,143,0.06);
+    border-radius: 0 3px 3px 0; color: var(--navy);
+  }
+  #pdf-status.visible { display: block; }
+  #pdf-status.error { border-color: var(--danger); background: var(--danger-bg); color: var(--danger); }
+  #pdf-status.success { border-color: var(--success); background: var(--success-bg); color: var(--success); }
+
   /* ── Debug / footer ───────────────────────────────────────────── */
   details.debug { margin-top: 8px; }
   details.debug summary { cursor: pointer; font-size: 0.75rem; color: var(--muted); }
@@ -182,6 +203,11 @@
   </div>
 
   <div id="formRoot"></div>
+
+  <div id="pdf-actions">
+    <button id="generatePdfBtn" type="button" class="btn-primary">Generate PDF</button>
+    <div id="pdf-status"></div>
+  </div>
 
   <details class="debug">
     <summary>Debug: current answers (not part of the real form)</summary>
@@ -2115,6 +2141,192 @@ function updateReqMark(fieldEl, required) {
     star.remove();
   }
 }
+
+// ---------- PDF generation ----------
+// Walks SCHEMA the same way refreshAll() does — same kindSetMatches/evalShowIf
+// checks — so the generated PDF always matches what's currently visible on screen.
+
+function wrapText(font, text, size, maxWidth) {
+  const words = String(text).split(/\s+/);
+  const lines = [];
+  let current = '';
+  for (const w of words) {
+    const test = current ? current + ' ' + w : w;
+    if (font.widthOfTextAtSize(test, size) > maxWidth && current) {
+      lines.push(current);
+      current = w;
+    } else {
+      current = test;
+    }
+  }
+  if (current) lines.push(current);
+  return lines.length ? lines : [''];
+}
+
+async function generatePdf() {
+  const statusEl = document.getElementById('pdf-status');
+  const btn = document.getElementById('generatePdfBtn');
+  statusEl.className = 'visible';
+  statusEl.textContent = 'Generating PDF…';
+  btn.disabled = true;
+
+  try {
+    const { PDFDocument, StandardFonts, rgb } = PDFLib;
+    const PAGE_W = 612, PAGE_H = 792, MARGIN = 54;
+    const CONTENT_W = PAGE_W - MARGIN * 2;
+    const COLOR_HEADER = rgb(0.176, 0.416, 0.561);
+    const COLOR_NAVY = rgb(0.118, 0.227, 0.373);
+    const COLOR_TEXT = rgb(0.17, 0.17, 0.17);
+    const COLOR_MUTED = rgb(0.42, 0.486, 0.576);
+
+    const pdfDoc = await PDFDocument.create();
+    const fontRegular = await pdfDoc.embedFont(StandardFonts.Helvetica);
+    const fontBold = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
+
+    let page, y;
+    function addPage() {
+      page = pdfDoc.addPage([PAGE_W, PAGE_H]);
+      y = PAGE_H - MARGIN;
+    }
+    function ensureSpace(h) {
+      if (y - h < MARGIN) addPage();
+    }
+    function drawText(text, opts) {
+      opts = opts || {};
+      const font = opts.font || fontRegular;
+      const size = opts.size || 10;
+      const color = opts.color || COLOR_TEXT;
+      const indent = opts.indent || 0;
+      const lineGap = opts.lineGap != null ? opts.lineGap : 4;
+      const lines = wrapText(font, text, size, CONTENT_W - indent);
+      lines.forEach(line => {
+        ensureSpace(size + lineGap);
+        page.drawText(line, { x: MARGIN + indent, y, size, font, color });
+        y -= size + lineGap;
+      });
+    }
+    function drawSectionHeading(text) {
+      ensureSpace(30);
+      y -= 6;
+      page.drawText(text.toUpperCase(), { x: MARGIN, y, size: 12, font: fontBold, color: COLOR_HEADER });
+      y -= 5;
+      page.drawLine({ start: { x: MARGIN, y }, end: { x: PAGE_W - MARGIN, y }, thickness: 1.2, color: COLOR_HEADER });
+      y -= 14;
+    }
+    function missing() { return '(not provided)'; }
+
+    function drawFieldBlock(field, getVal) {
+      if (field.type === 'info') {
+        drawText(field.label, { size: 9, color: COLOR_MUTED });
+        y -= 4;
+        return;
+      }
+      const val = getVal();
+
+      if (field.type === 'checkbox_group' && field.options.length === 1) {
+        const checked = Array.isArray(val) && val.includes(field.options[0].value);
+        const redundant = field.options[0].label.trim().toLowerCase() === field.label.trim().toLowerCase();
+        if (!redundant) drawText(field.label, { font: fontBold, size: 10, color: COLOR_NAVY });
+        drawText((checked ? '[x] ' : '[ ] ') + field.options[0].label, { size: 10 });
+        y -= 4;
+        return;
+      }
+
+      drawText(field.label, { font: fontBold, size: 10, color: COLOR_NAVY });
+      if (field.type === 'checkbox_group') {
+        const arr = Array.isArray(val) ? val : [];
+        field.options.forEach(opt => {
+          drawText((arr.includes(opt.value) ? '[x] ' : '[ ] ') + opt.label, { size: 10, indent: 12 });
+        });
+      } else if (field.type === 'radio' || field.type === 'select') {
+        const opt = field.options.find(o => o.value === val);
+        drawText(opt ? opt.label : missing(), { size: 10, indent: 12, color: opt ? COLOR_TEXT : COLOR_MUTED });
+      } else {
+        const hasVal = val !== undefined && val !== null && String(val).trim() !== '';
+        drawText(hasVal ? String(val) : missing(), { size: 10, indent: 12, color: hasVal ? COLOR_TEXT : COLOR_MUTED });
+      }
+      y -= 6;
+    }
+
+    addPage();
+    page.drawText('POGIL Activity Clearinghouse', { x: MARGIN, y, size: 10, font: fontBold, color: COLOR_HEADER });
+    y -= 18;
+    page.drawText('Activity Submission Form', { x: MARGIN, y, size: 18, font: fontBold, color: COLOR_NAVY });
+    y -= 14;
+    drawText('Generated ' + new Date().toLocaleString(), { size: 8, color: COLOR_MUTED });
+    y -= 8;
+
+    const kset = activeKindSet();
+
+    SCHEMA.sections.forEach(section => {
+      if (!kindSetMatches(section.applies_to_kinds, kset)) return;
+
+      const visibleItems = section.items.filter(item => {
+        if (item.kind === 'field') {
+          return kindSetMatches(item.applies_to_kinds, kset) && evalShowIf(item.show_if, getTopValue);
+        }
+        return evalShowIf(item.show_if, getTopValue);
+      });
+      if (!visibleItems.length) return;
+
+      // A page_break_before on the FIRST visible item means "start this whole
+      // section fresh" — do the break before the heading, not after, so the
+      // heading never gets stranded alone at the bottom of the prior page.
+      const firstItemBreak = visibleItems[0].pdf && visibleItems[0].pdf.page_break_before;
+      if (firstItemBreak) addPage();
+      drawSectionHeading(section.title);
+
+      visibleItems.forEach((item, idx) => {
+        if (idx > 0 && item.pdf && item.pdf.page_break_before) addPage();
+
+        if (item.kind === 'field') {
+          drawFieldBlock(item, () => getTopValue(item.id));
+        } else {
+          const instances = groupInstances[item.id] || [];
+          if (!instances.length) {
+            drawText('(none added)', { size: 9, color: COLOR_MUTED, indent: 12 });
+            y -= 4;
+          }
+          instances.forEach((inst, idx) => {
+            drawText(item.item_label + ' ' + (idx + 1), { font: fontBold, size: 10, color: COLOR_HEADER });
+            item.fields.forEach(f => {
+              if (!evalShowIf(f.show_if, (ref) => getInstanceValue(item.id, idx, ref))) return;
+              drawFieldBlock(f, () => getInstanceValue(item.id, idx, f.id));
+            });
+            y -= 4;
+          });
+        }
+      });
+      y -= 8;
+    });
+
+    const bytes = await pdfDoc.save();
+    const blob = new Blob([bytes], { type: 'application/pdf' });
+    const url = URL.createObjectURL(blob);
+
+    const titleVal = getTopValue('title_activity') || getTopValue('idea_title') || 'activity-submission';
+    const slug = String(titleVal).trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || 'form';
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'pac-submission-' + slug + '.pdf';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+
+    statusEl.className = 'visible success';
+    statusEl.textContent = 'PDF generated and downloaded.';
+  } catch (err) {
+    statusEl.className = 'visible error';
+    statusEl.textContent = 'Could not generate PDF: ' + err.message;
+    console.error(err);
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+document.getElementById('generatePdfBtn').addEventListener('click', generatePdf);
 
 buildPage();
 refreshAll();
