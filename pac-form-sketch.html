@@ -60,6 +60,16 @@
   .page-title h2 { font-size: 1.4rem; font-weight: 700; color: var(--navy); }
   .page-title p  { font-size: 0.85rem; color: var(--muted); margin-top: 4px; }
 
+  .upload-bar {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+    padding: 11px 16px; background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 3px; flex-wrap: wrap;
+  }
+  .upload-bar .upload-label { font-size: 0.8rem; color: var(--muted); flex: 1; min-width: 180px; }
+  #upload-status { font-size: 0.78rem; font-weight: 600; }
+  #upload-status.error { color: var(--danger); }
+  #upload-status.success { color: var(--success); }
+
   /* ── Status banner (matches galley tool's #galley-confirm) ──── */
   #kind-confirm {
     display: flex; align-items: center; gap: 10px; background: var(--surface2);
@@ -192,6 +202,13 @@
 
 <div class="app">
 
+  <div class="upload-bar">
+    <span class="upload-label">Already have a submission saved as JSON? Load it to continue where you left off.</span>
+    <button type="button" class="btn-outline" id="loadPriorBtn">Load Prior Submission</button>
+    <input type="file" id="jsonUploadInput" accept="application/json,.json" style="display:none">
+    <span id="upload-status"></span>
+  </div>
+
   <div class="page-title">
     <h2>Activity Submission Form</h2>
     <p>Complete the Submission Kind section below, then the rest of the form adapts automatically.</p>
@@ -205,7 +222,7 @@
   <div id="formRoot"></div>
 
   <div id="pdf-actions">
-    <button id="generatePdfBtn" type="button" class="btn-primary">Generate PDF</button>
+    <button id="generatePdfBtn" type="button" class="btn-primary">Generate PDF + JSON</button>
     <div id="pdf-status"></div>
   </div>
 
@@ -649,22 +666,20 @@
       ]
     },
     {
-      "id": "activity_identification",
+      "id": "activity_title_objectives",
       "order": 4.0,
-      "title": "Activity Identification",
+      "title": "Activity Title and Learning Objectives",
       "applies_to_kinds": [
-        "activity_for_review",
-        "activity_for_testing",
-        "approved_activity"
+        "all"
       ],
       "items": [
         {
           "kind": "field",
           "order": 1.0,
-          "id": "title_activity",
-          "section_id": "activity_identification",
+          "id": "title",
+          "section_id": "activity_title_objectives",
           "group_id": null,
-          "label": "Title of Activity",
+          "label": "Title",
           "type": "text",
           "options": [],
           "required": "TRUE",
@@ -683,134 +698,91 @@
           }
         },
         {
-          "kind": "field",
+          "kind": "group",
           "order": 2.0,
-          "id": "discipline",
-          "section_id": "activity_identification",
-          "group_id": null,
-          "label": "Discipline",
-          "type": "select",
-          "options": [
+          "id": "content_objectives_group",
+          "section_id": "activity_title_objectives",
+          "item_label": "Content Objective",
+          "min_instances": 1,
+          "max_instances": null,
+          "add_button_text": "+ Add content objective",
+          "required_for_kinds": [],
+          "fields": [
             {
-              "value": "anatomy_physiology",
-              "label": "Anatomy & Physiology"
-            },
-            {
-              "value": "astronomy",
-              "label": "Astronomy"
-            },
-            {
-              "value": "biology",
-              "label": "Biology"
-            },
-            {
-              "value": "chemistry",
-              "label": "Chemistry"
-            },
-            {
-              "value": "computer_science",
-              "label": "Computer Science"
-            },
-            {
-              "value": "economics",
-              "label": "Economics"
-            },
-            {
-              "value": "environmental_science",
-              "label": "Environmental Science"
-            },
-            {
-              "value": "exercise_science",
-              "label": "Exercise Science"
-            },
-            {
-              "value": "fine_arts",
-              "label": "Fine Arts"
-            },
-            {
-              "value": "general",
-              "label": "General"
-            },
-            {
-              "value": "general_education",
-              "label": "General Education"
-            },
-            {
-              "value": "general_science",
-              "label": "General Science"
-            },
-            {
-              "value": "language_arts",
-              "label": "Language Arts"
-            },
-            {
-              "value": "mathematics",
-              "label": "Mathematics"
-            },
-            {
-              "value": "music",
-              "label": "Music"
-            },
-            {
-              "value": "neuroscience",
-              "label": "Neuroscience"
-            },
-            {
-              "value": "physics",
-              "label": "Physics"
-            },
-            {
-              "value": "psychology",
-              "label": "Psychology"
-            },
-            {
-              "value": "statistics",
-              "label": "Statistics"
+              "id": "objective_text",
+              "section_id": "activity_title_objectives",
+              "group_id": "content_objectives_group",
+              "order": 1.0,
+              "label": "Content Objective",
+              "type": "text",
+              "options": [],
+              "required": "TRUE",
+              "required_first_only": true,
+              "required_for_kinds": [],
+              "applies_to_kinds": [
+                "all"
+              ],
+              "ui_style": "",
+              "help_text": "",
+              "show_if": null,
+              "disabled_if": null,
+              "pdf": {
+                "page_break_before": false,
+                "pdf_format": "table_row"
+              }
             }
           ],
-          "required": "TRUE",
-          "required_first_only": false,
-          "required_for_kinds": [],
-          "applies_to_kinds": [
-            "all"
-          ],
-          "ui_style": "",
-          "help_text": "",
           "show_if": null,
-          "disabled_if": null,
           "pdf": {
             "page_break_before": false,
-            "pdf_format": "table_row"
+            "pdf_format": "repeated_block"
           }
         },
         {
-          "kind": "field",
+          "kind": "group",
           "order": 3.0,
-          "id": "topic",
-          "section_id": "activity_identification",
-          "group_id": null,
-          "label": "Topic",
-          "type": "text",
-          "options": [],
-          "required": "TRUE",
-          "required_first_only": false,
+          "id": "process_skills_group",
+          "section_id": "activity_title_objectives",
+          "item_label": "Process Objective",
+          "min_instances": 1,
+          "max_instances": null,
+          "add_button_text": "+ Add process objective",
           "required_for_kinds": [],
-          "applies_to_kinds": [
-            "all"
+          "fields": [
+            {
+              "id": "skill_text",
+              "section_id": "activity_title_objectives",
+              "group_id": "process_skills_group",
+              "order": 1.0,
+              "label": "Process Objective",
+              "type": "text",
+              "options": [],
+              "required": "TRUE",
+              "required_first_only": true,
+              "required_for_kinds": [],
+              "applies_to_kinds": [
+                "all"
+              ],
+              "ui_style": "",
+              "help_text": "",
+              "show_if": null,
+              "disabled_if": null,
+              "pdf": {
+                "page_break_before": false,
+                "pdf_format": "table_row"
+              }
+            }
           ],
-          "ui_style": "",
-          "help_text": "",
           "show_if": null,
-          "disabled_if": null,
           "pdf": {
             "page_break_before": false,
-            "pdf_format": "table_row"
+            "pdf_format": "repeated_block"
           }
         }
       ]
     },
     {
-      "id": "idea_context",
+      "id": "classroom_context",
       "order": 5.0,
       "title": "Activity Type and Classroom Context",
       "applies_to_kinds": [
@@ -820,8 +792,8 @@
         {
           "kind": "field",
           "order": 1.0,
-          "id": "idea_activity_type",
-          "section_id": "idea_context",
+          "id": "activity_type",
+          "section_id": "classroom_context",
           "group_id": null,
           "label": "Activity Type",
           "type": "checkbox_group",
@@ -853,8 +825,8 @@
         {
           "kind": "field",
           "order": 3.0,
-          "id": "idea_discipline",
-          "section_id": "idea_context",
+          "id": "discipline",
+          "section_id": "classroom_context",
           "group_id": null,
           "label": "Discipline",
           "type": "select",
@@ -954,8 +926,8 @@
         {
           "kind": "field",
           "order": 4.0,
-          "id": "idea_setting",
-          "section_id": "idea_context",
+          "id": "setting",
+          "section_id": "classroom_context",
           "group_id": null,
           "label": "Setting",
           "type": "checkbox_group",
@@ -988,7 +960,7 @@
           "kind": "field",
           "order": 5.0,
           "id": "course",
-          "section_id": "idea_context",
+          "section_id": "classroom_context",
           "group_id": null,
           "label": "Course (e.g., Physical Chemistry, General Biology)",
           "type": "text",
@@ -1011,8 +983,8 @@
         {
           "kind": "field",
           "order": 6.0,
-          "id": "idea_level",
-          "section_id": "idea_context",
+          "id": "level",
+          "section_id": "classroom_context",
           "group_id": null,
           "label": "Level",
           "type": "checkbox_group",
@@ -1055,6 +1027,40 @@
           "pdf": {
             "page_break_before": false,
             "pdf_format": "checklist"
+          }
+        }
+      ]
+    },
+    {
+      "id": "activity_description",
+      "order": 6.0,
+      "title": "Activity Description",
+      "applies_to_kinds": [
+        "activity_idea"
+      ],
+      "items": [
+        {
+          "kind": "field",
+          "order": 1.0,
+          "id": "idea_description",
+          "section_id": "activity_description",
+          "group_id": null,
+          "label": "Description",
+          "type": "textarea",
+          "options": [],
+          "required": "TRUE",
+          "required_first_only": false,
+          "required_for_kinds": [],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "ui_style": "",
+          "help_text": "250 words or less",
+          "show_if": null,
+          "disabled_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "paragraph"
           }
         }
       ]
@@ -1148,52 +1154,6 @@
           "pdf": {
             "page_break_before": false,
             "pdf_format": "paragraph"
-          }
-        }
-      ]
-    },
-    {
-      "id": "objectives_goals",
-      "order": 8.0,
-      "title": "Learning Objectives & Process Skill Goals",
-      "applies_to_kinds": [
-        "activity_for_review",
-        "activity_for_testing",
-        "approved_activity"
-      ],
-      "items": [
-        {
-          "kind": "group",
-          "order": 1.0,
-          "id": "content_objectives_group",
-          "section_id": "objectives_goals",
-          "item_label": "Learning Objective",
-          "min_instances": 1,
-          "max_instances": null,
-          "add_button_text": "+ Add learning objective",
-          "required_for_kinds": [],
-          "fields": [],
-          "show_if": null,
-          "pdf": {
-            "page_break_before": false,
-            "pdf_format": "repeated_block"
-          }
-        },
-        {
-          "kind": "group",
-          "order": 2.0,
-          "id": "process_skills_group",
-          "section_id": "objectives_goals",
-          "item_label": "Process Skill Goal",
-          "min_instances": 1,
-          "max_instances": null,
-          "add_button_text": "+ Add process skill goal",
-          "required_for_kinds": [],
-          "fields": [],
-          "show_if": null,
-          "pdf": {
-            "page_break_before": false,
-            "pdf_format": "repeated_block"
           }
         }
       ]
@@ -1559,146 +1519,6 @@
           }
         }
       ]
-    },
-    {
-      "id": "idea_details",
-      "order": 12.0,
-      "title": "Activity Idea",
-      "applies_to_kinds": [
-        "activity_idea"
-      ],
-      "items": [
-        {
-          "kind": "field",
-          "order": 1.0,
-          "id": "idea_title",
-          "section_id": "idea_details",
-          "group_id": null,
-          "label": "Title",
-          "type": "text",
-          "options": [],
-          "required": "TRUE",
-          "required_first_only": false,
-          "required_for_kinds": [],
-          "applies_to_kinds": [
-            "all"
-          ],
-          "ui_style": "",
-          "help_text": "",
-          "show_if": null,
-          "disabled_if": null,
-          "pdf": {
-            "page_break_before": false,
-            "pdf_format": "table_row"
-          }
-        },
-        {
-          "kind": "group",
-          "order": 2.0,
-          "id": "idea_content_objectives_group",
-          "section_id": "idea_details",
-          "item_label": "Content Objective",
-          "min_instances": 1,
-          "max_instances": null,
-          "add_button_text": "+ Add content objective",
-          "required_for_kinds": [],
-          "fields": [
-            {
-              "id": "idea_objective_text",
-              "section_id": "idea_details",
-              "group_id": "idea_content_objectives_group",
-              "order": 1.0,
-              "label": "Content Objective",
-              "type": "text",
-              "options": [],
-              "required": "TRUE",
-              "required_first_only": true,
-              "required_for_kinds": [],
-              "applies_to_kinds": [
-                "all"
-              ],
-              "ui_style": "",
-              "help_text": "",
-              "show_if": null,
-              "disabled_if": null,
-              "pdf": {
-                "page_break_before": false,
-                "pdf_format": "table_row"
-              }
-            }
-          ],
-          "show_if": null,
-          "pdf": {
-            "page_break_before": false,
-            "pdf_format": "repeated_block"
-          }
-        },
-        {
-          "kind": "group",
-          "order": 3.0,
-          "id": "idea_process_skills_group",
-          "section_id": "idea_details",
-          "item_label": "Process Objective",
-          "min_instances": 1,
-          "max_instances": null,
-          "add_button_text": "+ Add process objective",
-          "required_for_kinds": [],
-          "fields": [
-            {
-              "id": "idea_skill_text",
-              "section_id": "idea_details",
-              "group_id": "idea_process_skills_group",
-              "order": 1.0,
-              "label": "Process Objective",
-              "type": "text",
-              "options": [],
-              "required": "TRUE",
-              "required_first_only": true,
-              "required_for_kinds": [],
-              "applies_to_kinds": [
-                "all"
-              ],
-              "ui_style": "",
-              "help_text": "",
-              "show_if": null,
-              "disabled_if": null,
-              "pdf": {
-                "page_break_before": false,
-                "pdf_format": "table_row"
-              }
-            }
-          ],
-          "show_if": null,
-          "pdf": {
-            "page_break_before": false,
-            "pdf_format": "repeated_block"
-          }
-        },
-        {
-          "kind": "field",
-          "order": 4.0,
-          "id": "idea_description",
-          "section_id": "idea_details",
-          "group_id": null,
-          "label": "Description",
-          "type": "textarea",
-          "options": [],
-          "required": "TRUE",
-          "required_first_only": false,
-          "required_for_kinds": [],
-          "applies_to_kinds": [
-            "all"
-          ],
-          "ui_style": "",
-          "help_text": "250 words or less",
-          "show_if": null,
-          "disabled_if": null,
-          "pdf": {
-            "page_break_before": false,
-            "pdf_format": "paragraph"
-          }
-        }
-      ]
     }
   ]
 }
@@ -1996,7 +1816,7 @@ function renderGroup(group, container, onChange) {
     onChange();
   });
 
-  for (let i = 0; i < group.min_instances; i++) groupInstances[group.id].push({});
+  while (groupInstances[group.id].length < group.min_instances) groupInstances[group.id].push({});
   groupInstances[group.id].forEach((_, idx) => renderInstance(idx));
 
   container.appendChild(gwrap);
@@ -2141,6 +1961,99 @@ function updateReqMark(fieldEl, required) {
     star.remove();
   }
 }
+
+// ---------- JSON sidecar: export ----------
+
+function collectSubmissionData() {
+  return {
+    sidecar_version: 1,
+    schema_version: SCHEMA.version,
+    generated_at: new Date().toISOString(),
+    answers: answers,
+    groupInstances: groupInstances,
+  };
+}
+
+function downloadJsonSidecar(slug) {
+  const data = collectSubmissionData();
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'pac-submission-' + slug + '.json';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
+}
+
+// ---------- JSON sidecar: reload ----------
+
+function hasAnyEnteredData() {
+  if (Object.keys(answers).some(k => {
+    const v = answers[k];
+    return Array.isArray(v) ? v.length > 0 : (v !== undefined && v !== null && v !== '');
+  })) return true;
+  return Object.values(groupInstances).some(arr =>
+    arr.some(inst => Object.keys(inst).some(k => {
+      const v = inst[k];
+      return Array.isArray(v) ? v.length > 0 : (v !== undefined && v !== null && v !== '');
+    }))
+  );
+}
+
+function loadSubmissionData(data) {
+  if (!data || typeof data !== 'object' || typeof data.answers !== 'object') {
+    throw new Error('file does not look like a PAC submission JSON sidecar');
+  }
+
+  Object.keys(answers).forEach(k => delete answers[k]);
+  Object.keys(groupInstances).forEach(k => delete groupInstances[k]);
+  Object.keys(fieldById).forEach(k => delete fieldById[k]);
+
+  Object.assign(answers, data.answers || {});
+  Object.assign(groupInstances, data.groupInstances || {});
+
+  document.getElementById('formRoot').innerHTML = '';
+  buildPage();
+  refreshAll();
+}
+
+document.getElementById('loadPriorBtn').addEventListener('click', () => {
+  document.getElementById('jsonUploadInput').click();
+});
+
+document.getElementById('jsonUploadInput').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  e.target.value = ''; // allow re-selecting the same file later
+  if (!file) return;
+
+  const statusEl = document.getElementById('upload-status');
+
+  if (hasAnyEnteredData()) {
+    const proceed = confirm('Loading a prior submission will replace your current answers. Continue?');
+    if (!proceed) return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const data = JSON.parse(reader.result);
+      loadSubmissionData(data);
+      statusEl.className = 'success';
+      statusEl.textContent = 'Loaded "' + file.name + '".';
+    } catch (err) {
+      statusEl.className = 'error';
+      statusEl.textContent = 'Could not load file: ' + err.message;
+      console.error(err);
+    }
+  };
+  reader.onerror = () => {
+    statusEl.className = 'error';
+    statusEl.textContent = 'Could not read file.';
+  };
+  reader.readAsText(file);
+});
 
 // ---------- PDF generation ----------
 // Walks SCHEMA the same way refreshAll() does — same kindSetMatches/evalShowIf
@@ -2304,7 +2217,7 @@ async function generatePdf() {
     const blob = new Blob([bytes], { type: 'application/pdf' });
     const url = URL.createObjectURL(blob);
 
-    const titleVal = getTopValue('title_activity') || getTopValue('idea_title') || 'activity-submission';
+    const titleVal = getTopValue('title') || 'activity-submission';
     const slug = String(titleVal).trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || 'form';
 
     const a = document.createElement('a');
@@ -2315,8 +2228,14 @@ async function generatePdf() {
     a.remove();
     setTimeout(() => URL.revokeObjectURL(url), 2000);
 
+    // A short delay before triggering the second automatic download: browsers
+    // routinely drop or silently merge two downloads fired back-to-back in the
+    // same tick, and the delay is enough for them to treat this as two
+    // separate, distinct downloads instead.
+    setTimeout(() => downloadJsonSidecar(slug), 400);
+
     statusEl.className = 'visible success';
-    statusEl.textContent = 'PDF generated and downloaded.';
+    statusEl.textContent = 'PDF and JSON generated and downloaded.';
   } catch (err) {
     statusEl.className = 'visible error';
     statusEl.textContent = 'Could not generate PDF: ' + err.message;

@@ -423,22 +423,20 @@
       ]
     },
     {
-      "id": "activity_identification",
+      "id": "activity_title_objectives",
       "order": 4.0,
-      "title": "Activity Identification",
+      "title": "Activity Title and Learning Objectives",
       "applies_to_kinds": [
-        "activity_for_review",
-        "activity_for_testing",
-        "approved_activity"
+        "all"
       ],
       "items": [
         {
           "kind": "field",
           "order": 1.0,
-          "id": "title_activity",
-          "section_id": "activity_identification",
+          "id": "title",
+          "section_id": "activity_title_objectives",
           "group_id": null,
-          "label": "Title of Activity",
+          "label": "Title",
           "type": "text",
           "options": [],
           "required": "TRUE",
@@ -457,134 +455,91 @@
           }
         },
         {
-          "kind": "field",
+          "kind": "group",
           "order": 2.0,
-          "id": "discipline",
-          "section_id": "activity_identification",
-          "group_id": null,
-          "label": "Discipline",
-          "type": "select",
-          "options": [
+          "id": "content_objectives_group",
+          "section_id": "activity_title_objectives",
+          "item_label": "Content Objective",
+          "min_instances": 1,
+          "max_instances": null,
+          "add_button_text": "+ Add content objective",
+          "required_for_kinds": [],
+          "fields": [
             {
-              "value": "anatomy_physiology",
-              "label": "Anatomy & Physiology"
-            },
-            {
-              "value": "astronomy",
-              "label": "Astronomy"
-            },
-            {
-              "value": "biology",
-              "label": "Biology"
-            },
-            {
-              "value": "chemistry",
-              "label": "Chemistry"
-            },
-            {
-              "value": "computer_science",
-              "label": "Computer Science"
-            },
-            {
-              "value": "economics",
-              "label": "Economics"
-            },
-            {
-              "value": "environmental_science",
-              "label": "Environmental Science"
-            },
-            {
-              "value": "exercise_science",
-              "label": "Exercise Science"
-            },
-            {
-              "value": "fine_arts",
-              "label": "Fine Arts"
-            },
-            {
-              "value": "general",
-              "label": "General"
-            },
-            {
-              "value": "general_education",
-              "label": "General Education"
-            },
-            {
-              "value": "general_science",
-              "label": "General Science"
-            },
-            {
-              "value": "language_arts",
-              "label": "Language Arts"
-            },
-            {
-              "value": "mathematics",
-              "label": "Mathematics"
-            },
-            {
-              "value": "music",
-              "label": "Music"
-            },
-            {
-              "value": "neuroscience",
-              "label": "Neuroscience"
-            },
-            {
-              "value": "physics",
-              "label": "Physics"
-            },
-            {
-              "value": "psychology",
-              "label": "Psychology"
-            },
-            {
-              "value": "statistics",
-              "label": "Statistics"
+              "id": "objective_text",
+              "section_id": "activity_title_objectives",
+              "group_id": "content_objectives_group",
+              "order": 1.0,
+              "label": "Content Objective",
+              "type": "text",
+              "options": [],
+              "required": "TRUE",
+              "required_first_only": true,
+              "required_for_kinds": [],
+              "applies_to_kinds": [
+                "all"
+              ],
+              "ui_style": "",
+              "help_text": "",
+              "show_if": null,
+              "disabled_if": null,
+              "pdf": {
+                "page_break_before": false,
+                "pdf_format": "table_row"
+              }
             }
           ],
-          "required": "TRUE",
-          "required_first_only": false,
-          "required_for_kinds": [],
-          "applies_to_kinds": [
-            "all"
-          ],
-          "ui_style": "",
-          "help_text": "",
           "show_if": null,
-          "disabled_if": null,
           "pdf": {
             "page_break_before": false,
-            "pdf_format": "table_row"
+            "pdf_format": "repeated_block"
           }
         },
         {
-          "kind": "field",
+          "kind": "group",
           "order": 3.0,
-          "id": "topic",
-          "section_id": "activity_identification",
-          "group_id": null,
-          "label": "Topic",
-          "type": "text",
-          "options": [],
-          "required": "TRUE",
-          "required_first_only": false,
+          "id": "process_skills_group",
+          "section_id": "activity_title_objectives",
+          "item_label": "Process Objective",
+          "min_instances": 1,
+          "max_instances": null,
+          "add_button_text": "+ Add process objective",
           "required_for_kinds": [],
-          "applies_to_kinds": [
-            "all"
+          "fields": [
+            {
+              "id": "skill_text",
+              "section_id": "activity_title_objectives",
+              "group_id": "process_skills_group",
+              "order": 1.0,
+              "label": "Process Objective",
+              "type": "text",
+              "options": [],
+              "required": "TRUE",
+              "required_first_only": true,
+              "required_for_kinds": [],
+              "applies_to_kinds": [
+                "all"
+              ],
+              "ui_style": "",
+              "help_text": "",
+              "show_if": null,
+              "disabled_if": null,
+              "pdf": {
+                "page_break_before": false,
+                "pdf_format": "table_row"
+              }
+            }
           ],
-          "ui_style": "",
-          "help_text": "",
           "show_if": null,
-          "disabled_if": null,
           "pdf": {
             "page_break_before": false,
-            "pdf_format": "table_row"
+            "pdf_format": "repeated_block"
           }
         }
       ]
     },
     {
-      "id": "idea_context",
+      "id": "classroom_context",
       "order": 5.0,
       "title": "Activity Type and Classroom Context",
       "applies_to_kinds": [
@@ -594,8 +549,8 @@
         {
           "kind": "field",
           "order": 1.0,
-          "id": "idea_activity_type",
-          "section_id": "idea_context",
+          "id": "activity_type",
+          "section_id": "classroom_context",
           "group_id": null,
           "label": "Activity Type",
           "type": "checkbox_group",
@@ -627,8 +582,8 @@
         {
           "kind": "field",
           "order": 3.0,
-          "id": "idea_discipline",
-          "section_id": "idea_context",
+          "id": "discipline",
+          "section_id": "classroom_context",
           "group_id": null,
           "label": "Discipline",
           "type": "select",
@@ -728,8 +683,8 @@
         {
           "kind": "field",
           "order": 4.0,
-          "id": "idea_setting",
-          "section_id": "idea_context",
+          "id": "setting",
+          "section_id": "classroom_context",
           "group_id": null,
           "label": "Setting",
           "type": "checkbox_group",
@@ -762,7 +717,7 @@
           "kind": "field",
           "order": 5.0,
           "id": "course",
-          "section_id": "idea_context",
+          "section_id": "classroom_context",
           "group_id": null,
           "label": "Course (e.g., Physical Chemistry, General Biology)",
           "type": "text",
@@ -785,8 +740,8 @@
         {
           "kind": "field",
           "order": 6.0,
-          "id": "idea_level",
-          "section_id": "idea_context",
+          "id": "level",
+          "section_id": "classroom_context",
           "group_id": null,
           "label": "Level",
           "type": "checkbox_group",
@@ -829,6 +784,40 @@
           "pdf": {
             "page_break_before": false,
             "pdf_format": "checklist"
+          }
+        }
+      ]
+    },
+    {
+      "id": "activity_description",
+      "order": 6.0,
+      "title": "Activity Description",
+      "applies_to_kinds": [
+        "activity_idea"
+      ],
+      "items": [
+        {
+          "kind": "field",
+          "order": 1.0,
+          "id": "idea_description",
+          "section_id": "activity_description",
+          "group_id": null,
+          "label": "Description",
+          "type": "textarea",
+          "options": [],
+          "required": "TRUE",
+          "required_first_only": false,
+          "required_for_kinds": [],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "ui_style": "",
+          "help_text": "250 words or less",
+          "show_if": null,
+          "disabled_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "paragraph"
           }
         }
       ]
@@ -922,52 +911,6 @@
           "pdf": {
             "page_break_before": false,
             "pdf_format": "paragraph"
-          }
-        }
-      ]
-    },
-    {
-      "id": "objectives_goals",
-      "order": 8.0,
-      "title": "Learning Objectives & Process Skill Goals",
-      "applies_to_kinds": [
-        "activity_for_review",
-        "activity_for_testing",
-        "approved_activity"
-      ],
-      "items": [
-        {
-          "kind": "group",
-          "order": 1.0,
-          "id": "content_objectives_group",
-          "section_id": "objectives_goals",
-          "item_label": "Learning Objective",
-          "min_instances": 1,
-          "max_instances": null,
-          "add_button_text": "+ Add learning objective",
-          "required_for_kinds": [],
-          "fields": [],
-          "show_if": null,
-          "pdf": {
-            "page_break_before": false,
-            "pdf_format": "repeated_block"
-          }
-        },
-        {
-          "kind": "group",
-          "order": 2.0,
-          "id": "process_skills_group",
-          "section_id": "objectives_goals",
-          "item_label": "Process Skill Goal",
-          "min_instances": 1,
-          "max_instances": null,
-          "add_button_text": "+ Add process skill goal",
-          "required_for_kinds": [],
-          "fields": [],
-          "show_if": null,
-          "pdf": {
-            "page_break_before": false,
-            "pdf_format": "repeated_block"
           }
         }
       ]
@@ -1326,146 +1269,6 @@
               "extensive"
             ]
           },
-          "disabled_if": null,
-          "pdf": {
-            "page_break_before": false,
-            "pdf_format": "paragraph"
-          }
-        }
-      ]
-    },
-    {
-      "id": "idea_details",
-      "order": 12.0,
-      "title": "Activity Idea",
-      "applies_to_kinds": [
-        "activity_idea"
-      ],
-      "items": [
-        {
-          "kind": "field",
-          "order": 1.0,
-          "id": "idea_title",
-          "section_id": "idea_details",
-          "group_id": null,
-          "label": "Title",
-          "type": "text",
-          "options": [],
-          "required": "TRUE",
-          "required_first_only": false,
-          "required_for_kinds": [],
-          "applies_to_kinds": [
-            "all"
-          ],
-          "ui_style": "",
-          "help_text": "",
-          "show_if": null,
-          "disabled_if": null,
-          "pdf": {
-            "page_break_before": false,
-            "pdf_format": "table_row"
-          }
-        },
-        {
-          "kind": "group",
-          "order": 2.0,
-          "id": "idea_content_objectives_group",
-          "section_id": "idea_details",
-          "item_label": "Content Objective",
-          "min_instances": 1,
-          "max_instances": null,
-          "add_button_text": "+ Add content objective",
-          "required_for_kinds": [],
-          "fields": [
-            {
-              "id": "idea_objective_text",
-              "section_id": "idea_details",
-              "group_id": "idea_content_objectives_group",
-              "order": 1.0,
-              "label": "Content Objective",
-              "type": "text",
-              "options": [],
-              "required": "TRUE",
-              "required_first_only": true,
-              "required_for_kinds": [],
-              "applies_to_kinds": [
-                "all"
-              ],
-              "ui_style": "",
-              "help_text": "",
-              "show_if": null,
-              "disabled_if": null,
-              "pdf": {
-                "page_break_before": false,
-                "pdf_format": "table_row"
-              }
-            }
-          ],
-          "show_if": null,
-          "pdf": {
-            "page_break_before": false,
-            "pdf_format": "repeated_block"
-          }
-        },
-        {
-          "kind": "group",
-          "order": 3.0,
-          "id": "idea_process_skills_group",
-          "section_id": "idea_details",
-          "item_label": "Process Objective",
-          "min_instances": 1,
-          "max_instances": null,
-          "add_button_text": "+ Add process objective",
-          "required_for_kinds": [],
-          "fields": [
-            {
-              "id": "idea_skill_text",
-              "section_id": "idea_details",
-              "group_id": "idea_process_skills_group",
-              "order": 1.0,
-              "label": "Process Objective",
-              "type": "text",
-              "options": [],
-              "required": "TRUE",
-              "required_first_only": true,
-              "required_for_kinds": [],
-              "applies_to_kinds": [
-                "all"
-              ],
-              "ui_style": "",
-              "help_text": "",
-              "show_if": null,
-              "disabled_if": null,
-              "pdf": {
-                "page_break_before": false,
-                "pdf_format": "table_row"
-              }
-            }
-          ],
-          "show_if": null,
-          "pdf": {
-            "page_break_before": false,
-            "pdf_format": "repeated_block"
-          }
-        },
-        {
-          "kind": "field",
-          "order": 4.0,
-          "id": "idea_description",
-          "section_id": "idea_details",
-          "group_id": null,
-          "label": "Description",
-          "type": "textarea",
-          "options": [],
-          "required": "TRUE",
-          "required_first_only": false,
-          "required_for_kinds": [],
-          "applies_to_kinds": [
-            "all"
-          ],
-          "ui_style": "",
-          "help_text": "250 words or less",
-          "show_if": null,
           "disabled_if": null,
           "pdf": {
             "page_break_before": false,
