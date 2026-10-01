@@ -1578,7 +1578,12 @@ function evalShowIf(showIf, getVal) {
   }
 }
 
-function isRequired(field, kset, instanceIdx, visible) {
+function isFieldDisabled(field, getVal) {
+  return !!(field.disabled_if && evalShowIf(field.disabled_if, getVal));
+}
+
+function isRequired(field, kset, instanceIdx, visible, disabled) {
+  if (disabled) return false;
   let req = field.required === 'TRUE';
   if (field.required === 'IF_VISIBLE') req = !!visible;
   if (field.required_for_kinds && field.required_for_kinds.length) {
@@ -1905,12 +1910,13 @@ function refreshAll() {
         const kindOk = kindSetMatches(item.applies_to_kinds, kset);
         const showIfOk = evalShowIf(item.show_if, getTopValue);
         const visible2 = kindOk && showIfOk;
+        const disabled2 = isFieldDisabled(item, getTopValue);
         el.classList.toggle('hidden', !visible2);
-        const req = isRequired(item, kset, 0, visible2);
+        const req = isRequired(item, kset, 0, visible2, disabled2);
         updateReqMark(el, req);
 
         if (item.disabled_if) {
-          const isDisabled = evalShowIf(item.disabled_if, getTopValue);
+          const isDisabled = disabled2;
           el.querySelectorAll('.toggle-btn, input, textarea, select').forEach(ctrl => {
             ctrl.disabled = isDisabled;
           });
@@ -1931,7 +1937,8 @@ function refreshAll() {
             if (!el) return;
             const showIfOk = evalShowIf(f.show_if, (ref) => getInstanceValue(item.id, idx, ref));
             el.classList.toggle('hidden', !showIfOk);
-            const req = isRequired(f, kset, idx, showIfOk);
+            const disabledOk = isFieldDisabled(f, (ref) => getInstanceValue(item.id, idx, ref));
+            const req = isRequired(f, kset, idx, showIfOk, disabledOk);
             updateReqMark(el, req);
           });
         });
@@ -1976,7 +1983,8 @@ function collectValidationIssues() {
         const showOk = evalShowIf(item.show_if, getTopValue);
         const visible = kindOk && showOk;
         if (!visible) return;
-        if (isRequired(item, kset, 0, visible) && !isFieldFilled(item, getTopValue(item.id))) {
+        const disabledOk = isFieldDisabled(item, getTopValue);
+        if (isRequired(item, kset, 0, visible, disabledOk) && !isFieldFilled(item, getTopValue(item.id))) {
           issues.push(item.label + ' (' + section.title + ')');
         }
       } else {
@@ -1992,7 +2000,8 @@ function collectValidationIssues() {
           item.fields.forEach(f => {
             const showOk = evalShowIf(f.show_if, (ref) => getInstanceValue(item.id, idx, ref));
             if (!showOk) return;
-            if (isRequired(f, kset, idx, showOk) && !isFieldFilled(f, getInstanceValue(item.id, idx, f.id))) {
+            const disabledOk = isFieldDisabled(f, (ref) => getInstanceValue(item.id, idx, ref));
+            if (isRequired(f, kset, idx, showOk, disabledOk) && !isFieldFilled(f, getInstanceValue(item.id, idx, f.id))) {
               issues.push(f.label + ' (' + item.item_label + ' ' + (idx + 1) + ')');
             }
           });
