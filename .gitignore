@@ -1,0 +1,8 @@
+# MacOS
+.DS_Store
+
+# Excel
+~$*.xlsx
+
+# PyCharm
+.idea
