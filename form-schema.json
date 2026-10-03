@@ -376,7 +376,7 @@
           "show_if": null,
           "disabled_if": null,
           "pdf": {
-            "page_break_before": false,
+            "page_break_before": true,
             "pdf_format": "checklist"
           }
         },
