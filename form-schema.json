@@ -113,6 +113,30 @@
         {
           "kind": "field",
           "order": 1.0,
+          "id": "submission_kind_intro",
+          "section_id": "submission_kind",
+          "group_id": null,
+          "label": "The PAC supports activity writing across all stages of development. What is your estimate for the stage of your activity?",
+          "type": "info",
+          "options": [],
+          "required": "FALSE",
+          "required_first_only": false,
+          "required_for_kinds": [],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "ui_style": "",
+          "help_text": "",
+          "show_if": null,
+          "disabled_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "paragraph"
+          }
+        },
+        {
+          "kind": "field",
+          "order": 2.0,
           "id": "readiness",
           "section_id": "submission_kind",
           "group_id": null,
@@ -143,7 +167,7 @@
             "all"
           ],
           "ui_style": "toggle",
-          "help_text": "The PAC supports activity writing across all stages. What is your estimate for the stage of your activity?",
+          "help_text": "",
           "show_if": null,
           "disabled_if": null,
           "pdf": {
@@ -153,7 +177,31 @@
         },
         {
           "kind": "field",
-          "order": 2.0,
+          "order": 3.0,
+          "id": "review_kind_intro",
+          "section_id": "submission_kind",
+          "group_id": null,
+          "label": "The PAC offers several kinds of activity feedback.\n\n\u2022 TRADITIONAL REVIEW: Reviewers provide written feedback based on the appropriate rubric.\n\n\u2022 COLLABORATIVE ACTIVITY FEEDBACK: Authors meet virtually and share feedback with each other in a facilitated session.\n\n\u2022 CLASSROOM TESTING: Activities are sent to testers, who provide feedback based on their classroom experiences.",
+          "type": "info",
+          "options": [],
+          "required": "FALSE",
+          "required_first_only": false,
+          "required_for_kinds": [],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "ui_style": "",
+          "help_text": "",
+          "show_if": null,
+          "disabled_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "paragraph"
+          }
+        },
+        {
+          "kind": "field",
+          "order": 4.0,
           "id": "review_kind",
           "section_id": "submission_kind",
           "group_id": null,
@@ -194,7 +242,7 @@
         },
         {
           "kind": "field",
-          "order": 3.0,
+          "order": 5.0,
           "id": "posting_goal",
           "section_id": "submission_kind",
           "group_id": null,
