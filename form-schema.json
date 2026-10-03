@@ -291,7 +291,7 @@
         {
           "kind": "field",
           "order": 2.0,
-          "id": "posting_goal",
+          "id": "posting_goal_choice",
           "section_id": "posting_goal",
           "group_id": null,
           "label": "Posting Goal",
