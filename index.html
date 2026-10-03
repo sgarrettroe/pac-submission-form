@@ -194,10 +194,6 @@
     background: var(--navy); color: #cfe3ed; font-size: 0.7rem; padding: 14px;
     border-radius: 3px; overflow-x: auto; margin-top: 8px;
   }
-  .sketch-note {
-    margin-top: 24px; padding: 11px 16px; font-size: 0.78rem; color: var(--navy);
-    border-left: 4px solid var(--header-blue); background: rgba(45,106,143,0.06); border-radius: 0 3px 3px 0;
-  }
 </style>
 </head>
 <body>
@@ -221,7 +217,7 @@
 
   <div class="page-title">
     <h2>Activity Submission Form</h2>
-    <p>Complete the Submission Kind section below, then the rest of the form adapts automatically.</p>
+    <p>This form adapts automatically to your selections in the Submission Kind section below.</p>
   </div>
 
   <div id="kind-confirm" class="incomplete">
@@ -237,20 +233,20 @@
     <div id="pdf-status"></div>
   </div>
 
-  <details class="debug">
+  <details class="debug" id="debugPanel">
     <summary>Debug: current answers (not part of the real form)</summary>
     <pre id="debugOut"></pre>
   </details>
 
-  <div class="sketch-note">
-    This form adapts automatically based on your answers in Submission Kind — sections, required
-    fields, and the Checklist above all respond to your selected Activity Readiness and Kind of
-    Review.
-  </div>
-
 </div>
 
 <script>
+// Dev aids only — flip either to true while debugging, leave false for the live form.
+// SHOW_SECTION_DEBUG_NOTES: "Always shown." / "Shown when: ..." under each section heading.
+// SHOW_DEBUG_PANEL: the raw answers/groupInstances dump at the bottom of the page.
+const SHOW_SECTION_DEBUG_NOTES = false;
+const SHOW_DEBUG_PANEL = false;
+
 let SCHEMA = null;
 let KIND_AXIS_FIELDS = [];
 
@@ -578,12 +574,14 @@ function buildPage() {
     h3.textContent = section.title;
     sec.appendChild(h3);
 
-    const kindNote = document.createElement('p');
-    kindNote.className = 'panel-note';
-    kindNote.textContent = section.applies_to_kinds.includes('all')
-      ? 'Always shown.'
-      : 'Shown when: ' + section.applies_to_kinds.join(', ');
-    sec.appendChild(kindNote);
+    if (SHOW_SECTION_DEBUG_NOTES) {
+      const kindNote = document.createElement('p');
+      kindNote.className = 'panel-note';
+      kindNote.textContent = section.applies_to_kinds.includes('all')
+        ? 'Always shown.'
+        : 'Shown when: ' + section.applies_to_kinds.join(', ');
+      sec.appendChild(kindNote);
+    }
 
     section.items.forEach(item => {
       if (item.kind === 'field') {
@@ -688,9 +686,11 @@ function refreshAll() {
   updateKindConfirmBanner();
   updateValidationAndButton();
 
-  document.getElementById('debugOut').textContent = JSON.stringify(
-    { answers, groupInstances }, null, 2
-  );
+  if (SHOW_DEBUG_PANEL) {
+    document.getElementById('debugOut').textContent = JSON.stringify(
+      { answers, groupInstances }, null, 2
+    );
+  }
 }
 
 function isFieldFilled(field, val) {
@@ -1068,6 +1068,10 @@ async function generatePdf() {
 }
 
 document.getElementById('generatePdfBtn').addEventListener('click', generatePdf);
+
+if (!SHOW_DEBUG_PANEL) {
+  document.getElementById('debugPanel').style.display = 'none';
+}
 
 async function init() {
   const root = document.getElementById('formRoot');
