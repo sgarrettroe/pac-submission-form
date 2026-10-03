@@ -919,7 +919,7 @@
           "id": "ai_use_intro",
           "section_id": "ai_use",
           "group_id": null,
-          "label": "Generative AI can support activity development, but it should support \u2014 not replace \u2014 your own instructional design, disciplinary judgment, and critical thinking. As AI plays a larger role in producing content, the expectation for your review, verification, and disclosure increases. Select the level that best describes how AI was used in developing this activity.\n\u2022 <b>Routine or Supportive use</b> covers things like brainstorming, wording suggestions, grammar/clarity checks, or formatting on work you conceived and directed.\n\u2022 <b>Substantive Developmental use</b> means AI helped develop or revise real components \u2014 drafting objectives, generating questions from your objectives, building datasets, or suggesting scaffolding \u2014 requiring your careful review and verification.\n\u2022 <b>Extensive Generative use</b> means AI generated substantial portions of the activity (e.g. a full question sequence or draft) with limited initial input from you.",
+          "label": "Generative AI can support activity development, but it should support \u2014 not replace \u2014 your own instructional design, disciplinary judgment, and critical thinking. As AI plays a larger role in producing content, the expectation for your review, verification, and disclosure increases. Select the level that best describes how AI was used in developing this activity.\n\u2022 ROUTINE or SUPPORTIVE use covers things like brainstorming, wording suggestions, grammar/clarity checks, or formatting on work you conceived and directed.\n\u2022 SUBSTANTIVE DEVELOPMENTAL use means AI helped develop or revise real components \u2014 drafting objectives, generating questions from your objectives, building datasets, or suggesting scaffolding \u2014 requiring your careful review and verification.\n\u2022 EXTENSIVE GENERATIVE use means AI generated substantial portions of the activity (e.g. a full question sequence or draft) with limited initial input from you.",
           "type": "info",
           "options": [],
           "required": "FALSE",
@@ -1089,6 +1089,30 @@
         {
           "kind": "field",
           "order": 1.0,
+          "id": "check_list_intro",
+          "section_id": "check_list",
+          "group_id": null,
+          "label": "The following documents will be required during the upload. Requred documents are marked *. Ensure you have each required document in the indicated file format. (The submission form pdf and json are created by this web app when you click download.)",
+          "type": "info",
+          "options": [],
+          "required": "FALSE",
+          "required_first_only": false,
+          "required_for_kinds": [],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "ui_style": "",
+          "help_text": "",
+          "show_if": null,
+          "disabled_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "paragraph"
+          }
+        },
+        {
+          "kind": "field",
+          "order": 2.0,
           "id": "submission_form_pdf",
           "section_id": "check_list",
           "group_id": null,
@@ -1117,7 +1141,7 @@
         },
         {
           "kind": "field",
-          "order": 2.0,
+          "order": 3.0,
           "id": "submission_form_json",
           "section_id": "check_list",
           "group_id": null,
@@ -1146,11 +1170,11 @@
         },
         {
           "kind": "field",
-          "order": 3.0,
+          "order": 4.0,
           "id": "activity_document",
           "section_id": "check_list",
           "group_id": null,
-          "label": "Activity",
+          "label": "Activity (PDF)",
           "type": "checkbox_group",
           "options": [
             {
@@ -1179,11 +1203,11 @@
         },
         {
           "kind": "field",
-          "order": 4.0,
+          "order": 5.0,
           "id": "toc_graphic",
           "section_id": "check_list",
           "group_id": null,
-          "label": "TOC Graphic",
+          "label": "TOC Graphic (PNG)",
           "type": "checkbox_group",
           "options": [
             {
@@ -1212,11 +1236,11 @@
         },
         {
           "kind": "field",
-          "order": 5.0,
+          "order": 6.0,
           "id": "answer_key",
           "section_id": "check_list",
           "group_id": null,
-          "label": "Student Answers (Key)",
+          "label": "Student Answers / Key (PDF)",
           "type": "checkbox_group",
           "options": [
             {
@@ -1245,11 +1269,11 @@
         },
         {
           "kind": "field",
-          "order": 6.0,
+          "order": 7.0,
           "id": "facilitation_guide",
           "section_id": "check_list",
           "group_id": null,
-          "label": "Facilitation Guide",
+          "label": "Facilitation Guide (PDF)",
           "type": "checkbox_group",
           "options": [
             {
