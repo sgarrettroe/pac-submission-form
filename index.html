@@ -70,17 +70,6 @@
   #upload-status.error { color: var(--danger); }
   #upload-status.success { color: var(--success); }
 
-  /* ── Status banner (matches galley tool's #galley-confirm) ──── */
-  #kind-confirm {
-    display: flex; align-items: center; gap: 10px; background: var(--surface2);
-    border: 1px solid var(--border); border-left: 4px solid var(--green-dark);
-    padding: 11px 16px; border-radius: 0 3px 3px 0; font-size: 0.85rem;
-    font-weight: 600; color: var(--navy); margin-bottom: 20px; flex-wrap: wrap;
-  }
-  #kind-confirm.incomplete { border-left-color: var(--border); color: var(--muted); font-style: italic; font-weight: 400; }
-  .confirm-label { font-weight: 700; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green-dark); white-space: nowrap; flex-shrink: 0; }
-  #kind-confirm.incomplete .confirm-label { color: var(--muted); }
-
   /* ── Panels ───────────────────────────────────────────────────── */
   .panel { background: var(--surface); border: 1px solid var(--border); padding: 18px 22px; margin-bottom: 20px; border-radius: 0 3px 3px 0; }
   .panel-blue  { border-left: 4px solid var(--header-blue); }
@@ -598,25 +587,6 @@ function buildPage() {
   });
 }
 
-function updateKindConfirmBanner() {
-  const banner = document.getElementById('kind-confirm');
-  const text = document.getElementById('kind-confirm-text');
-  const values = KIND_AXIS_FIELDS.map(fid => {
-    const f = fieldById[fid];
-    const v = getTopValue(fid);
-    if (!f || v === undefined || v === '') return null;
-    const opt = (f.options || []).find(o => o.value === v);
-    return opt ? opt.label : v;
-  });
-  if (values.every(v => v)) {
-    banner.classList.remove('incomplete');
-    text.textContent = values.join('  ·  ');
-  } else {
-    banner.classList.add('incomplete');
-    text.textContent = 'Select Kind of Review and Activity Readiness below.';
-  }
-}
-
 function refreshAll() {
   const kset = activeKindSet();
 
@@ -680,7 +650,6 @@ function refreshAll() {
     });
   });
 
-  updateKindConfirmBanner();
   updateValidationAndButton();
 
   if (SHOW_DEBUG_PANEL) {
