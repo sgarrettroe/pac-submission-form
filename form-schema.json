@@ -224,205 +224,6 @@
       ]
     },
     {
-      "id": "supplemental",
-      "order": 3.0,
-      "title": "Checklist for Submission",
-      "applies_to_kinds": [
-        "all"
-      ],
-      "items": [
-        {
-          "kind": "field",
-          "order": 1.0,
-          "id": "submission_form_pdf",
-          "section_id": "supplemental",
-          "group_id": null,
-          "label": "Submission Form (PDF)",
-          "type": "checkbox_group",
-          "options": [
-            {
-              "value": "yes",
-              "label": "Submission Form (PDF)"
-            }
-          ],
-          "required": "TRUE",
-          "required_first_only": false,
-          "required_for_kinds": [],
-          "applies_to_kinds": [
-            "all"
-          ],
-          "ui_style": "",
-          "help_text": "",
-          "show_if": null,
-          "disabled_if": null,
-          "pdf": {
-            "page_break_before": true,
-            "pdf_format": "checklist"
-          }
-        },
-        {
-          "kind": "field",
-          "order": 2.0,
-          "id": "submission_form_json",
-          "section_id": "supplemental",
-          "group_id": null,
-          "label": "Submission Form (JSON)",
-          "type": "checkbox_group",
-          "options": [
-            {
-              "value": "yes",
-              "label": "Submission Form (JSON)"
-            }
-          ],
-          "required": "TRUE",
-          "required_first_only": false,
-          "required_for_kinds": [],
-          "applies_to_kinds": [
-            "all"
-          ],
-          "ui_style": "",
-          "help_text": "",
-          "show_if": null,
-          "disabled_if": null,
-          "pdf": {
-            "page_break_before": false,
-            "pdf_format": "checklist"
-          }
-        },
-        {
-          "kind": "field",
-          "order": 3.0,
-          "id": "activity_document",
-          "section_id": "supplemental",
-          "group_id": null,
-          "label": "Activity",
-          "type": "checkbox_group",
-          "options": [
-            {
-              "value": "yes",
-              "label": "Activity"
-            }
-          ],
-          "required": "FALSE",
-          "required_first_only": false,
-          "required_for_kinds": [
-            "activity_for_review",
-            "activity_for_testing",
-            "approved_activity"
-          ],
-          "applies_to_kinds": [
-            "all"
-          ],
-          "ui_style": "",
-          "help_text": "",
-          "show_if": null,
-          "disabled_if": null,
-          "pdf": {
-            "page_break_before": false,
-            "pdf_format": "checklist"
-          }
-        },
-        {
-          "kind": "field",
-          "order": 4.0,
-          "id": "toc_graphic",
-          "section_id": "supplemental",
-          "group_id": null,
-          "label": "TOC Graphic",
-          "type": "checkbox_group",
-          "options": [
-            {
-              "value": "yes",
-              "label": "TOC Graphic"
-            }
-          ],
-          "required": "FALSE",
-          "required_first_only": false,
-          "required_for_kinds": [
-            "activity_for_review",
-            "activity_for_testing",
-            "approved_activity"
-          ],
-          "applies_to_kinds": [
-            "all"
-          ],
-          "ui_style": "",
-          "help_text": "",
-          "show_if": null,
-          "disabled_if": null,
-          "pdf": {
-            "page_break_before": false,
-            "pdf_format": "checklist"
-          }
-        },
-        {
-          "kind": "field",
-          "order": 5.0,
-          "id": "answer_key",
-          "section_id": "supplemental",
-          "group_id": null,
-          "label": "Student Answers (Key)",
-          "type": "checkbox_group",
-          "options": [
-            {
-              "value": "yes",
-              "label": "Student Answers (Key)"
-            }
-          ],
-          "required": "FALSE",
-          "required_first_only": false,
-          "required_for_kinds": [
-            "activity_for_review",
-            "activity_for_testing",
-            "approved_activity"
-          ],
-          "applies_to_kinds": [
-            "all"
-          ],
-          "ui_style": "",
-          "help_text": "",
-          "show_if": null,
-          "disabled_if": null,
-          "pdf": {
-            "page_break_before": false,
-            "pdf_format": "checklist"
-          }
-        },
-        {
-          "kind": "field",
-          "order": 6.0,
-          "id": "facilitation_guide",
-          "section_id": "supplemental",
-          "group_id": null,
-          "label": "Facilitation Guide",
-          "type": "checkbox_group",
-          "options": [
-            {
-              "value": "yes",
-              "label": "Facilitation Guide"
-            }
-          ],
-          "required": "FALSE",
-          "required_first_only": false,
-          "required_for_kinds": [
-            "activity_for_testing",
-            "approved_activity"
-          ],
-          "applies_to_kinds": [
-            "all"
-          ],
-          "ui_style": "",
-          "help_text": "",
-          "show_if": null,
-          "disabled_if": null,
-          "pdf": {
-            "page_break_before": false,
-            "pdf_format": "checklist"
-          }
-        }
-      ]
-    },
-    {
       "id": "activity_title_objectives",
       "order": 4.0,
       "title": "Activity Title and Learning Objectives",
@@ -1118,7 +919,7 @@
           "id": "ai_use_intro",
           "section_id": "ai_use",
           "group_id": null,
-          "label": "Generative AI can support activity development, but it should support \u2014 not replace \u2014 your own instructional design, disciplinary judgment, and critical thinking. As AI plays a larger role in producing content, the expectation for your review, verification, and disclosure increases. Select the level that best describes how AI was used in developing this activity.\n\u2022 __Routine or Supportive use__ covers things like brainstorming, wording suggestions, grammar/clarity checks, or formatting on work you conceived and directed.\n\u2022 __Substantive Developmental use__ means AI helped develop or revise real components \u2014 drafting objectives, generating questions from your objectives, building datasets, or suggesting scaffolding \u2014 requiring your careful review and verification.\n\u2022 __Extensive Generative use__ means AI generated substantial portions of the activity (e.g. a full question sequence or draft) with limited initial input from you.",
+          "label": "Generative AI can support activity development, but it should support \u2014 not replace \u2014 your own instructional design, disciplinary judgment, and critical thinking. As AI plays a larger role in producing content, the expectation for your review, verification, and disclosure increases. Select the level that best describes how AI was used in developing this activity.\n\u2022 <b>Routine or Supportive use</b> covers things like brainstorming, wording suggestions, grammar/clarity checks, or formatting on work you conceived and directed.\n\u2022 <b>Substantive Developmental use</b> means AI helped develop or revise real components \u2014 drafting objectives, generating questions from your objectives, building datasets, or suggesting scaffolding \u2014 requiring your careful review and verification.\n\u2022 <b>Extensive Generative use</b> means AI generated substantial portions of the activity (e.g. a full question sequence or draft) with limited initial input from you.",
           "type": "info",
           "options": [],
           "required": "FALSE",
@@ -1273,6 +1074,205 @@
           "pdf": {
             "page_break_before": false,
             "pdf_format": "paragraph"
+          }
+        }
+      ]
+    },
+    {
+      "id": "check_list",
+      "order": 12.0,
+      "title": "Checklist for Submission",
+      "applies_to_kinds": [
+        "all"
+      ],
+      "items": [
+        {
+          "kind": "field",
+          "order": 1.0,
+          "id": "submission_form_pdf",
+          "section_id": "check_list",
+          "group_id": null,
+          "label": "Submission Form (PDF)",
+          "type": "checkbox_group",
+          "options": [
+            {
+              "value": "yes",
+              "label": "Submission Form (PDF)"
+            }
+          ],
+          "required": "TRUE",
+          "required_first_only": false,
+          "required_for_kinds": [],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "ui_style": "",
+          "help_text": "",
+          "show_if": null,
+          "disabled_if": null,
+          "pdf": {
+            "page_break_before": true,
+            "pdf_format": "checklist"
+          }
+        },
+        {
+          "kind": "field",
+          "order": 2.0,
+          "id": "submission_form_json",
+          "section_id": "check_list",
+          "group_id": null,
+          "label": "Submission Form (JSON)",
+          "type": "checkbox_group",
+          "options": [
+            {
+              "value": "yes",
+              "label": "Submission Form (JSON)"
+            }
+          ],
+          "required": "TRUE",
+          "required_first_only": false,
+          "required_for_kinds": [],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "ui_style": "",
+          "help_text": "",
+          "show_if": null,
+          "disabled_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "checklist"
+          }
+        },
+        {
+          "kind": "field",
+          "order": 3.0,
+          "id": "activity_document",
+          "section_id": "check_list",
+          "group_id": null,
+          "label": "Activity",
+          "type": "checkbox_group",
+          "options": [
+            {
+              "value": "yes",
+              "label": "Activity"
+            }
+          ],
+          "required": "FALSE",
+          "required_first_only": false,
+          "required_for_kinds": [
+            "activity_for_review",
+            "activity_for_testing",
+            "approved_activity"
+          ],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "ui_style": "",
+          "help_text": "",
+          "show_if": null,
+          "disabled_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "checklist"
+          }
+        },
+        {
+          "kind": "field",
+          "order": 4.0,
+          "id": "toc_graphic",
+          "section_id": "check_list",
+          "group_id": null,
+          "label": "TOC Graphic",
+          "type": "checkbox_group",
+          "options": [
+            {
+              "value": "yes",
+              "label": "TOC Graphic"
+            }
+          ],
+          "required": "FALSE",
+          "required_first_only": false,
+          "required_for_kinds": [
+            "activity_for_review",
+            "activity_for_testing",
+            "approved_activity"
+          ],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "ui_style": "",
+          "help_text": "",
+          "show_if": null,
+          "disabled_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "checklist"
+          }
+        },
+        {
+          "kind": "field",
+          "order": 5.0,
+          "id": "answer_key",
+          "section_id": "check_list",
+          "group_id": null,
+          "label": "Student Answers (Key)",
+          "type": "checkbox_group",
+          "options": [
+            {
+              "value": "yes",
+              "label": "Student Answers (Key)"
+            }
+          ],
+          "required": "FALSE",
+          "required_first_only": false,
+          "required_for_kinds": [
+            "activity_for_review",
+            "activity_for_testing",
+            "approved_activity"
+          ],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "ui_style": "",
+          "help_text": "",
+          "show_if": null,
+          "disabled_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "checklist"
+          }
+        },
+        {
+          "kind": "field",
+          "order": 6.0,
+          "id": "facilitation_guide",
+          "section_id": "check_list",
+          "group_id": null,
+          "label": "Facilitation Guide",
+          "type": "checkbox_group",
+          "options": [
+            {
+              "value": "yes",
+              "label": "Facilitation Guide"
+            }
+          ],
+          "required": "FALSE",
+          "required_first_only": false,
+          "required_for_kinds": [
+            "activity_for_testing",
+            "approved_activity"
+          ],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "ui_style": "",
+          "help_text": "",
+          "show_if": null,
+          "disabled_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "checklist"
           }
         }
       ]
