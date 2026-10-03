@@ -256,6 +256,30 @@
           }
         },
         {
+          "kind": "field",
+          "order": 2.0,
+          "id": "prerequisite_knowledge",
+          "section_id": "activity_title_objectives",
+          "group_id": null,
+          "label": "Key knowledge students should have as a prerequisite.",
+          "type": "textarea",
+          "options": [],
+          "required": "TRUE",
+          "required_first_only": false,
+          "required_for_kinds": [],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "ui_style": "",
+          "help_text": "",
+          "show_if": null,
+          "disabled_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "paragraph"
+          }
+        },
+        {
           "kind": "group",
           "order": 2.0,
           "id": "content_objectives_group",
@@ -270,7 +294,7 @@
               "id": "objective_text",
               "section_id": "activity_title_objectives",
               "group_id": "content_objectives_group",
-              "order": 1.0,
+              "order": 3.0,
               "label": "Content Objective",
               "type": "text",
               "options": [],
@@ -311,7 +335,7 @@
               "id": "skill_text",
               "section_id": "activity_title_objectives",
               "group_id": "process_skills_group",
-              "order": 1.0,
+              "order": 4.0,
               "label": "Process Objective",
               "type": "text",
               "options": [],
@@ -614,99 +638,6 @@
           ],
           "ui_style": "",
           "help_text": "250 words or less",
-          "show_if": null,
-          "disabled_if": null,
-          "pdf": {
-            "page_break_before": false,
-            "pdf_format": "paragraph"
-          }
-        }
-      ]
-    },
-    {
-      "id": "student_background",
-      "order": 7.0,
-      "title": "Student Background",
-      "applies_to_kinds": [
-        "activity_for_review",
-        "activity_for_testing",
-        "approved_activity"
-      ],
-      "items": [
-        {
-          "kind": "field",
-          "order": 1.0,
-          "id": "q2",
-          "section_id": "student_background",
-          "group_id": null,
-          "label": "Have students used and/or reviewed this activity?",
-          "type": "radio",
-          "options": [
-            {
-              "value": "yes",
-              "label": "Yes"
-            },
-            {
-              "value": "no",
-              "label": "No"
-            }
-          ],
-          "required": "TRUE",
-          "required_first_only": false,
-          "required_for_kinds": [],
-          "applies_to_kinds": [
-            "all"
-          ],
-          "ui_style": "",
-          "help_text": "",
-          "show_if": null,
-          "disabled_if": null,
-          "pdf": {
-            "page_break_before": false,
-            "pdf_format": "checklist"
-          }
-        },
-        {
-          "kind": "field",
-          "order": 2.0,
-          "id": "q3a",
-          "section_id": "student_background",
-          "group_id": null,
-          "label": "Key knowledge students should have as a prerequisite.",
-          "type": "textarea",
-          "options": [],
-          "required": "TRUE",
-          "required_first_only": false,
-          "required_for_kinds": [],
-          "applies_to_kinds": [
-            "all"
-          ],
-          "ui_style": "",
-          "help_text": "",
-          "show_if": null,
-          "disabled_if": null,
-          "pdf": {
-            "page_break_before": false,
-            "pdf_format": "paragraph"
-          }
-        },
-        {
-          "kind": "field",
-          "order": 3.0,
-          "id": "q3b",
-          "section_id": "student_background",
-          "group_id": null,
-          "label": "Knowledge students are not expected to have prior to activity.",
-          "type": "textarea",
-          "options": [],
-          "required": "TRUE",
-          "required_first_only": false,
-          "required_for_kinds": [],
-          "applies_to_kinds": [
-            "all"
-          ],
-          "ui_style": "",
-          "help_text": "",
           "show_if": null,
           "disabled_if": null,
           "pdf": {
