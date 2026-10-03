@@ -932,8 +932,7 @@ async function generatePdf() {
 
     function drawFieldBlock(field, getVal) {
       if (field.type === 'info') {
-        drawText(field.label, { size: 9, color: COLOR_MUTED });
-        y -= 4;
+        // Instructional/explanatory text only — never part of the submitted record.
         return;
       }
       const val = getVal();

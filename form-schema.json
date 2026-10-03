@@ -920,7 +920,7 @@
           "options": [
             {
               "value": "affirmed",
-              "label": "I affirm that I have critically reviewed, verified, and substantively revised any AI-assisted content in this activity. My own intellectual and creative contribution to this activity is substantial enough that I hold copyright in the final work, and I accept full responsibility for the accuracy, originality, instructional design, and POGIL alignment of the submitted activity."
+              "label": "I have critically reviewed, verified, and substantively revised any AI-assisted content in this activity. My own intellectual and creative contribution to this activity is substantial enough that I hold copyright in the final work, and I accept full responsibility for the accuracy, originality, instructional design, and POGIL alignment of the submitted activity."
             }
           ],
           "required": "IF_VISIBLE",
