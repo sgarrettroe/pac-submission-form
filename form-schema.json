@@ -850,7 +850,7 @@
           "id": "ai_use_intro",
           "section_id": "ai_use",
           "group_id": null,
-          "label": "Generative AI can support activity development, but it should support \u2014 not replace \u2014 your own instructional design, disciplinary judgment, and critical thinking. As AI plays a larger role in producing content, the expectation for your review, verification, and disclosure increases. Three levels of AI use are\n\n\u2022 ROUTINE or SUPPORTIVE use covers things like brainstorming, wording suggestions, grammar/clarity checks, or formatting on work you conceived and directed.\n\n\u2022 SUBSTANTIVE DEVELOPMENTAL use means AI helped develop or revise real components \u2014 drafting objectives, generating questions from your objectives, building datasets, or suggesting scaffolding \u2014 requiring your careful review and verification.\n\n\u2022 EXTENSIVE GENERATIVE use means AI generated substantial portions of the activity (e.g. a full question sequence or draft) with limited initial input from you.\n\n Select the level that best describes how AI was used in developing this activity.",
+          "label": "Generative AI can support activity development, but it should support, not replace, your own instructional design, disciplinary judgment, and critical thinking. As AI plays a larger role in producing content, the expectation for your review, verification, and disclosure increases. Three levels of AI use are\n\n\u2022 ROUTINE or SUPPORTIVE use covers things like brainstorming, wording suggestions, grammar/clarity checks, or formatting on work you conceived and directed.\n\n\u2022 SUBSTANTIVE DEVELOPMENTAL use means AI helped develop or revise real components such as drafting objectives, generating questions from your objectives, building datasets, or suggesting scaffolding.\n\n\u2022 EXTENSIVE GENERATIVE use means AI generated substantial portions of the activity (e.g. a full question sequence or draft) with limited initial input from you.\n\n Select the level that best describes how AI was used in developing this activity.",
           "type": "info",
           "options": [],
           "required": "FALSE",
@@ -912,37 +912,6 @@
         {
           "kind": "field",
           "order": 3.0,
-          "id": "ai_responsibility_statement",
-          "section_id": "ai_use",
-          "group_id": null,
-          "label": "Author Responsibility Statement: By selecting this level, I affirm that I have critically reviewed, verified, and substantively revised any AI-assisted content in this activity. My own intellectual and creative contribution to this activity is substantial enough that I hold copyright in the final work, and I accept full responsibility for the accuracy, originality, instructional design, and POGIL alignment of the submitted activity.",
-          "type": "info",
-          "options": [],
-          "required": "FALSE",
-          "required_first_only": false,
-          "required_for_kinds": [],
-          "applies_to_kinds": [
-            "all"
-          ],
-          "ui_style": "",
-          "help_text": "",
-          "show_if": {
-            "ref": "ai_use_level",
-            "op": "in",
-            "values": [
-              "substantive",
-              "extensive"
-            ]
-          },
-          "disabled_if": null,
-          "pdf": {
-            "page_break_before": false,
-            "pdf_format": "paragraph"
-          }
-        },
-        {
-          "kind": "field",
-          "order": 4.0,
           "id": "ai_responsibility_checkbox",
           "section_id": "ai_use",
           "group_id": null,
@@ -951,7 +920,7 @@
           "options": [
             {
               "value": "affirmed",
-              "label": "I affirm the statement above."
+              "label": "I affirm that I have critically reviewed, verified, and substantively revised any AI-assisted content in this activity. My own intellectual and creative contribution to this activity is substantial enough that I hold copyright in the final work, and I accept full responsibility for the accuracy, originality, instructional design, and POGIL alignment of the submitted activity."
             }
           ],
           "required": "IF_VISIBLE",
@@ -978,7 +947,7 @@
         },
         {
           "kind": "field",
-          "order": 5.0,
+          "order": 4.0,
           "id": "ai_use_description",
           "section_id": "ai_use",
           "group_id": null,
