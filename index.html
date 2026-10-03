@@ -110,7 +110,7 @@
   .field label.field-label {
     display: block; font-size: 0.82rem; font-weight: 600; margin-bottom: 6px; color: var(--navy);
   }
-  .field .help { font-size: 0.75rem; color: var(--muted); margin: 4px 0 0; }
+  .field .help { font-size: 0.75rem; color: var(--muted); margin: 4px 0 10px; }
   .req-mark { color: var(--danger); margin-left: 3px; font-weight: 700; }
 
   input[type=text], input[type=email], input[type=tel], input[type=date], textarea, select {
@@ -330,7 +330,7 @@ function syncToggleSelected(tg, field, getVal) {
   });
 }
 
-function renderField(field, container, getVal, setVal, onChange) {
+function renderField(field, container, getVal, setVal, onChange, labelOverride) {
   fieldById[field.id] = field;
   const wrap = document.createElement('div');
   wrap.className = 'field';
@@ -388,10 +388,10 @@ function renderField(field, container, getVal, setVal, onChange) {
     return wrap;
   }
 
-  wrap.appendChild(labelWithReq(field.label));
+  wrap.appendChild(labelWithReq(labelOverride || field.label));
 
   const isSingleCheckbox = field.type === 'checkbox_group' && field.options.length === 1;
-  const redundantLabel = isSingleCheckbox &&
+  const redundantLabel = !labelOverride && isSingleCheckbox &&
     field.options[0].label.trim().toLowerCase() === field.label.trim().toLowerCase();
   if (redundantLabel) {
     // A lone checkbox whose option text repeats the field label reads better as
@@ -505,10 +505,19 @@ function renderGroup(group, container, onChange) {
     block.className = 'group-instance panel panel-green';
     block.dataset.instanceIdx = idx;
 
-    const lbl = document.createElement('p');
-    lbl.className = 'instance-label';
-    lbl.textContent = group.item_label + ' ' + (idx + 1);
-    block.appendChild(lbl);
+    // A group with exactly one field (e.g. "Content Objective") would otherwise
+    // show its own label directly under an instance heading that says almost
+    // the same thing ("Content Objective 1" / "Content Objective"). Fold the
+    // instance number into the field's own label instead, and skip the
+    // separate heading line — this keeps the required-asterisk logic working
+    // normally, since the field still has its own real label element.
+    const singleField = group.fields.length === 1;
+    if (!singleField) {
+      const lbl = document.createElement('p');
+      lbl.className = 'instance-label';
+      lbl.textContent = group.item_label + ' ' + (idx + 1);
+      block.appendChild(lbl);
+    }
 
     if (idx >= group.min_instances) {
       const rm = document.createElement('button');
@@ -524,11 +533,13 @@ function renderGroup(group, container, onChange) {
     }
 
     group.fields.forEach(f => {
+      const labelOverride = singleField ? (group.item_label + ' ' + (idx + 1)) : null;
       renderField(
         f, block,
         () => getInstanceValue(group.id, idx, f.id),
         (v) => { groupInstances[group.id][idx][f.id] = v; },
-        onChange
+        onChange,
+        labelOverride
       );
     });
 
@@ -930,23 +941,25 @@ async function generatePdf() {
     }
     function missing() { return '(not provided)'; }
 
-    function drawFieldBlock(field, getVal) {
+    function drawFieldBlock(field, getVal, labelOverride) {
       if (field.type === 'info') {
         // Instructional/explanatory text only — never part of the submitted record.
         return;
       }
       const val = getVal();
+      const displayLabel = labelOverride || field.label;
 
       if (field.type === 'checkbox_group' && field.options.length === 1) {
         const checked = Array.isArray(val) && val.includes(field.options[0].value);
-        const redundant = field.options[0].label.trim().toLowerCase() === field.label.trim().toLowerCase();
-        if (!redundant) drawText(field.label, { font: fontBold, size: 10, color: COLOR_NAVY });
+        const redundant = !labelOverride &&
+          field.options[0].label.trim().toLowerCase() === field.label.trim().toLowerCase();
+        if (!redundant) drawText(displayLabel, { font: fontBold, size: 10, color: COLOR_NAVY });
         drawText((checked ? '[x] ' : '[ ] ') + field.options[0].label, { size: 10 });
         y -= 4;
         return;
       }
 
-      drawText(field.label, { font: fontBold, size: 10, color: COLOR_NAVY });
+      drawText(displayLabel, { font: fontBold, size: 10, color: COLOR_NAVY });
       if (field.type === 'checkbox_group') {
         const arr = Array.isArray(val) ? val : [];
         field.options.forEach(opt => {
@@ -983,16 +996,17 @@ async function generatePdf() {
       });
       if (!visibleItems.length) return;
 
-      // A page_break_before on the FIRST visible item means "start this whole
-      // section fresh" — do the break before the heading, not after, so the
-      // heading never gets stranded alone at the bottom of the prior page.
-      const firstItemBreak = visibleItems[0].pdf && visibleItems[0].pdf.page_break_before;
-      if (firstItemBreak) addPage();
+      // A page_break_before ANYWHERE in the section means "start this whole
+      // section fresh" — not "break partway through it." Doing the break once,
+      // before the heading, is what keeps the heading from ever landing alone
+      // at the bottom of the prior page while its content starts on the next —
+      // regardless of which specific field in the section happens to carry the
+      // flag, or where it sits in the field order.
+      const sectionNeedsBreak = visibleItems.some(it => it.pdf && it.pdf.page_break_before);
+      if (sectionNeedsBreak) addPage();
       drawSectionHeading(section.title);
 
-      visibleItems.forEach((item, idx) => {
-        if (idx > 0 && item.pdf && item.pdf.page_break_before) addPage();
-
+      visibleItems.forEach((item) => {
         if (item.kind === 'field') {
           drawFieldBlock(item, () => getTopValue(item.id));
         } else {
@@ -1001,11 +1015,18 @@ async function generatePdf() {
             drawText('(none added)', { size: 9, color: COLOR_MUTED, indent: 12 });
             y -= 4;
           }
+          const singleField = item.fields.length === 1;
           instances.forEach((inst, idx) => {
-            drawText(item.item_label + ' ' + (idx + 1), { font: fontBold, size: 10, color: COLOR_HEADER });
+            // Mirrors the on-screen renderer: a group with exactly one field
+            // folds the instance number into that field's own label instead of
+            // printing a separate, nearly-identical heading above it.
+            if (!singleField) {
+              drawText(item.item_label + ' ' + (idx + 1), { font: fontBold, size: 10, color: COLOR_HEADER });
+            }
             item.fields.forEach(f => {
               if (!evalShowIf(f.show_if, (ref) => getInstanceValue(item.id, idx, ref))) return;
-              drawFieldBlock(f, () => getInstanceValue(item.id, idx, f.id));
+              const labelOverride = singleField ? (item.item_label + ' ' + (idx + 1)) : null;
+              drawFieldBlock(f, () => getInstanceValue(item.id, idx, f.id), labelOverride);
             });
             y -= 4;
           });
