@@ -174,12 +174,24 @@
             "page_break_before": false,
             "pdf_format": "checklist"
           }
-        },
+        }
+      ]
+    },
+    {
+      "id": "kind_of_feedback",
+      "order": 3.0,
+      "title": "Kind of Feedback",
+      "applies_to_kinds": [
+        "activity_for_review",
+        "activity_for_testing",
+        "approved_activity"
+      ],
+      "items": [
         {
           "kind": "field",
-          "order": 3.0,
+          "order": 1.0,
           "id": "review_kind_intro",
-          "section_id": "submission_kind",
+          "section_id": "kind_of_feedback",
           "group_id": null,
           "label": "The PAC offers several kinds of activity feedback.\n\n\u2022 TRADITIONAL REVIEW: Reviewers provide written feedback based on the appropriate rubric.\n\n\u2022 COLLABORATIVE ACTIVITY FEEDBACK: Authors meet virtually and share feedback with each other in a facilitated session.\n\n\u2022 CLASSROOM TESTING: Activities are sent to testers, who provide feedback based on their classroom experiences.",
           "type": "info",
@@ -201,9 +213,9 @@
         },
         {
           "kind": "field",
-          "order": 4.0,
+          "order": 2.0,
           "id": "review_kind",
-          "section_id": "submission_kind",
+          "section_id": "kind_of_feedback",
           "group_id": null,
           "label": "Kind of Review",
           "type": "radio",
@@ -239,12 +251,48 @@
             "page_break_before": false,
             "pdf_format": "checklist"
           }
+        }
+      ]
+    },
+    {
+      "id": "posting_goal",
+      "order": 4.0,
+      "title": "Posting Goal",
+      "applies_to_kinds": [
+        "activity_for_review",
+        "activity_for_testing",
+        "approved_activity"
+      ],
+      "items": [
+        {
+          "kind": "field",
+          "order": 1.0,
+          "id": "posting_goal_intro",
+          "section_id": "posting_goal",
+          "group_id": null,
+          "label": "The PAC serves authors with many goals. Some authors want PAC feedback and may not intend to post the activity on the PAC (e.g., activities for Endorsed Collections). Indicate your preference.",
+          "type": "info",
+          "options": [],
+          "required": "FALSE",
+          "required_first_only": false,
+          "required_for_kinds": [],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "ui_style": "",
+          "help_text": "",
+          "show_if": null,
+          "disabled_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "paragraph"
+          }
         },
         {
           "kind": "field",
-          "order": 5.0,
+          "order": 2.0,
           "id": "posting_goal",
-          "section_id": "submission_kind",
+          "section_id": "posting_goal",
           "group_id": null,
           "label": "Posting Goal",
           "type": "checkbox_group",
@@ -261,7 +309,7 @@
             "all"
           ],
           "ui_style": "",
-          "help_text": "The PAC serves authors with many goals. Some authors want PAC feedback and may not intend to post the activity on the PAC (e.g., activities for Endorsed Collections). Indicate your preference.",
+          "help_text": "",
           "show_if": null,
           "disabled_if": null,
           "pdf": {
@@ -273,7 +321,7 @@
     },
     {
       "id": "activity_title_objectives",
-      "order": 4.0,
+      "order": 5.0,
       "title": "Activity Title and Learning Objectives",
       "applies_to_kinds": [
         "all"
@@ -413,7 +461,7 @@
     },
     {
       "id": "classroom_context",
-      "order": 5.0,
+      "order": 6.0,
       "title": "Activity Type and Classroom Context",
       "applies_to_kinds": [
         "all"
@@ -663,7 +711,7 @@
     },
     {
       "id": "activity_description",
-      "order": 6.0,
+      "order": 7.0,
       "title": "Activity Description",
       "applies_to_kinds": [
         "activity_idea"
@@ -697,7 +745,7 @@
     },
     {
       "id": "approval_evidence",
-      "order": 9.0,
+      "order": 8.0,
       "title": "Classroom Testing & Revision",
       "applies_to_kinds": [
         "approved_activity"
@@ -731,7 +779,7 @@
     },
     {
       "id": "image_source",
-      "order": 10.0,
+      "order": 9.0,
       "title": "Image Source",
       "applies_to_kinds": [
         "activity_for_review",
@@ -884,7 +932,7 @@
     },
     {
       "id": "ai_use",
-      "order": 11.0,
+      "order": 10.0,
       "title": "Generative AI Use",
       "applies_to_kinds": [
         "activity_for_review",
@@ -1028,7 +1076,7 @@
     },
     {
       "id": "check_list",
-      "order": 12.0,
+      "order": 11.0,
       "title": "Checklist for Submission",
       "applies_to_kinds": [
         "all"
