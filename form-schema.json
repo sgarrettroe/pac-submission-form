@@ -775,7 +775,7 @@
             },
             {
               "value": "specify",
-              "label": "Specify image authorship"
+              "label": "Specify image authorship individually"
             }
           ],
           "required": "FALSE",
@@ -919,7 +919,7 @@
           "id": "ai_use_intro",
           "section_id": "ai_use",
           "group_id": null,
-          "label": "Generative AI can support activity development, but it should support \u2014 not replace \u2014 your own instructional design, disciplinary judgment, and critical thinking. As AI plays a larger role in producing content, the expectation for your review, verification, and disclosure increases. Select the level that best describes how AI was used in developing this activity.\n\u2022 ROUTINE or SUPPORTIVE use covers things like brainstorming, wording suggestions, grammar/clarity checks, or formatting on work you conceived and directed.\n\u2022 SUBSTANTIVE DEVELOPMENTAL use means AI helped develop or revise real components \u2014 drafting objectives, generating questions from your objectives, building datasets, or suggesting scaffolding \u2014 requiring your careful review and verification.\n\u2022 EXTENSIVE GENERATIVE use means AI generated substantial portions of the activity (e.g. a full question sequence or draft) with limited initial input from you.",
+          "label": "Generative AI can support activity development, but it should support \u2014 not replace \u2014 your own instructional design, disciplinary judgment, and critical thinking. As AI plays a larger role in producing content, the expectation for your review, verification, and disclosure increases. Three levels of AI use are\n\n\u2022 ROUTINE or SUPPORTIVE use covers things like brainstorming, wording suggestions, grammar/clarity checks, or formatting on work you conceived and directed.\n\n\u2022 SUBSTANTIVE DEVELOPMENTAL use means AI helped develop or revise real components \u2014 drafting objectives, generating questions from your objectives, building datasets, or suggesting scaffolding \u2014 requiring your careful review and verification.\n\n\u2022 EXTENSIVE GENERATIVE use means AI generated substantial portions of the activity (e.g. a full question sequence or draft) with limited initial input from you.\n\n Select the level that best describes how AI was used in developing this activity.",
           "type": "info",
           "options": [],
           "required": "FALSE",
@@ -1179,7 +1179,7 @@
           "options": [
             {
               "value": "yes",
-              "label": "Activity"
+              "label": "Activity (PDF)"
             }
           ],
           "required": "FALSE",
@@ -1212,7 +1212,7 @@
           "options": [
             {
               "value": "yes",
-              "label": "TOC Graphic"
+              "label": "TOC Graphic (PNG)"
             }
           ],
           "required": "FALSE",
@@ -1245,7 +1245,7 @@
           "options": [
             {
               "value": "yes",
-              "label": "Student Answers (Key)"
+              "label": "Student Answers / Key (PDF)"
             }
           ],
           "required": "FALSE",
@@ -1278,7 +1278,7 @@
           "options": [
             {
               "value": "yes",
-              "label": "Facilitation Guide"
+              "label": "Facilitation Guide (PDF)"
             }
           ],
           "required": "FALSE",
