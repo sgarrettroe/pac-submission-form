@@ -571,7 +571,7 @@
             "all"
           ],
           "ui_style": "",
-          "help_text": "",
+          "help_text": "A learning cycle activity takes students through one or more explore, invent, apply cycles. An application activity often guides the application of concepts without a complete learning cycle.",
           "show_if": null,
           "disabled_if": null,
           "pdf": {
@@ -1118,7 +1118,7 @@
           "id": "ai_use_intro",
           "section_id": "ai_use",
           "group_id": null,
-          "label": "Generative AI can support activity development, but it should support \u2014 not replace \u2014 your own instructional design, disciplinary judgment, and critical thinking. As AI plays a larger role in producing content, the expectation for your review, verification, and disclosure increases. Select the level that best describes how AI was used in developing this activity. Routine or Supportive use covers things like brainstorming, wording suggestions, grammar/clarity checks, or formatting on work you conceived and directed. Substantive Developmental use means AI helped develop or revise real components \u2014 drafting objectives, generating questions from your objectives, building datasets, or suggesting scaffolding \u2014 requiring your careful review and verification. Extensive Generative use means AI generated substantial portions of the activity (e.g. a full question sequence or draft) with limited initial input from you.",
+          "label": "Generative AI can support activity development, but it should support \u2014 not replace \u2014 your own instructional design, disciplinary judgment, and critical thinking. As AI plays a larger role in producing content, the expectation for your review, verification, and disclosure increases. Select the level that best describes how AI was used in developing this activity.\n\u2022 __Routine or Supportive use__ covers things like brainstorming, wording suggestions, grammar/clarity checks, or formatting on work you conceived and directed.\n\u2022 __Substantive Developmental use__ means AI helped develop or revise real components \u2014 drafting objectives, generating questions from your objectives, building datasets, or suggesting scaffolding \u2014 requiring your careful review and verification.\n\u2022 __Extensive Generative use__ means AI generated substantial portions of the activity (e.g. a full question sequence or draft) with limited initial input from you.",
           "type": "info",
           "options": [],
           "required": "FALSE",
