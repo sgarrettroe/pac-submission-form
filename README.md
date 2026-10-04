@@ -111,53 +111,50 @@ Flip either to `true` while debugging branching logic. Set back to `false` befor
 
 ---
 
-## OJS Integration (Trial — Cloudflare Worker)
+## OJS Integration (Blocked — Cloudflare WAF)
 
-**Status:** The Worker code is written and the architecture is sound, but this has not yet been deployed or tested end-to-end against OJS.
+**Status: Abandoned for now.** The Worker code is written, deployed to `https://pac-ojs-proxy.sgarrettroe.workers.dev`, and structurally correct — but it cannot reach the OJS API due to a Cloudflare WAF configuration issue outside our control.
 
-### What it does
+### What happened
 
-`pac-ojs-worker.js` is a Cloudflare Worker that acts as a secure proxy between the PAC form (running in the author's browser on GitHub Pages) and the OJS REST API. It:
+`pac.pogil.org` sits behind Cloudflare's **Managed Challenge** (bot protection), which blocks all non-browser HTTP requests to `/api/v1/*`. This includes requests from Cloudflare Workers, even though the Worker runs inside Cloudflare's own network.
 
-1. Accepts a `POST` from `index.html` containing the author's form data as JSON
-2. Maps the PAC `review_kind` to the correct OJS `sectionId`
+The fix requires a **WAF Custom Rule** on the `pac.pogil.org` Cloudflare account that exempts Worker traffic from the bot challenge:
+
+- Condition: `cf.worker.upstream_used eq true` AND `http.request.uri.path starts_with "/index.php/pac/api/v1"`
+- Action: **Skip → Bot Fight Mode**
+
+We do not have access to the Cloudflare account managing `pac.pogil.org`. Until someone with that access adds the rule, the Worker cannot reach OJS.
+
+### To resume this work
+
+1. Get the WAF rule above added by whoever manages the `pac.pogil.org` Cloudflare account (hosting provider or PAC IT)
+2. The Worker is already deployed — retest with the browser console fetch in `about:blank`:
+   ```js
+   fetch('https://pac-ojs-proxy.sgarrettroe.workers.dev/submit', {
+     method: 'POST',
+     headers: { 'Content-Type': 'application/json' },
+     body: JSON.stringify({
+       title: 'Test Submission via Worker',
+       review_kind: 'traditional_review',
+       readiness: 'activity_for_review',
+       authors: [{ author_name: 'Test Author', author_email: 'test@test.com' }]
+     })
+   }).then(r => r.json()).then(console.log)
+   ```
+3. If the response contains `submissionId` and `workflowUrl`, the Worker is working and the next step is wiring up a "Submit to PAC" button in `index.html`
+
+### What the Worker does (for reference)
+
+`pac-ojs-worker.js` is a Cloudflare Worker proxy that:
+1. Accepts a POST from `index.html` with PAC form data as JSON
+2. Maps `review_kind` → OJS `sectionId`
 3. Creates a bare OJS submission (`POST /submissions`)
-4. Creates a publication for it (`POST /submissions/{id}/publications`) — required separately in OJS 3.3
+4. Creates a publication (`POST /submissions/{id}/publications`) — required separately in OJS 3.3
 5. Adds all authors (`POST /submissions/{id}/publications/{pubId}/contributors`)
-6. Returns the OJS author workflow URL so the author can finish uploading files in OJS
+6. Returns the OJS author workflow URL
 
-### Why a Worker (not a backend server)
-
-The PAC form is intentionally serverless — hosted on GitHub Pages with no backend. An OJS API token cannot be safely embedded in a public HTML file (anyone viewing source could extract and misuse it). A Cloudflare Worker holds the token as an **encrypted secret** that never appears in source code, browser responses, or logs. Only the Worker's own runtime can access it.
-
-### Deployment (manual — not yet automated)
-
-The Worker is deployed and updated manually via the Cloudflare dashboard. Changes to `pac-ojs-worker.js` in this repo do **not** auto-deploy — you must paste the updated code into the Cloudflare editor and redeploy by hand.
-
-Future improvement: add a GitHub Action that deploys the Worker via Wrangler CLI on push.
-
-**Steps to deploy:**
-1. Create a free account at [cloudflare.com](https://cloudflare.com)
-2. Workers & Pages → Create → Worker → name it `pac-ojs-proxy`
-3. Paste `pac-ojs-worker.js` into the online editor → Deploy
-4. Settings → Variables and Secrets, add:
-
-| Name | Type | Value |
-|---|---|---|
-| `OJS_TOKEN` | **Secret (encrypted)** | OJS API token for the PAC service account |
-| `OJS_BASE_URL` | Plain text | `https://pac.pogil.org/index.php/pac/api/v1` |
-| `ALLOWED_ORIGIN` | Plain text | `https://sgarrettroe.github.io` |
-
-### Known OJS 3.3 quirks
-
-- `POST /submissions` does **not** auto-create a publication in OJS 3.3 (this changed in 3.4). The Worker handles this with a separate `POST /submissions/{id}/publications` step.
-- Contributor locale fields use bracket notation: `"givenName[en_US]"`, not `{"givenName": {"en_US": "..."}}`.
-- Several endpoints documented for 3.4+ do not exist in 3.3 (`/sections`, `/contributors` as GET, etc.).
-- The OJS instance is behind Cloudflare's Managed Challenge, which blocks `curl` and non-browser scripts from reaching `/api/v1/...` directly. The Worker runs inside Cloudflare's network and is not subject to this challenge.
-
-### Section ID mapping
-
-New PAC submissions are routed to OJS sections based on the author's selected `review_kind`:
+### Section ID mapping (for reference)
 
 | PAC `review_kind` | OJS section | `sectionId` |
 |---|---|---|
@@ -166,11 +163,18 @@ New PAC submissions are routed to OJS sections based on the author's selected `r
 | `classroom_testing` | Activities for Classroom Testing Review | 15 |
 | `activity_idea` | Activity Ideas | 3 |
 
-Note: `readiness` (Activity for Review, Activity for Testing, Approved Activity) is set by editors after submission — it is not used to select the initial OJS section.
+### Known OJS 3.3 quirks (for reference)
 
-### Known TODO
+- `POST /submissions` does not auto-create a publication in OJS 3.3 (fixed in 3.4)
+- Contributor locale fields use bracket notation: `"givenName[en_US]"` not `{"givenName": {"en_US": "..."}}`
+- Several 3.4+ endpoints do not exist in 3.3: `/sections`, `/contributors` as GET, etc.
+- The origin IP is hidden behind Cloudflare's proxy — direct IP bypass is not viable
 
-- `buildAbstract()` in the Worker is a placeholder that encodes PAC metadata fields into the OJS abstract. Once the PAC form captures a real abstract/description from authors, replace with: `return pac.abstract || '';`
+### Known TODO (for when this resumes)
+
+- `buildAbstract()` in the Worker is a placeholder encoding PAC metadata into the OJS abstract field. Once the PAC form captures a real abstract from authors, replace with: `return pac.abstract || '';`
+- Wire up a "Submit to PAC" button in `index.html` that POSTs form data to the Worker URL
+- Consider automating Worker deployment via GitHub Actions + Wrangler CLI
 
 ---
 
