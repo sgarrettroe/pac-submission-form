@@ -1,0 +1,53 @@
+name: Rebuild form schema
+
+# Runs automatically when structure.xlsx or build_schema.py changes on main.
+# Can also be triggered manually from the Actions tab (useful for testing
+# or forcing a rebuild without editing a file).
+on:
+  push:
+    branches: [main]
+    paths:
+      - structure.xlsx
+      - build_schema.py
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write   # needed to commit form-schema.json back to the repo
+
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+        with:
+          # Fetch with the default GITHUB_TOKEN so the commit step can push.
+          # token is implicitly GITHUB_TOKEN here; no extra secret needed.
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install openpyxl
+
+      - name: Build schema
+        run: python build_schema.py structure.xlsx form-schema.json
+
+      - name: Commit updated schema (if changed)
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add form-schema.json
+          # Only commit if form-schema.json actually changed — avoids
+          # empty commits when structure.xlsx was touched but the schema
+          # content is identical (e.g. whitespace-only cell edits).
+          if git diff --cached --quiet; then
+            echo "form-schema.json unchanged — nothing to commit."
+          else
+            git commit -m "chore: rebuild form-schema.json from structure.xlsx [skip ci]"
+            git push
+          fi
