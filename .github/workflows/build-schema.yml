@@ -20,14 +20,14 @@ jobs:
 
     steps:
       - name: Check out repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           # Fetch with the default GITHUB_TOKEN so the commit step can push.
           # token is implicitly GITHUB_TOKEN here; no extra secret needed.
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: "3.11"
 
