@@ -733,7 +733,7 @@
             "all"
           ],
           "ui_style": "",
-          "help_text": "250 words or less",
+          "help_text": "500 words or less",
           "show_if": null,
           "disabled_if": null,
           "pdf": {
