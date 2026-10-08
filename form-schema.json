@@ -337,7 +337,7 @@
               "label": "I am unsure."
             }
           ],
-          "required": "FALSE",
+          "required": "TRUE",
           "required_first_only": false,
           "required_for_kinds": [],
           "applies_to_kinds": [
