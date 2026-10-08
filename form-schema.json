@@ -102,8 +102,8 @@
               "label": "Institution",
               "type": "text",
               "options": [],
-              "required": "TRUE",
-              "required_first_only": true,
+              "required": "FALSE",
+              "required_first_only": false,
               "required_for_kinds": [],
               "applies_to_kinds": [
                 "all"
@@ -873,10 +873,10 @@
       ]
     },
     {
-      "id": "image_source",
+      "id": "copyright_attribution",
       "order": 9.0,
       "pdf_order": 6.0,
-      "title": "Image Source",
+      "title": "Copyright & Attribution",
       "applies_to_kinds": [
         "activity_for_review",
         "activity_for_testing",
@@ -886,19 +886,43 @@
         {
           "kind": "field",
           "order": 1.0,
-          "id": "image_authorship_mode",
-          "section_id": "image_source",
+          "id": "copyright_intro",
+          "section_id": "copyright_attribution",
           "group_id": null,
-          "label": "Image Authorship",
+          "label": "The standards for including copyrighted materials changes as activities move toward Approval. \n\n\u2022 APPROVED ACTIVITIES: the author(s) should hold copyright on all materials OR specifically identify the origin of materials that would require a license. \n\n\u2022 REVIEW and TESTING: Activities may use copyrighted materials with proper attribution under Fair Use.",
+          "type": "info",
+          "options": [],
+          "required": "FALSE",
+          "required_first_only": false,
+          "required_for_kinds": [],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "ui_style": "",
+          "help_text": "",
+          "show_if": null,
+          "disabled_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "paragraph"
+          }
+        },
+        {
+          "kind": "field",
+          "order": 2.0,
+          "id": "copyright_authorship_mode",
+          "section_id": "copyright_attribution",
+          "group_id": null,
+          "label": "Copyrighted Materials",
           "type": "radio",
           "options": [
             {
               "value": "blanket_author",
-              "label": "I am the author of all images in the activity"
+              "label": "I am the sole author of all materials in this activity"
             },
             {
               "value": "specify",
-              "label": "Specify image authorship individually"
+              "label": "Specify authorship individually"
             }
           ],
           "required": "FALSE",
@@ -921,22 +945,22 @@
         {
           "kind": "group",
           "order": 2.0,
-          "id": "image_source_group",
-          "section_id": "image_source",
-          "item_label": "Image",
+          "id": "copyright_item_group",
+          "section_id": "copyright_attribution",
+          "item_label": "Item",
           "min_instances": 0,
           "max_instances": null,
-          "add_button_text": "+ Add image",
+          "add_button_text": "+ Add item",
           "required_for_kinds": [
             "approved_activity"
           ],
           "fields": [
             {
-              "id": "image_description",
-              "section_id": "image_source",
-              "group_id": "image_source_group",
-              "order": 1.0,
-              "label": "Image",
+              "id": "item_description",
+              "section_id": "copyright_attribution",
+              "group_id": "copyright_item_group",
+              "order": 3.0,
+              "label": "Description",
               "type": "text",
               "options": [],
               "required": "TRUE",
@@ -946,7 +970,7 @@
                 "all"
               ],
               "ui_style": "",
-              "help_text": "A short description or filename identifying the image.",
+              "help_text": "Brief description or filename of the copyrighted material (e.g. Figure 3 from Smith 2020, or data_table.csv)",
               "show_if": null,
               "disabled_if": null,
               "pdf": {
@@ -955,20 +979,20 @@
               }
             },
             {
-              "id": "image_role",
-              "section_id": "image_source",
-              "group_id": "image_source_group",
-              "order": 2.0,
-              "label": "Image Credit",
+              "id": "item_role",
+              "section_id": "copyright_attribution",
+              "group_id": "copyright_item_group",
+              "order": 3.0,
+              "label": "Authorship",
               "type": "radio",
               "options": [
                 {
                   "value": "author",
-                  "label": "I am the author of this image"
+                  "label": "I am the author of this material"
                 },
                 {
                   "value": "source",
-                  "label": "I am not the author of this image. Image source:"
+                  "label": "I am not the author of this material. Source:"
                 }
               ],
               "required": "TRUE",
@@ -987,10 +1011,10 @@
               }
             },
             {
-              "id": "image_source_detail",
-              "section_id": "image_source",
-              "group_id": "image_source_group",
-              "order": 3.0,
+              "id": "item_source_detail",
+              "section_id": "copyright_attribution",
+              "group_id": "copyright_item_group",
+              "order": 4.0,
               "label": "Source (URL or description)",
               "type": "text",
               "options": [],
@@ -1003,7 +1027,7 @@
               "ui_style": "",
               "help_text": "",
               "show_if": {
-                "ref": "image_role",
+                "ref": "item_role",
                 "op": "==",
                 "value": "source"
               },
@@ -1015,7 +1039,7 @@
             }
           ],
           "show_if": {
-            "ref": "image_authorship_mode",
+            "ref": "copyright_authorship_mode",
             "op": "==",
             "value": "specify"
           },
