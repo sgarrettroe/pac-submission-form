@@ -93,6 +93,29 @@
                 "page_break_before": false,
                 "pdf_format": "table_row"
               }
+            },
+            {
+              "id": "author_institution",
+              "section_id": "authors",
+              "group_id": "authors_group",
+              "order": 4.0,
+              "label": "Institution",
+              "type": "text",
+              "options": [],
+              "required": "TRUE",
+              "required_first_only": true,
+              "required_for_kinds": [],
+              "applies_to_kinds": [
+                "all"
+              ],
+              "ui_style": "",
+              "help_text": "",
+              "show_if": null,
+              "disabled_if": null,
+              "pdf": {
+                "page_break_before": false,
+                "pdf_format": "table_row"
+              }
             }
           ],
           "show_if": null,
@@ -118,7 +141,7 @@
           "id": "submission_kind_intro",
           "section_id": "submission_kind",
           "group_id": null,
-          "label": "The PAC supports activity writing across all stages of development. What is your estimate for the stage of your activity?",
+          "label": "The PAC supports activity writing across all stages of development. What is your estimate for the stage of your activity?\n\n\u2022 ACTIVITY IDEAS are ideas, intial drafts, rough activities. Authors are seeking collaborators to work on these ideas to develop activities.\n\n\u2022 ACTIVITIES FOR REVIEW are complete activities. Authors are seeking formative feedback to improve the quality of the activity. \n\n\u2022 ACTIVITIES FOR TESTING are complete learning cycle or application activities that are ready for widespread classroom testing. Authors are seeking classroom testing feedback to optimize the activity.  \n\n\u2022 APPROVED ACTIVITIES are polished activities that have been revised based on classroom testing and meet the The POGIL Project's standards for a \"high-quality activity.\"",
           "type": "info",
           "options": [],
           "required": "FALSE",
