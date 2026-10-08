@@ -193,9 +193,16 @@ def build(xlsx_path: Path):
         except (TypeError, ValueError):
             errors.append(f"Sections row {rownum} ({sid}): 'order' is not a number")
             order = 0
+        pdf_order_raw = r.get("pdf_order")
+        try:
+            pdf_order = float(pdf_order_raw) if pdf_order_raw not in (None, "") else order
+        except (TypeError, ValueError):
+            errors.append(f"Sections row {rownum} ({sid}): 'pdf_order' is not a number")
+            pdf_order = order
         sections[sid] = {
             "id": sid,
             "order": order,
+            "pdf_order": pdf_order,
             "title": str(r.get("title", "")).strip(),
             "applies_to_kinds": applies,
             "_row": rownum,

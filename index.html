@@ -951,7 +951,13 @@ async function generatePdf() {
 
     const kset = activeKindSet();
 
-    SCHEMA.sections.forEach(section => {
+    // Sort sections by pdf_order for the PDF (falls back to order if not set),
+    // independently of the form display order.
+    const pdfSections = [...SCHEMA.sections].sort((a, b) =>
+      (a.pdf_order ?? a.order) - (b.pdf_order ?? b.order)
+    );
+
+    pdfSections.forEach(section => {
       if (!kindSetMatches(section.applies_to_kinds, kset)) return;
 
       const visibleItems = section.items.filter(item => {
