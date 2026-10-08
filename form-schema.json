@@ -299,11 +299,19 @@
           "section_id": "posting_goal",
           "group_id": null,
           "label": "Posting Goal",
-          "type": "checkbox_group",
+          "type": "radio",
           "options": [
             {
-              "value": "intend_to_post",
+              "value": "posting_goal_yes",
               "label": "I intend the activity to be posted on the PAC."
+            },
+            {
+              "value": "posting_goal_no",
+              "label": "I do not intend the activity to be post on the PAC."
+            },
+            {
+              "value": "posting_goal_maybe",
+              "label": "I am unsure."
             }
           ],
           "required": "FALSE",
@@ -461,6 +469,30 @@
             "page_break_before": false,
             "pdf_format": "repeated_block"
           }
+        },
+        {
+          "kind": "field",
+          "order": 5.0,
+          "id": "keywords",
+          "section_id": "activity_title_objectives",
+          "group_id": null,
+          "label": "Keywords",
+          "type": "text",
+          "options": [],
+          "required": "TRUE",
+          "required_first_only": false,
+          "required_for_kinds": [],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "ui_style": "",
+          "help_text": "topics covered",
+          "show_if": null,
+          "disabled_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "table_row"
+          }
         }
       ]
     },
@@ -590,6 +622,10 @@
             {
               "value": "statistics",
               "label": "Statistics"
+            },
+            {
+              "value": "other",
+              "label": "Other"
             }
           ],
           "required": "TRUE",
@@ -601,6 +637,34 @@
           "ui_style": "",
           "help_text": "",
           "show_if": null,
+          "disabled_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "table_row"
+          }
+        },
+        {
+          "kind": "field",
+          "order": 3.5,
+          "id": "discipline_other",
+          "section_id": "classroom_context",
+          "group_id": null,
+          "label": "If Other, please specify your discipline",
+          "type": "text",
+          "options": [],
+          "required": "IF_VISIBLE",
+          "required_first_only": false,
+          "required_for_kinds": [],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "ui_style": "",
+          "help_text": "",
+          "show_if": {
+            "ref": "discipline",
+            "op": "==",
+            "value": "other"
+          },
           "disabled_if": null,
           "pdf": {
             "page_break_before": false,
