@@ -141,7 +141,7 @@
           "id": "submission_kind_intro",
           "section_id": "submission_kind",
           "group_id": null,
-          "label": "The PAC supports activity writing across all stages of development. What is your estimate for the stage of your activity?\n\n\u2022 ACTIVITY IDEAS are ideas, intial drafts, rough activities. Authors are seeking collaborators to work on these ideas to develop activities.\n\n\u2022 ACTIVITIES FOR REVIEW are complete activities. Authors are seeking formative feedback to improve the quality of the activity. \n\n\u2022 ACTIVITIES FOR TESTING are complete learning cycle or application activities that are ready for widespread classroom testing. Authors are seeking classroom testing feedback to optimize the activity.  \n\n\u2022 APPROVED ACTIVITIES are polished activities that have been revised based on classroom testing and meet the The POGIL Project's standards for a \"high-quality activity.\"",
+          "label": "The PAC supports activity writing across all stages of development.\n\n\u2022 ACTIVITY IDEAS are ideas, initial drafts, rough activities. Authors are seeking collaborators to work on these ideas to develop activities.\n\n\u2022 ACTIVITIES FOR REVIEW are complete activities. Authors are seeking formative feedback to improve the quality of the activity. \n\n\u2022 ACTIVITIES FOR TESTING are complete learning cycle or application activities that are ready for widespread classroom testing. Authors are seeking classroom testing feedback to optimize the activity.  \n\n\u2022 APPROVED ACTIVITIES are polished activities that have been revised based on classroom testing and meet the The POGIL Project's standards for a \"high-quality activity.\"\n\nWhat is your estimate for the stage of your activity?",
           "type": "info",
           "options": [],
           "required": "FALSE",
@@ -219,7 +219,7 @@
           "id": "review_kind_intro",
           "section_id": "kind_of_feedback",
           "group_id": null,
-          "label": "The PAC offers several kinds of activity feedback.\n\n\u2022 TRADITIONAL REVIEW: Reviewers provide written feedback based on the appropriate rubric.\n\n\u2022 COLLABORATIVE ACTIVITY FEEDBACK: Authors meet virtually and share feedback with each other in a facilitated session.\n\n\u2022 CLASSROOM TESTING: Activities are sent to testers, who provide feedback based on their classroom experiences.",
+          "label": "The PAC offers several kinds of activity feedback.\n\n\u2022 TRADITIONAL REVIEW: Reviewers provide written feedback based on the appropriate rubric.\n\n\u2022 COLLABORATIVE ACTIVITY FEEDBACK: Authors meet virtually and share feedback with each other in a facilitated session.\n\n\u2022 CLASSROOM TESTING: Activities are sent to testers, who provide feedback based on their classroom experiences.\n\nWhat kind of review would you like?",
           "type": "info",
           "options": [],
           "required": "FALSE",
@@ -992,7 +992,7 @@
                 },
                 {
                   "value": "source",
-                  "label": "I am not the author of this material. Source:"
+                  "label": "I am not the author of this material."
                 }
               ],
               "required": "TRUE",
