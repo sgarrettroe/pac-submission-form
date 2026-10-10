@@ -1196,9 +1196,75 @@
       ]
     },
     {
-      "id": "check_list",
+      "id": "copyright_transfer",
       "order": 11.0,
       "pdf_order": 11.0,
+      "title": "Copyright Transfer Acknowledgement",
+      "applies_to_kinds": [
+        "approved_activity"
+      ],
+      "items": [
+        {
+          "kind": "field",
+          "order": 1.0,
+          "id": "copyright_transfer_intro",
+          "section_id": "copyright_transfer",
+          "group_id": null,
+          "label": "Approval of an activity is accompanied by the transfer of copyright to The POGIL Project and minting of a doi making it permanently citable.",
+          "type": "info",
+          "options": [],
+          "required": "FALSE",
+          "required_first_only": false,
+          "required_for_kinds": [],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "ui_style": "",
+          "help_text": "",
+          "show_if": null,
+          "disabled_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "paragraph"
+          }
+        },
+        {
+          "kind": "field",
+          "order": 2.0,
+          "id": "copyright_transfer_acknowledgement",
+          "section_id": "copyright_transfer",
+          "group_id": null,
+          "label": "Copyright Transfer",
+          "type": "checkbox_group",
+          "options": [
+            {
+              "value": "acknowledged",
+              "label": "I acknowledge that the copyright of an Approved Activity will be transferred to The POGIL Project."
+            }
+          ],
+          "required": "FALSE",
+          "required_first_only": false,
+          "required_for_kinds": [
+            "approved_activity"
+          ],
+          "applies_to_kinds": [
+            "all"
+          ],
+          "ui_style": "",
+          "help_text": "",
+          "show_if": null,
+          "disabled_if": null,
+          "pdf": {
+            "page_break_before": false,
+            "pdf_format": "checklist"
+          }
+        }
+      ]
+    },
+    {
+      "id": "check_list",
+      "order": 12.0,
+      "pdf_order": 12.0,
       "title": "Checklist for Submission",
       "applies_to_kinds": [
         "all"
