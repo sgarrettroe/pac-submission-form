@@ -176,6 +176,81 @@
   #pdf-status.error { border-color: var(--danger); background: var(--danger-bg); color: var(--danger); }
   #pdf-status.success { border-color: var(--success); background: var(--success-bg); color: var(--success); }
 
+  /* ── Next steps modal ────────────────────────────────────────── */
+  #next-steps-overlay {
+    display: none; position: fixed; inset: 0; z-index: 100;
+    background: rgba(30,58,95,0.55); align-items: center; justify-content: center;
+    padding: 24px;
+  }
+  #next-steps-overlay.visible { display: flex; }
+  #next-steps-modal {
+    background: var(--surface); border-radius: 4px; max-width: 560px; width: 100%;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.22); overflow: hidden;
+  }
+  #next-steps-modal .modal-header {
+    background: var(--header-blue); padding: 18px 24px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  #next-steps-modal .modal-header .check-circle {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--green); display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; color: var(--navy); font-weight: 700; flex-shrink: 0;
+  }
+  #next-steps-modal .modal-header h3 {
+    color: #fff; font-size: 1rem; font-weight: 700; margin: 0;
+  }
+  #next-steps-modal .modal-header p {
+    color: rgba(255,255,255,0.8); font-size: 0.78rem; margin: 2px 0 0;
+  }
+  #next-steps-modal .modal-body { padding: 20px 24px; }
+  #next-steps-modal .modal-body h4 {
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.07em;
+    text-transform: uppercase; color: var(--navy); margin: 0 0 12px;
+  }
+  #next-steps-modal .checklist-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 7px 0; border-bottom: 1px solid var(--border);
+    font-size: 0.85rem;
+  }
+  #next-steps-modal .checklist-item:last-child { border-bottom: none; }
+  #next-steps-modal .checklist-item .item-status {
+    width: 20px; height: 20px; border-radius: 3px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; font-weight: 700;
+  }
+  #next-steps-modal .checklist-item .item-status.checked {
+    background: var(--success-bg); color: var(--success); border: 1.5px solid var(--success);
+  }
+  #next-steps-modal .checklist-item .item-status.unchecked {
+    background: var(--warning-bg); color: var(--warning); border: 1.5px solid var(--warning);
+  }
+  #next-steps-modal .checklist-item .item-status.auto {
+    background: rgba(45,106,143,0.1); color: var(--header-blue); border: 1.5px solid var(--header-blue);
+  }
+  #next-steps-modal .checklist-item span { flex: 1; }
+  #next-steps-modal .checklist-item .item-note {
+    font-size: 0.73rem; color: var(--muted); font-style: italic;
+  }
+  #next-steps-modal .modal-footer {
+    padding: 16px 24px; background: var(--surface2);
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    flex-wrap: wrap;
+  }
+  #next-steps-modal .btn-wizard {
+    background: var(--header-blue); color: #fff; border: none;
+    font-family: 'Open Sans', sans-serif; font-size: 0.9rem; font-weight: 700;
+    padding: 11px 22px; border-radius: 3px; cursor: pointer;
+    text-decoration: none; display: inline-block; transition: background 0.2s;
+  }
+  #next-steps-modal .btn-wizard:hover { background: #245a7a; }
+  #next-steps-modal .btn-close-modal {
+    background: none; border: 1px solid var(--border); color: var(--muted);
+    font-family: 'Open Sans', sans-serif; font-size: 0.82rem; font-weight: 600;
+    padding: 9px 18px; border-radius: 3px; cursor: pointer; transition: all 0.2s;
+  }
+  #next-steps-modal .btn-close-modal:hover { border-color: var(--navy); color: var(--navy); }
+
   /* ── Debug / footer ───────────────────────────────────────────── */
   details.debug { margin-top: 8px; }
   details.debug summary { cursor: pointer; font-size: 0.75rem; color: var(--muted); }
@@ -206,15 +281,35 @@
 
   <div class="page-title">
     <h2>Activity Submission Form</h2>
-    <p>This web app helps prepare documents to submit to the PAC.
+    <p>This web app helps prepare submission documents.
        It creates a Submission Form (PDF) and a Submission Data File (JSON) to
-       include with your submission.
-       It will also help you identify the other documents you will need
-       based on your selections.
-    </p>
+       include with your submission based on your selections.</p>
   </div>
 
   <div id="formRoot"></div>
+
+  <div id="next-steps-overlay">
+    <div id="next-steps-modal">
+      <div class="modal-header">
+        <div class="check-circle">✓</div>
+        <div>
+          <h3>Download complete</h3>
+          <p>Your submission form PDF and JSON data file have been saved.</p>
+        </div>
+      </div>
+      <div class="modal-body">
+        <h4>Before you go to OJS — collect these documents:</h4>
+        <div id="modal-checklist"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-close-modal" id="closeModalBtn">Close</button>
+        <a href="https://pac.pogil.org/index.php/pac/submission/wizard"
+           target="_blank" rel="noopener" class="btn-wizard">
+          Go to OJS Submission Wizard →
+        </a>
+      </div>
+    </div>
+  </div>
 
   <div id="pdf-actions">
     <div id="validation-block"></div>
@@ -744,6 +839,76 @@ function updateReqMark(fieldEl, required) {
   }
 }
 
+// ---------- Next steps modal ----------
+
+const CHECKLIST_FIELD_IDS = [
+  'submission_form_pdf',
+  'submission_form_json',
+  'activity_document',
+  'toc_graphic',
+  'answer_key',
+  'facilitation_guide',
+];
+
+function showNextStepsModal() {
+  const kset = activeKindSet();
+  const container = document.getElementById('modal-checklist');
+  container.innerHTML = '';
+
+  SCHEMA.sections.forEach(section => {
+    if (section.id !== 'check_list') return;
+    section.items.forEach(item => {
+      if (item.kind !== 'field') return;
+      if (!CHECKLIST_FIELD_IDS.includes(item.id)) return;
+
+      // Is this item visible for the current kind?
+      const kindOk = kindSetMatches(item.applies_to_kinds, kset);
+      const reqForKind = item.required_for_kinds && item.required_for_kinds.length &&
+                         kindSetMatches(item.required_for_kinds, kset);
+      const required = item.required === 'TRUE' || reqForKind;
+      if (!kindOk && !required) return;
+
+      const val = getTopValue(item.id);
+      const checked = Array.isArray(val) && val.includes('yes');
+      const isAuto = item.id === 'submission_form_pdf' || item.id === 'submission_form_json';
+
+      const row = document.createElement('div');
+      row.className = 'checklist-item';
+
+      const status = document.createElement('div');
+      status.className = 'item-status ' + (isAuto ? 'auto' : (checked ? 'checked' : 'unchecked'));
+      status.textContent = isAuto ? '↓' : (checked ? '✓' : '!');
+      row.appendChild(status);
+
+      const label = document.createElement('span');
+      label.textContent = item.options[0].label;
+      row.appendChild(label);
+
+      const note = document.createElement('span');
+      note.className = 'item-note';
+      if (isAuto) note.textContent = 'just downloaded';
+      else if (!checked && required) note.textContent = 'not yet collected';
+      else if (!checked) note.textContent = 'optional';
+      row.appendChild(note);
+
+      container.appendChild(row);
+    });
+  });
+
+  document.getElementById('next-steps-overlay').classList.add('visible');
+}
+
+document.getElementById('closeModalBtn').addEventListener('click', () => {
+  document.getElementById('next-steps-overlay').classList.remove('visible');
+});
+
+// Close on backdrop click
+document.getElementById('next-steps-overlay').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('next-steps-overlay')) {
+    document.getElementById('next-steps-overlay').classList.remove('visible');
+  }
+});
+
 // ---------- JSON sidecar: export ----------
 
 function collectSubmissionData() {
@@ -1033,6 +1198,7 @@ async function generatePdf() {
 
     statusEl.className = 'visible success';
     statusEl.textContent = 'PDF and JSON generated and downloaded.';
+    showNextStepsModal();
   } catch (err) {
     statusEl.className = 'visible error';
     statusEl.textContent = 'Could not generate PDF: ' + err.message;
