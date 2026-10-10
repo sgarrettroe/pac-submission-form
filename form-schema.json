@@ -1276,7 +1276,7 @@
           "id": "check_list_intro",
           "section_id": "check_list",
           "group_id": null,
-          "label": "Documents marked * will be required during the upload. Ensure you have each required document in the indicated file format. (The submission form pdf and json are created by this web app when you click download.)",
+          "label": "The following checklist will help you identify the documents that you will need during the upload process. Documents marked * will be required during the upload. Ensure you have each required document in the indicated file format. (The submission form pdf and json are created by this web app when you click download.)",
           "type": "info",
           "options": [],
           "required": "FALSE",
