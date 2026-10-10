@@ -203,6 +203,17 @@
     color: rgba(255,255,255,0.8); font-size: 0.78rem; margin: 2px 0 0;
   }
   #next-steps-modal .modal-body { padding: 20px 24px; }
+  #modal-section-guidance {
+    background: rgba(45,106,143,0.06); border-left: 4px solid var(--header-blue);
+    border-radius: 0 3px 3px 0; padding: 12px 14px; margin-bottom: 18px;
+    font-size: 0.85rem; color: var(--navy); line-height: 1.5;
+  }
+  #modal-section-guidance strong { display: block; margin-bottom: 4px; font-size: 0.78rem;
+    text-transform: uppercase; letter-spacing: 0.07em; color: var(--header-blue); }
+  #modal-section-guidance .section-name {
+    font-weight: 700; font-size: 0.95rem;
+  }
+
   #next-steps-modal .modal-body h4 {
     font-size: 0.78rem; font-weight: 700; letter-spacing: 0.07em;
     text-transform: uppercase; color: var(--navy); margin: 0 0 12px;
@@ -298,6 +309,7 @@
         </div>
       </div>
       <div class="modal-body">
+        <div id="modal-section-guidance"></div>
         <h4>Before you go to OJS — collect these documents:</h4>
         <div id="modal-checklist"></div>
       </div>
@@ -841,6 +853,35 @@ function updateReqMark(fieldEl, required) {
 
 // ---------- Next steps modal ----------
 
+// Maps review_kind / activity_idea readiness → OJS section name
+const OJS_SECTION_MAP = {
+  traditional_review:          { name: 'Activities for Traditional Review',            id: 13 },
+  collaborative_peer_feedback: { name: 'Activities for Collaborative Activity Feedback', id: 12 },
+  classroom_testing:           { name: 'Activities for Classroom Testing Review',       id: 15 },
+  activity_idea:               { name: 'Activity Ideas',                                id:  3 },
+};
+
+function buildSectionGuidance() {
+  const guidance = document.getElementById('modal-section-guidance');
+  const readiness   = getTopValue('readiness')   || '';
+  const reviewKind  = getTopValue('review_kind') || '';
+  const isIdea      = readiness === 'activity_idea';
+
+  // For activity ideas, section is driven by readiness; otherwise by review_kind.
+  const key     = isIdea ? 'activity_idea' : reviewKind;
+  const section = OJS_SECTION_MAP[key];
+
+  if (!section) {
+    guidance.style.display = 'none';
+    return;
+  }
+
+  guidance.style.display = '';
+  guidance.innerHTML =
+    '<strong>In the OJS Submission Wizard — select this section:</strong>' +
+    '<span class="section-name">' + section.name + '</span>';
+}
+
 const CHECKLIST_FIELD_IDS = [
   'submission_form_pdf',
   'submission_form_json',
@@ -851,6 +892,7 @@ const CHECKLIST_FIELD_IDS = [
 ];
 
 function showNextStepsModal() {
+  buildSectionGuidance();
   const kset = activeKindSet();
   const container = document.getElementById('modal-checklist');
   container.innerHTML = '';
