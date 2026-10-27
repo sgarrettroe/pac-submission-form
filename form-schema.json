@@ -600,7 +600,7 @@
             },
             {
               "value": "exercise_science",
-              "label": "Exercise Science"
+              "label": "Exercise  Science"
             },
             {
               "value": "fine_arts",
@@ -637,6 +637,10 @@
             {
               "value": "physics",
               "label": "Physics"
+            },
+            {
+              "value": "professional_development",
+              "label": "Professional Development"
             },
             {
               "value": "psychology",
@@ -704,12 +708,16 @@
           "type": "checkbox_group",
           "options": [
             {
+              "value": "classroom",
+              "label": "Classroom"
+            },
+            {
               "value": "laboratory",
               "label": "Laboratory"
             },
             {
-              "value": "classroom",
-              "label": "Classroom"
+              "value": "workshop",
+              "label": "Workshop"
             }
           ],
           "required": "TRUE",
